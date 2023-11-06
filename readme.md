@@ -1,4 +1,4 @@
 NODE_ENV=development
 PORT=5000
 MONGO_URI="add your mongoose"
-JWT_SECRET=abc123
+JWT_SECRET=hjdfgadhshgfajsgf
