@@ -14,7 +14,7 @@ const loginUser = asyncHandler(async (req, res) => {
     generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      nickName: user.nickName,
       email: user.email,
     });
   } else {
@@ -27,7 +27,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //route     POST /api/users/register
 //@access   Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { firstName, nickName, email, password } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -36,13 +36,14 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ firstName, nickName, email, password });
 
   if (user) {
     generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      firstName: user.firstName,
+      nickName: user.nickName,
       email: user.email,
     });
   } else {
@@ -69,7 +70,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = {
     _id: req.user._id,
-    name: req.user.name,
+    firstName: req.user.firstName,
+    nickName: req.user.nickName,
     email: req.user.email,
   };
 
@@ -83,7 +85,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.name = req.body.name || user.name;
+    user.firstName = req.body.firstName || user.firstName;
+    user.nickName = req.body.nickName || user.nickName;
     user.email = req.body.email || user.email;
 
     if (req.body.password) {
@@ -94,7 +97,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       _id: updatedUser._id,
-      name: updatedUser.name,
+      firstName: updatedUser.firstName,
+      nickName: updatedUser.nickName,
       email: updatedUser.email,
     });
   } else {
