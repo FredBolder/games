@@ -1,8 +1,30 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom';
 import "./LoginPage.css";
+import axios from "axios";
 
 function LoginPage() {
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const userCredentials = {
+        email: e.target["email"].value,
+        password: e.target["password"].value,
+      };
+      const response = await axios.post(
+        `${import.meta.env.VITE_BE_URL}/api/users/login`,
+        userCredentials
+      );
+      navigate("/bal");
+    } catch (err) {
+      //console.log(err);
+      alert(err);
+    }
+  };
+
   return (
     <>
       <div className="loginBody">
@@ -13,11 +35,11 @@ function LoginPage() {
                 <h3>Login Here:</h3>
               </div>
               <div>
-                <form action="">
+                <form  onSubmit={submitHandler}>
                   <p>Email:</p>
-                  <input type="email" />
+                  <input name="email" type="email" />
                   <p>Password:</p>
-                  <input type="password" />
+                  <input name="password" type="password" />
                   <br />
                   <input type="submit" value="Login" />
                 </form>
