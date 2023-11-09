@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, Outlet } from "react-router-dom";
 import "./LoginPage.css";
 
 function LoginPage() {
@@ -27,7 +28,7 @@ function LoginPage() {
               <p>To fully use our site, you need to make an account,</p>
               <p>what only takes 2 minutes.</p>
               <p>To make an account, click here:</p>
-              <a href="./register-page.html">REGISTER</a>
+              <Link to="/register">Register</Link>
             </div>
           </div>
         </div>
