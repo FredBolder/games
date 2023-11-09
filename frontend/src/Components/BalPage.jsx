@@ -2,12 +2,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import "./BalPage.css";
-import axios from 'axios';
+import axios from "axios";
 
 function BalPage() {
   let canvas;
   let ctx;
-  const [ gameData, setGameData ] = useState([]);
+  const [gameData, setGameData] = useState([]);
 
   function drawLevel(ctx, data) {
     if (!data || data.length < 1) {
@@ -245,14 +245,20 @@ function BalPage() {
     let level = n.toString();
     let data = [];
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BE_URL}/api/bal/initlevel`, {level: level});
+      const response = await axios.post(
+        `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
+        { level: level }
+      );
       //console.log(response);
       data = response.data.gameData;
       setGameData(data);
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
+  }
+
+  function changeLevel(e) {
+    initLevel(Number(e.target.value));
   }
 
   useEffect(() => {
@@ -261,6 +267,8 @@ function BalPage() {
 
   useEffect(() => {
     canvas = document.querySelector(".myCanvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     console.log("gameData: ", gameData);
     drawLevel(ctx, gameData);
@@ -269,6 +277,16 @@ function BalPage() {
   return (
     <div>
       <Navbar />
+      <div>
+        <label>Level </label>
+        <select name="level" id="level" onChange={changeLevel}>
+          <option value="1" selected="selected">
+            1
+          </option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
       <canvas className="myCanvas">
         <p>Add suitable fallback here.</p>
       </canvas>
