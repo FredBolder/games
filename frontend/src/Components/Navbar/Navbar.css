@@ -1,0 +1,31 @@
+/* Basic styles for the navbar */
+.loginNavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 10px 20px;
+}
+
+/* Styles for the logo */
+.logo h1 {
+  color: #000000;
+  margin: 0;
+}
+
+/* Styles for the navigation links */
+.nav-links a {
+  color: #000000;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+/* Styles for the right-aligned links */
+.nav-links {
+  display: flex;
+}
+
+/* Style for the last link to remove the margin */
+.nav-links a:last-child {
+  margin-right: 0;
+}
