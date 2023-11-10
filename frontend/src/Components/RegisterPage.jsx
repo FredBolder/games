@@ -1,12 +1,11 @@
 import React from "react";
-import "./RegisterPage.css";
 import Navbar from "./Navbar";
 
 function RegisterPage() {
   return (
     <>
       <Navbar />
-      <main className="loginBody">
+      <main className="mainBody">
         <div className="loginBox">
           <div className="loginBoxInfo">
             <div className="loginBoxInfos">

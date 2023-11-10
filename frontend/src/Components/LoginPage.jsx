@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import { NavLink, useNavigate } from 'react-router-dom';
-import "./LoginPage.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
 import axios from "axios";
 
 function LoginPage() {
@@ -27,7 +27,8 @@ function LoginPage() {
 
   return (
     <>
-      <div className="loginBody">
+      <Navbar />
+      <div className="mainBody">
         <div className="loginBox">
           <div className="loginBoxInfo">
             <div className="loginBoxInfos">
@@ -35,7 +36,7 @@ function LoginPage() {
                 <h3>Login Here:</h3>
               </div>
               <div>
-                <form  onSubmit={submitHandler}>
+                <form onSubmit={submitHandler}>
                   <p>Email:</p>
                   <input name="email" type="email" />
                   <p>Password:</p>
