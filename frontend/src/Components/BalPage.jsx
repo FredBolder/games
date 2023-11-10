@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import "./BalPage.css";
 import axios from "axios";
 
 function BalPage() {
@@ -262,11 +261,11 @@ function BalPage() {
   }
 
   useEffect(() => {
-    initLevel(2);
+    initLevel(1);
   }, []);
 
   useEffect(() => {
-    canvas = document.querySelector(".myCanvas");
+    canvas = document.querySelector(".gameCanvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
@@ -277,19 +276,24 @@ function BalPage() {
   return (
     <div>
       <Navbar />
-      <div>
-        <label>Level </label>
-        <select name="level" id="level" onChange={changeLevel}>
-          <option value="1" selected="selected">
-            1
-          </option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
+      <div className="mainBody">
+        <div className="hero-content">
+          <h1 className="hero-title">Bal - The Game for Smart People</h1>
+          <div className="levelSelector">
+            <label>Level </label>
+            <select name="level" id="level" onChange={changeLevel}>
+              <option value="1" selected="selected">
+                1
+              </option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+          </div>
+          <canvas className="gameCanvas">
+            <p>Bal</p>
+          </canvas>
+        </div>
       </div>
-      <canvas className="myCanvas">
-        <p>Add suitable fallback here.</p>
-      </canvas>
     </div>
   );
 }
