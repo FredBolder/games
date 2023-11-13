@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
 
 function BalPage() {
   let canvas;
@@ -16,15 +17,14 @@ function BalPage() {
     const rows = data.length;
     const columns = data[0].length;
 
-    let dw1 = canvas.width / columns;
-    let dw2 = canvas.height / rows;
+    let size1 = canvas.width / columns;
+    let size2 = canvas.height / rows;
 
-    if (dw2 < dw1) {
-      dw1 = dw2;
+    if (size2 < size1) {
+      size1 = size2;
     }
-    dw1 = Math.round(dw1);
-    ctx.fillStyle = "rgb(0, 0, 0)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    size1 = Math.round(size1);
+    drawFilledBox(ctx, 0, 0, canvas.width, canvas.height, "black");
     let dxmin = 0;
     let dxmax = 0;
     let dymin = 0;
@@ -41,85 +41,63 @@ function BalPage() {
     let d1 = 0;
     let d2 = 0;
     let d3 = 0;
-    let d4 = 0;
 
     dymin = 0;
     for (let row = 0; row < rows; row++) {
       const rowData = data[row];
-      dymax = Math.round(dymin + dw1) - 1;
+      dymax = Math.round(dymin + size1) - 1;
       dxmin = 0;
       for (let col = 0; col < columns; col++) {
-        dxmax = Math.round(dxmin + dw1) - 1;
+        dxmax = Math.round(dxmin + size1) - 1;
         xmin = Math.round(dxmin);
         xmax = Math.round(dxmax);
         ymin = Math.round(dymin);
         ymax = Math.round(dymax);
         w1 = xmax - xmin + 1;
         w2 = ymax - ymin + 1;
-        xc = (xmax + xmin) / 2;
-        yc = (ymax + ymin) / 2;
+        xc = Math.round((xmax + xmin) / 2);
+        yc = Math.round((ymax + ymin) / 2);
 
-        ctx.fillStyle = "rgb(0, 0, 0)";
-        ctx.fillRect(xmin, ymin, w1, w2);
-        ctx.strokeStyle = "rgb(0, 0, 0)";
-        ctx.strokeRect(xmin, ymin, w1, w2);
         const colData = rowData.slice(col, col + 1);
         switch (colData) {
           case "1":
             // wall
-            ctx.fillStyle = "rgb(70, 70, 70)";
-            ctx.fillRect(xmin, ymin, w1, w2);
-            ctx.strokeStyle = "rgb(70, 70, 70)";
-            ctx.strokeRect(xmin, ymin, w1, w2);
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
             break;
           case "2":
             // blue ball
-            ctx.fillStyle = "rgb(0, 0, 255)";
-            ctx.beginPath();
-            ctx.arc(
+            drawFilledCircle(
+              ctx,
               xmin + w1 * 0.5,
               (row + 1) * w1 - w1 * 0.5,
               w1 * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              "blue"
             );
-            ctx.fill();
-            eye = Math.round(w1 / 10);
 
+            eye = Math.round(w1 / 20);
             if (eye < 2) {
               eye = 2;
             }
-            d1 = dw1 / 3.25;
-            d2 = d1 - eye;
-            d3 = Math.round(w1 / 12);
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.beginPath();
-            ctx.arc(
+            d1 = size1 / 3.25;
+            d2 = Math.round(w1 / 12);
+            drawFilledCircle(
+              ctx,
               Math.round(dxmin + d1),
-              Math.round(yc - d3),
-              eye * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              Math.round(yc - d2),
+              eye,
+              "white"
             );
-            ctx.fill();
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.beginPath();
-            ctx.arc(
+            drawFilledCircle(
+              ctx,
               Math.round(dxmax - d1),
-              Math.round(yc - d3),
-              eye * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              Math.round(yc - d2),
+              eye,
+              "white"
             );
-            ctx.fill();
 
             d1 = w1 / 3.5;
             d2 = w1 / 3;
             d3 = w1 / 2;
-            d4 = w1 / 2;
             if (gameOver) {
               ctx.strokeStyle = "rgb(255, 255, 255)";
               ctx.beginPath();
@@ -148,95 +126,67 @@ function BalPage() {
             break;
           case "3":
             // green ball
-            ctx.fillStyle = "rgb(0, 150, 0)";
-            ctx.beginPath();
-            ctx.arc(
+            drawFilledCircle(
+              ctx,
               xmin + w1 * 0.5,
               (row + 1) * w1 - w1 * 0.75,
               w1 * 0.25,
-              0,
-              2 * Math.PI,
-              false
+              "green"
             );
-            ctx.fill();
             break;
           case "4":
             // white ball
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.beginPath();
-            ctx.arc(
+            drawFilledCircle(
+              ctx,
               xmin + w1 * 0.5,
               (row + 1) * w1 - w1 * 0.5,
               w1 * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              "white"
             );
-            ctx.fill();
             break;
           case "8":
             // red ball
-            ctx.fillStyle = "rgb(225, 0, 0)";
-            ctx.beginPath();
-            ctx.arc(
+            drawFilledCircle(
+              ctx,
               xmin + w1 * 0.5,
               (row + 1) * w1 - w1 * 0.5,
               w1 * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              "red"
             );
-            ctx.fill();
-            eye = Math.round(w1 / 10);
 
+            eye = Math.round(w1 / 20);
             if (eye < 2) {
               eye = 2;
             }
-            d1 = dw1 / 3.25;
-            d2 = d1 - eye;
-            d3 = Math.round(w1 / 12);
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.beginPath();
-            ctx.arc(
+            d1 = size1 / 3.25;
+            d2 = Math.round(w1 / 12);
+            drawFilledCircle(
+              ctx,
               Math.round(dxmin + d1),
-              Math.round(yc - d3),
-              eye * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              Math.round(yc - d2),
+              eye,
+              "white"
             );
-            ctx.fill();
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.beginPath();
-            ctx.arc(
+            drawFilledCircle(
+              ctx,
               Math.round(dxmax - d1),
-              Math.round(yc - d3),
-              eye * 0.5,
-              0,
-              2 * Math.PI,
-              false
+              Math.round(yc - d2),
+              eye,
+              "white"
             );
-            ctx.fill();
 
             d1 = w1 / 6;
             d2 = w1 / 5;
-            ctx.strokeStyle = "rgb(255, 255, 255)";
-            ctx.beginPath();
-            ctx.moveTo(xc - d1, yc + d2);
-            ctx.lineTo(xc + d1, yc + d2);
-            ctx.stroke();
+            drawLine(ctx, xc - d1, yc + d2, xc + d1, yc + d2, "white");
             break;
           default:
             // empty
-            ctx.fillStyle = "rgb(0, 0, 0)";
-            ctx.fillRect(xmin, ymin, w1, w2);
-            ctx.strokeStyle = "rgb(0, 0, 0)";
-            ctx.strokeRect(xmin, ymin, w1, w2);
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
             break;
         }
-        dxmin = dxmin + dw1;
+        dxmin += size1;
       }
-      dymin = dymin + dw1;
+      dymin += size1;
     }
   }
 
@@ -281,10 +231,13 @@ function BalPage() {
           <h1 className="hero-title">Bal - The Game for Smart People</h1>
           <div className="levelSelector">
             <label>Level </label>
-            <select name="level" id="level" onChange={changeLevel}>
-              <option value="1" selected="selected">
-                1
-              </option>
+            <select
+              name="level"
+              id="level"
+              defaultValue="1"
+              onChange={changeLevel}
+            >
+              <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
