@@ -42,7 +42,7 @@ function LoginPage() {
                   <p>Password:</p>
                   <input name="password" type="password" />
                   <br />
-                  <input type="submit" value="Login" />
+                  <input type="submit" value="Login" className="login-button"/>
                 </form>
               </div>
             </div>
