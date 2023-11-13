@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
 import PageNotFound from "./Components/PageNotFound.jsx";
@@ -10,31 +10,22 @@ import RegisterPage from "./Components/RegisterPage.jsx";
 import LoginPage from "./Components/LoginPage.jsx";
 import Footer from "./Components/Footer.jsx";
 
-
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div>
       <BrowserRouter>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            columnGap: "1em",
-          }}
-        >
-        </div>
         <Routes>
-        <Route path="/" element={<Page />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/bal" element={<BalPage />} />
-        <Route path="*" element={<PageNotFound />} />
+          <Route path="/" element={<Page />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/bal" element={<BalPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
