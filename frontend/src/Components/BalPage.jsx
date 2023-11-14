@@ -1,13 +1,17 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
+import { stringArrayToNumberArray } from "../balUtils";
+let gameData = [];
 
 function BalPage() {
   let canvas;
   let ctx;
-  const [gameData, setGameData] = useState([]);
+  const [posX, setPosX] = useState(-1);
+  const [posY, setPosY] = useState(-1);
+  const [update, setUpdate] = useState(false);
 
   function drawLevel(ctx, data) {
     if (!data || data.length < 1) {
@@ -44,7 +48,6 @@ function BalPage() {
 
     dymin = 0;
     for (let row = 0; row < rows; row++) {
-      const rowData = data[row];
       dymax = Math.round(dymin + size1) - 1;
       dxmin = 0;
       for (let col = 0; col < columns; col++) {
@@ -58,14 +61,18 @@ function BalPage() {
         xc = Math.round((xmax + xmin) / 2);
         yc = Math.round((ymax + ymin) / 2);
 
-        const colData = rowData.slice(col, col + 1);
+        const colData = data[row][col];
         switch (colData) {
-          case "1":
+          case 1:
             // wall
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
             break;
-          case "2":
+          case 2:
             // blue ball
+            if (posX === -1 && posY === -1) {
+              setPosX(col);
+              setPosY(row);
+            }
             drawFilledCircle(
               ctx,
               xmin + w1 * 0.5,
@@ -124,7 +131,7 @@ function BalPage() {
               ctx.stroke();
             }
             break;
-          case "3":
+          case 3:
             // green ball
             drawFilledCircle(
               ctx,
@@ -134,7 +141,7 @@ function BalPage() {
               "green"
             );
             break;
-          case "4":
+          case 4:
             // white ball
             drawFilledCircle(
               ctx,
@@ -144,7 +151,7 @@ function BalPage() {
               "white"
             );
             break;
-          case "8":
+          case 8:
             // red ball
             drawFilledCircle(
               ctx,
@@ -199,8 +206,11 @@ function BalPage() {
         { level: level }
       );
       //console.log(response);
+      setPosX(-1);
+      setPosY(-1);
       data = response.data.gameData;
-      setGameData(data);
+      gameData = stringArrayToNumberArray(data);
+      setUpdate(!update);
     } catch (err) {
       console.log(err);
     }
@@ -209,6 +219,39 @@ function BalPage() {
   function changeLevel(e) {
     initLevel(Number(e.target.value));
   }
+
+  function handleClick(e) {
+    if (posX === -1 || posY === -1 || gameData.length === 0) {
+      return false;
+    }
+    const maxX = gameData[0].length - 1;
+    gameData[posY][posX] = 0;
+    switch (e.key) {
+      case "ArrowLeft":
+        if (posX > 0) {
+          setPosX(posX - 1);
+        }
+        break;
+      case "ArrowRight":
+        if (posX < maxX) {
+          setPosX(posX + 1);
+        }
+        break;
+      default:
+        break;
+    }
+    gameData[posY][posX] = 2;
+    setUpdate(!update);
+  }
+
+  const myRef = useRef(document);
+
+  useEffect(() => {
+    myRef.current.addEventListener("keydown", handleClick);
+    return () => {
+      myRef.current.removeEventListener("keydown", handleClick);
+    };
+  }, []);
 
   useEffect(() => {
     initLevel(1);
@@ -219,9 +262,9 @@ function BalPage() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
-    console.log("gameData: ", gameData);
+    //console.log("gameData: ", gameData);
     drawLevel(ctx, gameData);
-  }, [gameData]);
+  }, [update]);
 
   return (
     <div>
