@@ -5,12 +5,12 @@ import axios from "axios";
 import { drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
 import { stringArrayToNumberArray } from "../balUtils";
 let gameData = [];
+let posX = -1;
+let posY = -1;
 
 function BalPage() {
   let canvas;
   let ctx;
-  const [posX, setPosX] = useState(-1);
-  const [posY, setPosY] = useState(-1);
   const [update, setUpdate] = useState(false);
 
   function drawLevel(ctx, data) {
@@ -70,8 +70,8 @@ function BalPage() {
           case 2:
             // blue ball
             if (posX === -1 && posY === -1) {
-              setPosX(col);
-              setPosY(row);
+              posX = col;
+              posY = row;
             }
             drawFilledCircle(
               ctx,
@@ -206,8 +206,8 @@ function BalPage() {
         { level: level }
       );
       //console.log(response);
-      setPosX(-1);
-      setPosY(-1);
+      posX = -1;
+      posY = -1;
       data = response.data.gameData;
       gameData = stringArrayToNumberArray(data);
       setUpdate(!update);
@@ -229,12 +229,12 @@ function BalPage() {
     switch (e.key) {
       case "ArrowLeft":
         if (posX > 0) {
-          setPosX(posX - 1);
+          posX = posX - 1;
         }
         break;
       case "ArrowRight":
         if (posX < maxX) {
-          setPosX(posX + 1);
+          posX = posX + 1;
         }
         break;
       default:
