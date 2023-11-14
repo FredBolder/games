@@ -1,9 +1,10 @@
 import React from "react";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
 import { stringArrayToNumberArray } from "../balUtils";
+let counter = 0;
 let gameData = [];
 let posX = -1;
 let posY = -1;
@@ -11,7 +12,6 @@ let posY = -1;
 function BalPage() {
   let canvas;
   let ctx;
-  const [update, setUpdate] = useState(false);
 
   function drawLevel(ctx, data) {
     if (!data || data.length < 1) {
@@ -69,7 +69,7 @@ function BalPage() {
             break;
           case 2:
             // blue ball
-            if (posX === -1 && posY === -1) {
+            if (posX === -1 || posY === -1) {
               posX = col;
               posY = row;
             }
@@ -210,7 +210,7 @@ function BalPage() {
       posY = -1;
       data = response.data.gameData;
       gameData = stringArrayToNumberArray(data);
-      setUpdate(!update);
+      updateScreen();
     } catch (err) {
       console.log(err);
     }
@@ -218,9 +218,11 @@ function BalPage() {
 
   function changeLevel(e) {
     initLevel(Number(e.target.value));
+    e.target.blur();
   }
 
   function handleClick(e) {
+    //console.log(posX, posY, gameData.length);
     if (posX === -1 || posY === -1 || gameData.length === 0) {
       return false;
     }
@@ -241,7 +243,7 @@ function BalPage() {
         break;
     }
     gameData[posY][posX] = 2;
-    setUpdate(!update);
+    updateScreen();
   }
 
   const myRef = useRef(document);
@@ -255,16 +257,17 @@ function BalPage() {
 
   useEffect(() => {
     initLevel(1);
+    updateScreen();
   }, []);
 
-  useEffect(() => {
+  function updateScreen() {
     canvas = document.querySelector(".gameCanvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx = canvas.getContext("2d");
     //console.log("gameData: ", gameData);
     drawLevel(ctx, gameData);
-  }, [update]);
+  }
 
   return (
     <div>
