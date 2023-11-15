@@ -3,11 +3,18 @@ import { useRef, useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
-import { stringArrayToNumberArray } from "../balUtils";
-let counter = 0;
+import {
+  stringArrayToNumberArray,
+  checkFalling,
+  moveLeft,
+  moveRight,
+} from "../balUtils.js";
+
 let gameData = [];
 let posX = -1;
 let posY = -1;
+let gameInterval;
+let skipFalling = 2;
 
 function BalPage() {
   let canvas;
@@ -197,6 +204,22 @@ function BalPage() {
     }
   }
 
+  function gameScheduler() {
+    let info = {};
+
+    if (skipFalling <= 0) {
+      info = checkFalling(gameData);
+      if (info.player) {
+        posY++;
+      }
+      if (info.falling) {
+        updateScreen();
+      }
+    } else {
+      skipFalling--;
+    }
+  }
+
   async function initLevel(n) {
     let level = n.toString();
     let data = [];
@@ -222,6 +245,10 @@ function BalPage() {
   }
 
   function handleClick(e) {
+    let info = {};
+    info.player = false;
+    info.eating = false;
+
     //console.log(posX, posY, gameData.length);
     if (posX === -1 || posY === -1 || gameData.length === 0) {
       return false;
@@ -230,34 +257,41 @@ function BalPage() {
     gameData[posY][posX] = 0;
     switch (e.key) {
       case "ArrowLeft":
-        if (posX > 0) {
-          posX = posX - 1;
+        info = moveLeft(gameData, posX, posY);
+        if (info.player) {
+          posX--;
         }
         break;
       case "ArrowRight":
-        if (posX < maxX) {
-          posX = posX + 1;
+        info = moveRight(gameData, posX, posY);
+        if (info.player) {
+          posX++;
         }
         break;
       default:
         break;
     }
     gameData[posY][posX] = 2;
-    updateScreen();
+    if (info.player) {
+      updateScreen();
+    }
+    if (info.eating) {
+      // TODO: Eating sound and decrease number of green balls
+    }
   }
 
   const myRef = useRef(document);
 
   useEffect(() => {
-    myRef.current.addEventListener("keydown", handleClick);
-    return () => {
-      myRef.current.removeEventListener("keydown", handleClick);
-    };
-  }, []);
-
-  useEffect(() => {
     initLevel(1);
     updateScreen();
+    myRef.current.addEventListener("keydown", handleClick);
+    gameInterval = setInterval(gameScheduler, 100);
+
+    return () => {
+      myRef.current.removeEventListener("keydown", handleClick);
+      clearInterval(gameInterval);
+    };
   }, []);
 
   function updateScreen() {
