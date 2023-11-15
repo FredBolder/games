@@ -21,6 +21,7 @@ function charToNumber(c) {
       result = 8;
       break;
     default:
+      result = 0;
       break;
   }
   return result;
@@ -49,6 +50,7 @@ function numberToChar(n) {
       result = "8";
       break;
     default:
+      result = " ";
       break;
   }
   return result;
@@ -58,15 +60,12 @@ export function stringArrayToNumberArray(arr) {
   let result = [];
 
   for (let i = 0; i < arr.length; i++) {
-    const arr2 = [];
-
+    const row = [];
     for (let j = 0; j < arr[i].length; j++) {
-      arr2.push(charToNumber(arr[i][j]));
+      row.push(charToNumber(arr[i][j]));
     }
-
-    result.push(arr2);
+    result.push(row);
   }
-
   return result;
 }
 
@@ -74,14 +73,38 @@ export function numberArrayToStringArray(arr) {
   let result = [];
 
   for (let i = 0; i < arr.length; i++) {
-    let string = "";
-
+    let row = "";
     for (let j = 0; j < arr[i].length; j++) {
-      string += numberToChar(arr[i][j]);
+      row += numberToChar(arr[i][j]);
     }
-
-    result.push(string);
+    result.push(row);
   }
+  return result;
+}
 
+export function checkFalling(arr) {
+  let result = {};
+  result.falling = false;
+  result.player = false;
+
+  // code Diana
+  return result;
+}
+
+export function moveLeft(arr) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+
+  // code Michal
+  return result;
+}
+
+export function moveRight(arr) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+
+  // code Michal
   return result;
 }
