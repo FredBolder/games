@@ -88,23 +88,107 @@ export function checkFalling(arr) {
   result.player = false;
 
   // code Diana
+  for (let i = arr.length - 2; i >= 0; i--) {
+    for (let j = 0; j < arr[i].length; j++) {
+      let element1 = arr[i][j];
+      let element2 = arr[i + 1][j];
+      if (
+        element2 === 0 &&
+        (element1 === 2 || element1 === 4 || element1 === 8)
+      ) {
+        result.falling = true;
+        if (element1 === 2) {
+          result.player = true;
+        }
+        arr[i + 1][j] = arr[i][j];
+        arr[i][j] = 0;
+      }
+    }
+  }
   return result;
 }
 
-export function moveLeft(arr, playerX, playerY) {
+export function moveLeft(arr, x, y) {
   let result = {};
+  let row = arr[y];
   result.eating = false;
   result.player = false;
-
-  // code Michal
+  if (arr.length > 0) {
+    if (x > 0) {
+      // empty space
+      if (row[x - 1] === 0 || row[x - 1] === 3) {
+        // green ball
+        if (row[x - 1] === 3) {
+          result.eating = true;
+        }
+        row[x] = 0;
+        row[x - 1] = 2;
+        result.player = true;
+      }
+    }
+    if (x > 1) {
+      // 1 white ball
+      if (row[x - 1] === 4 && row[x - 2] === 0) {
+        row[x] = 0;
+        row[x - 1] = 2;
+        row[x - 2] = 4;
+        result.player = true;
+      }
+    }
+    if (x > 2) {
+      // 2 white balls
+      if (row[x - 1] === 4 && row[x - 2] === 4 && row[x - 3] === 0) {
+        row[x] = 0;
+        row[x - 1] = 2;
+        row[x - 2] = 4;
+        row[x - 3] = 4;
+        result.player = true;
+      }
+    }
+  }
   return result;
 }
 
-export function moveRight(arr, playerX, playerY) {
+export function moveRight(arr, x, y) {
   let result = {};
+  let row = arr[y];
+  let maxX = 0;
   result.eating = false;
   result.player = false;
-
-  // code Michal
+  // whats the maximum length of game area??
+  if (arr.length > 0) {
+    maxX = arr[0].length;
+    if (x < maxX) {
+      // empty space
+      if (row[x + 1] === 0 || row[x + 1] === 3) {
+        // green ball
+        if (row[x + 1] === 3) {
+          result.eating = true;
+        }
+        row[x] = 0;
+        row[x + 1] = 2;
+        result.player = true;
+      }
+    }
+    if (x < maxX - 1) {
+      // 1 white ball
+      if (row[x + 1] === 4 && row[x + 2] === 0) {
+        row[x] = 0;
+        row[x + 1] = 2;
+        row[x + 2] = 4;
+        result.player = true;
+      }
+    }
+    if (x < maxX - 2) {
+      // 2 white balls
+      if (row[x + 1] === 4 && row[x + 2] === 4 && row[x + 3] === 0) {
+        row[x] = 0;
+        row[x + 1] = 2;
+        row[x + 2] = 4;
+        row[x + 3] = 4;
+        result.player = true;
+      }
+    }
+  }
   return result;
 }
