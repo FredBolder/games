@@ -91,7 +91,7 @@ export function checkFalling(arr) {
   return result;
 }
 
-export function moveLeft(arr) {
+export function moveLeft(arr, playerX, playerY) {
   let result = {};
   result.eating = false;
   result.player = false;
@@ -100,7 +100,7 @@ export function moveLeft(arr) {
   return result;
 }
 
-export function moveRight(arr) {
+export function moveRight(arr, playerX, playerY) {
   let result = {};
   result.eating = false;
   result.player = false;

@@ -116,7 +116,7 @@ describe("balUtils", () => {
     [1, 2, 0, 4, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info4a = moveLeft(input4a);
+  let info4a = moveLeft(input4a, 1, 1);
   it("moveLeft A", () => {
     expect(JSON.stringify(input4a)).toBe(JSON.stringify(expectedOutput4a));
   });
@@ -137,7 +137,7 @@ describe("balUtils", () => {
     [1, 2, 0, 4, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info4b = moveLeft(input4b);
+  let info4b = moveLeft(input4b, 2, 1);
   it("moveLeft B", () => {
     expect(JSON.stringify(input4b)).toBe(JSON.stringify(expectedOutput4b));
   });
@@ -158,7 +158,7 @@ describe("balUtils", () => {
     [1, 2, 0, 4, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info4c = moveLeft(input4c);
+  let info4c = moveLeft(input4c, 2, 1);
   it("moveLeft C", () => {
     expect(JSON.stringify(input4c)).toBe(JSON.stringify(expectedOutput4c));
   });
@@ -179,7 +179,7 @@ describe("balUtils", () => {
     [1, 4, 4, 2, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info4d = moveLeft(input4d);
+  let info4d = moveLeft(input4d, 4, 1);
   it("moveLeft D", () => {
     expect(JSON.stringify(input4d)).toBe(JSON.stringify(expectedOutput4d));
   });
@@ -200,7 +200,7 @@ describe("balUtils", () => {
     [1, 4, 4, 2, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info4e = moveLeft(input4e);
+  let info4e = moveLeft(input4e, 3, 1);
   it("moveLeft E", () => {
     expect(JSON.stringify(input4e)).toBe(JSON.stringify(expectedOutput4e));
   });
@@ -221,7 +221,7 @@ describe("balUtils", () => {
     [1, 0, 4, 4, 4, 2, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info4f = moveLeft(input4f);
+  let info4f = moveLeft(input4f, 5, 1);
   it("moveLeft F", () => {
     expect(JSON.stringify(input4f)).toBe(JSON.stringify(expectedOutput4f));
   });
@@ -242,7 +242,7 @@ describe("balUtils", () => {
     [1, 0, 4, 0, 2, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info5a = moveRight(input5a);
+  let info5a = moveRight(input5a, 4, 1);
   it("moveRight A", () => {
     expect(JSON.stringify(input5a)).toBe(JSON.stringify(expectedOutput5a));
   });
@@ -263,7 +263,7 @@ describe("balUtils", () => {
     [1, 0, 4, 0, 2, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info5b = moveRight(input5b);
+  let info5b = moveRight(input5b, 3, 1);
   it("moveRight B", () => {
     expect(JSON.stringify(input5b)).toBe(JSON.stringify(expectedOutput5b));
   });
@@ -284,7 +284,7 @@ describe("balUtils", () => {
     [1, 0, 4, 0, 2, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info5c = moveRight(input5c);
+  let info5c = moveRight(input5c, 3, 1);
   it("moveRight C", () => {
     expect(JSON.stringify(input5c)).toBe(JSON.stringify(expectedOutput5c));
   });
@@ -305,7 +305,7 @@ describe("balUtils", () => {
     [1, 0, 2, 4, 4, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info5d = moveRight(input5d);
+  let info5d = moveRight(input5d, 1, 1);
   it("moveRight D", () => {
     expect(JSON.stringify(input5d)).toBe(JSON.stringify(expectedOutput5d));
   });
@@ -326,7 +326,7 @@ describe("balUtils", () => {
     [1, 0, 2, 4, 4, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info5e = moveRight(input5e);
+  let info5e = moveRight(input5e, 2, 1);
   it("moveRight E", () => {
     expect(JSON.stringify(input5e)).toBe(JSON.stringify(expectedOutput5e));
   });
@@ -347,7 +347,7 @@ describe("balUtils", () => {
     [1, 2, 4, 4, 4, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info5f = moveRight(input5f);
+  let info5f = moveRight(input5f, 1, 1);
   it("moveRight F", () => {
     expect(JSON.stringify(input5f)).toBe(JSON.stringify(expectedOutput5f));
   });
