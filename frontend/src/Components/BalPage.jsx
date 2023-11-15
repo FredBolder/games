@@ -273,6 +273,7 @@ function BalPage() {
     }
     gameData[posY][posX] = 2;
     if (info.player) {
+      skipFalling = 1;
       updateScreen();
     }
     if (info.eating) {
@@ -286,7 +287,7 @@ function BalPage() {
     initLevel(1);
     updateScreen();
     myRef.current.addEventListener("keydown", handleClick);
-    gameInterval = setInterval(gameScheduler, 100);
+    gameInterval = setInterval(gameScheduler, 50);
 
     return () => {
       myRef.current.removeEventListener("keydown", handleClick);
