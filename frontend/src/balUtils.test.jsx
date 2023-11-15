@@ -4,7 +4,10 @@ import {
   stringArrayToNumberArray,
   checkFalling,
   moveLeft,
-  moveRight
+  moveRight,
+  jump,
+  jumpLeft,
+  jumpRight
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -358,14 +361,331 @@ describe("balUtils", () => {
     expect(info5f.player).toBe(false);
   });
 
+  // ***** JUMP *****
 
+  let input6a = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 3, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput6a = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 3, 0, 1],
+    [1, 0, 2, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info6a = jump(input6a, 2, 3);
+  it("jump A", () => {
+    expect(JSON.stringify(input6a)).toBe(JSON.stringify(expectedOutput6a));
+  });
+  it("jump A eating", () => {
+    expect(info6a.eating).toBe(false);
+  });
+  it("jump A player", () => {
+    expect(info6a.player).toBe(true);
+  });
 
+  let input6b = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 1, 0, 1],
+    [1, 0, 3, 0, 1],
+    [1, 0, 2, 4, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput6b = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 1, 0, 1],
+    [1, 0, 2, 0, 1],
+    [1, 0, 0, 4, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info6b = jump(input6b, 2, 3);
+  it("jump B", () => {
+    expect(JSON.stringify(input6b)).toBe(JSON.stringify(expectedOutput6b));
+  });
+  it("jump B eating", () => {
+    expect(info6b.eating).toBe(true);
+  });
+  it("jump B player", () => {
+    expect(info6b.player).toBe(true);
+  });
 
+  let input6c = [
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 3, 1],
+    [1, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput6c = [
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 3, 1],
+    [1, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info6c = jump(input6c, 1, 3);
+  it("jump C", () => {
+    expect(JSON.stringify(input6c)).toBe(JSON.stringify(expectedOutput6c));
+  });
+  it("jump C eating", () => {
+    expect(info6c.eating).toBe(false);
+  });
+  it("jump C player", () => {
+    expect(info6c.player).toBe(false);
+  });
 
+  let input7a = [
+    [1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput7a = [
+    [1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 1],
+    [1, 2, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info7a = jumpLeft(input7a, 2, 3);
+  it("jumpLeft A", () => {
+    expect(JSON.stringify(input7a)).toBe(JSON.stringify(expectedOutput7a));
+  });
+  it("jumpLeft A eating", () => {
+    expect(info7a.eating).toBe(false);
+  });
+  it("jumpLeft A player", () => {
+    expect(info7a.player).toBe(true);
+  });
 
+  let input7b = [
+    [1, 1, 1, 1, 1],
+    [1, 1, 0, 0, 1],
+    [1, 3, 0, 0, 1],
+    [1, 0, 2, 4, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput7b = [
+    [1, 1, 1, 1, 1],
+    [1, 1, 0, 0, 1],
+    [1, 2, 0, 0, 1],
+    [1, 0, 0, 4, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info7b = jumpLeft(input7b, 2, 3);
+  it("jumpLeft B", () => {
+    expect(JSON.stringify(input7b)).toBe(JSON.stringify(expectedOutput7b));
+  });
+  it("jumpLeft B eating", () => {
+    expect(info7b.eating).toBe(true);
+  });
+  it("jumpLeft B player", () => {
+    expect(info7b.player).toBe(true);
+  });
 
+  let input7c = [
+    [1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 2, 4, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput7c = [
+    [1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 1],
+    [1, 2, 0, 0, 1],
+    [1, 1, 0, 4, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info7c = jumpLeft(input7c, 2, 3);
+  it("jumpLeft C", () => {
+    expect(JSON.stringify(input7c)).toBe(JSON.stringify(expectedOutput7c));
+  });
+  it("jumpLeft C eating", () => {
+    expect(info7c.eating).toBe(false);
+  });
+  it("jumpLeft C player", () => {
+    expect(info7c.player).toBe(true);
+  });
 
+  let input7d = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 1, 0, 0, 1],
+    [1, 1, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput7d = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 1, 0, 0, 1],
+    [1, 1, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info7d = jumpLeft(input7d, 2, 3);
+  it("jumpLeft D", () => {
+    expect(JSON.stringify(input7d)).toBe(JSON.stringify(expectedOutput7d));
+  });
+  it("jumpLeft D eating", () => {
+    expect(info7d.eating).toBe(false);
+  });
+  it("jumpLeft D player", () => {
+    expect(info7d.player).toBe(false);
+  });
 
+  let input7e = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1],
+    [1, 0, 1, 0, 1],
+    [1, 1, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput7e = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 1, 1, 1],
+    [1, 0, 1, 0, 1],
+    [1, 1, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info7e = jumpLeft(input7e, 2, 3);
+  it("jumpLeft E", () => {
+    expect(JSON.stringify(input7e)).toBe(JSON.stringify(expectedOutput7e));
+  });
+  it("jumpLeft E eating", () => {
+    expect(info7e.eating).toBe(false);
+  });
+  it("jumpLeft E player", () => {
+    expect(info7e.player).toBe(false);
+  });
 
+  let input8a = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput8a = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 0, 0, 2, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info8a = jumpRight(input8a, 2, 3);
+  it("jumpRight A", () => {
+    expect(JSON.stringify(input8a)).toBe(JSON.stringify(expectedOutput8a));
+  });
+  it("jumpRight A eating", () => {
+    expect(info8a.eating).toBe(false);
+  });
+  it("jumpRight A player", () => {
+    expect(info8a.player).toBe(true);
+  });
+
+  let input8b = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 4, 2, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput8b = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 1],
+    [1, 0, 0, 2, 1],
+    [1, 4, 0, 0, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info8b = jumpRight(input8b, 2, 3);
+  it("jumpRight B", () => {
+    expect(JSON.stringify(input8b)).toBe(JSON.stringify(expectedOutput8b));
+  });
+  it("jumpRight B eating", () => {
+    expect(info8b.eating).toBe(true);
+  });
+  it("jumpRight B player", () => {
+    expect(info8b.player).toBe(true);
+  });
+
+  let input8c = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 0, 0, 0, 1],
+    [1, 4, 2, 1, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput8c = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 0, 0, 2, 1],
+    [1, 4, 0, 1, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info8c = jumpRight(input8c, 2, 3);
+  it("jumpRight C", () => {
+    expect(JSON.stringify(input8c)).toBe(JSON.stringify(expectedOutput8c));
+  });
+  it("jumpRight C eating", () => {
+    expect(info8c.eating).toBe(false);
+  });
+  it("jumpRight C player", () => {
+    expect(info8c.player).toBe(true);
+  });
+
+  let input8d = [
+    [1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 1],
+    [1, 0, 0, 1, 1],
+    [1, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput8d = [
+    [1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 1],
+    [1, 0, 0, 1, 1],
+    [1, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info8d = jumpRight(input8d, 2, 3);
+  it("jumpRight D", () => {
+    expect(JSON.stringify(input8d)).toBe(JSON.stringify(expectedOutput8d));
+  });
+  it("jumpRight D eating", () => {
+    expect(info8d.eating).toBe(false);
+  });
+  it("jumpRight D player", () => {
+    expect(info8d.player).toBe(false);
+  });
+
+  let input8e = [
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 1],
+    [1, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput8e = [
+    [1, 1, 1, 1, 1],
+    [1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 1],
+    [1, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let info8e = jumpRight(input8e, 2, 3);
+  it("jumpRight E", () => {
+    expect(JSON.stringify(input8e)).toBe(JSON.stringify(expectedOutput8e));
+  });
+  it("jumpRight E eating", () => {
+    expect(info8e.eating).toBe(false);
+  });
+  it("jumpRight E player", () => {
+    expect(info8e.player).toBe(false);
+  });
 
 });

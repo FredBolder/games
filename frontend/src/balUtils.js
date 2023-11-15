@@ -196,3 +196,30 @@ export function moveRight(arr, x, y) {
   }
   return result;
 }
+
+export function jump(arr, x, y) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+
+  // Code Diana
+  return result;
+}
+
+export function jumpLeft(arr, x, y) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+
+  // Code Michal
+  return result;
+}
+
+export function jumpRight(arr, x, y) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+
+  // Code Michal
+  return result;
+}

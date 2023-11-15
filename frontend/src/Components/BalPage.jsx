@@ -8,6 +8,9 @@ import {
   checkFalling,
   moveLeft,
   moveRight,
+  jump,
+  jumpLeft,
+  jumpRight
 } from "../balUtils.js";
 
 let gameData = [];
