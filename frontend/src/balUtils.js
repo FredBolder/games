@@ -262,7 +262,20 @@ export function getGameInfo(arr) {
   result.greenBalls = 0;
   result.redBalls = [];
 
-  // Your code
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr[i].length; j++) {
+      if (arr[i][j] === 3) {
+        result.greenBalls++;
+      }
+
+      if (arr[i][j] === 8) {
+        let redBall = {};
+        redBall.x = j;
+        redBall.y = i;
+        result.redBalls.push(redBall);
+      }
+    }
+  }
 
   return result;
 }
