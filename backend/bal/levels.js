@@ -67,6 +67,28 @@ function getLevel(n) {
       data.push("1                              1");
       data.push("11111111111111111111111111111111");
       break;
+    case 4:
+      data.push("11111111111111111111111111111111");
+      data.push("1                       3      1");
+      data.push("1                           4  1");
+      data.push("1               1111111111111111");
+      data.push("1              11111111111111111");
+      data.push("1            4            111111");
+      data.push("1          11111          111111");
+      data.push("1           4             111111");
+      data.push("1       11111111111        11111");
+      data.push("1      11   44    1         1111");
+      data.push("1 4   11    44    1          3 1");
+      data.push("11111       44    1            1");
+      data.push("1   11    4 44    1         1111");
+      data.push("1      1111144           1111111");
+      data.push("1     11    44      111111111111");
+      data.push("1 4  11     44                31");
+      data.push("1111        44                 1");
+      data.push("1 3         44           4 4   1");
+      data.push("1     2     44          11111111");
+      data.push("11111111111111111111111111111111");
+      break;
     default:
       break;
   }
