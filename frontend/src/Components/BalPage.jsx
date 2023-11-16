@@ -14,6 +14,7 @@ import {
   getGameInfo,
 } from "../balUtils.js";
 
+let currentLevel = 200;
 let gameData = [];
 let posX = -1;
 let posY = -1;
@@ -248,7 +249,8 @@ function BalPage() {
   }
 
   function changeLevel(e) {
-    initLevel(Number(e.target.value));
+    currentLevel = Number(e.target.value) + 199;
+    initLevel(currentLevel);
     e.target.blur();
   }
 
@@ -326,15 +328,20 @@ function BalPage() {
       updateScreen();
     }
     if (info.eating) {
-      // TODO: Eating sound and decrease number of green balls
+      // TODO: Eating sound
+      gameInfo.greenBalls--;
+      if (gameInfo.greenBalls <= 0) {
+        currentLevel++;
+        initLevel(currentLevel);
+      }
     }
   }
 
   const myRef = useRef(document);
 
   useEffect(() => {
-    initLevel(1);
-    updateScreen();
+    initLevel(200);
+    //updateScreen();
     myRef.current.addEventListener("keydown", handleClick);
     gameInterval = setInterval(gameScheduler, 50);
 

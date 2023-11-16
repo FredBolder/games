@@ -1,7 +1,7 @@
 function getLevel(n) {
   let data = [];
   switch (n) {
-    case 1:
+    case 200:
       data.push("11111111111111111111111111111111");
       data.push("1            3                 1");
       data.push("1 4   2                        1");
@@ -23,7 +23,7 @@ function getLevel(n) {
       data.push("1    111111111111111111111111111");
       data.push("11111111111111111111111111111111");
       break;
-    case 2:
+    case 201:
       data.push("11111111111111111111111111111111");
       data.push("1                              1");
       data.push("1                              1");
@@ -45,7 +45,7 @@ function getLevel(n) {
       data.push("1  8                           1");
       data.push("11111111111111111111111111111111");
       break;
-    case 3:
+    case 202:
       data.push("11111111111111111111111111111111");
       data.push("111111111                  3   1");
       data.push("1   3                          1");
@@ -67,7 +67,7 @@ function getLevel(n) {
       data.push("1                              1");
       data.push("11111111111111111111111111111111");
       break;
-    case 4:
+    case 203:
       data.push("11111111111111111111111111111111");
       data.push("1                       3      1");
       data.push("1                           4  1");
