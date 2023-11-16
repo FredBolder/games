@@ -256,3 +256,13 @@ export function jumpRight(arr, x, y) {
   }
   return result;
 }
+
+export function getGameInfo(arr) {
+  let result = {};
+  result.greenBalls = 0;
+  result.redBalls = [];
+
+  // Your code
+
+  return result;
+}

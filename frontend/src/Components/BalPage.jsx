@@ -10,7 +10,8 @@ import {
   moveRight,
   jump,
   jumpLeft,
-  jumpRight
+  jumpRight,
+  getGameInfo,
 } from "../balUtils.js";
 
 let gameData = [];
@@ -18,6 +19,7 @@ let posX = -1;
 let posY = -1;
 let gameInterval;
 let skipFalling = 2;
+let gameInfo = null;
 
 function BalPage() {
   let canvas;
@@ -237,6 +239,7 @@ function BalPage() {
       data = response.data.gameData;
       gameData = stringArrayToNumberArray(data);
       updateScreen();
+      gameInfo = getGameInfo();
     } catch (err) {
       console.log(err);
     }
@@ -256,25 +259,66 @@ function BalPage() {
     if (posX === -1 || posY === -1 || gameData.length === 0) {
       return false;
     }
-    const maxX = gameData[0].length - 1;
-    gameData[posY][posX] = 0;
-    switch (e.key) {
-      case "ArrowLeft":
-        info = moveLeft(gameData, posX, posY);
-        if (info.player) {
-          posX--;
-        }
-        break;
-      case "ArrowRight":
-        info = moveRight(gameData, posX, posY);
-        if (info.player) {
-          posX++;
-        }
-        break;
-      default:
-        break;
+    if (e.shiftKey) {
+      switch (e.key) {
+        case "ArrowLeft":
+          info = jumpLeft(gameData, posX, posY);
+          if (info.player) {
+            posX--;
+            posY--;
+          }
+          break;
+        case "ArrowRight":
+          info = jumpRight(gameData, posX, posY);
+          if (info.player) {
+            posX++;
+            posY--;
+          }
+          break;
+        default:
+          break;
+      }
+    } else {
+      switch (e.key) {
+        case "ArrowLeft":
+        case "a":
+          info = moveLeft(gameData, posX, posY);
+          if (info.player) {
+            posX--;
+          }
+          break;
+        case "ArrowRight":
+        case "d":
+          info = moveRight(gameData, posX, posY);
+          if (info.player) {
+            posX++;
+          }
+          break;
+        case "ArrowUp":
+        case "w":
+          info = jump(gameData, posX, posY);
+          if (info.player) {
+            posY--;
+          }
+          break;
+        case "q":
+          info = jumpLeft(gameData, posX, posY);
+          if (info.player) {
+            posX--;
+            posY--;
+          }
+          break;
+        case "e":
+          info = jumpRight(gameData, posX, posY);
+          if (info.player) {
+            posX++;
+            posY--;
+          }
+          break;
+        default:
+          break;
+      }
     }
-    gameData[posY][posX] = 2;
     if (info.player) {
       skipFalling = 1;
       updateScreen();
