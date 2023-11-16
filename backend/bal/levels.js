@@ -89,7 +89,12 @@ function getLevel(n) {
       data.push("1     2     44          11111111");
       data.push("11111111111111111111111111111111");
       break;
-    default:
+      case 204:
+        data.push("11111111111111111111111111111111");
+        data.push("131              2             1");
+        data.push("11111111111111111111111111111111");
+        break;
+      default:
       break;
   }
   return data;

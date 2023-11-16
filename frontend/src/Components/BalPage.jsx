@@ -242,7 +242,7 @@ function BalPage() {
       data = response.data.gameData;
       gameData = stringArrayToNumberArray(data);
       updateScreen();
-      gameInfo = getGameInfo();
+      gameInfo = getGameInfo(gameData);
     } catch (err) {
       console.log(err);
     }

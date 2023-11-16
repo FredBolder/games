@@ -267,7 +267,6 @@ export function getGameInfo(arr) {
       if (arr[i][j] === 3) {
         result.greenBalls++;
       }
-
       if (arr[i][j] === 8) {
         let redBall = {};
         redBall.x = j;
@@ -276,6 +275,5 @@ export function getGameInfo(arr) {
       }
     }
   }
-
   return result;
 }
