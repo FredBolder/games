@@ -160,7 +160,7 @@ export function moveRight(arr, x, y) {
 
   if (arr.length > 0) {
     if (arr[y + 1][x] !== 0) {
-      maxX = arr[0].length;
+      maxX = arr[0].length - 1;
       if (x < maxX) {
         // empty space
         if (row[x + 1] === 0 || row[x + 1] === 3) {
@@ -202,7 +202,16 @@ export function jump(arr, x, y) {
   result.eating = false;
   result.player = false;
 
-  // Code Diana
+  if (arr.length > 0 && y > 0) {
+    if (arr[y - 1][x] === 0 || arr[y - 1][x] === 3) {
+      if (arr[y - 1][x] === 3) {
+        result.eating = true;
+      }
+      arr[y - 1][x] = 2;
+      arr[y][x] = 0;
+      result.player = true;
+    }
+  }
   return result;
 }
 
@@ -210,8 +219,20 @@ export function jumpLeft(arr, x, y) {
   let result = {};
   result.eating = false;
   result.player = false;
-
-  // Code Michal
+  if (arr.length > 0) {
+    if (y > 0 && x > 0) {
+      if (arr[y - 1][x] === 0) {
+        if (arr[y - 1][x - 1] === 0 || arr[y - 1][x - 1] === 3) {
+          if (arr[y - 1][x - 1] === 3) {
+            result.eating = true;
+          }
+          arr[y - 1][x - 1] = 2;
+          arr[y][x] = 0;
+          result.player = true;
+        }
+      }
+    }
+  }
   return result;
 }
 
@@ -219,7 +240,19 @@ export function jumpRight(arr, x, y) {
   let result = {};
   result.eating = false;
   result.player = false;
-
-  // Code Michal
+  if (arr.length > 0) {
+    if (y > 0 && x < arr[0].length - 1) {
+      if (arr[y - 1][x] === 0) {
+        if (arr[y - 1][x + 1] === 0 || arr[y - 1][x + 1] === 3) {
+          if (arr[y - 1][x + 1] === 3) {
+            result.eating = true;
+          }
+          arr[y - 1][x + 1] = 2;
+          arr[y][x] = 0;
+          result.player = true;
+        }
+      }
+    }
+  }
   return result;
 }
