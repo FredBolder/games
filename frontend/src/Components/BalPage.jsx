@@ -19,7 +19,9 @@ let posX = -1;
 let posY = -1;
 let gameInterval;
 let skipFalling = 2;
-let gameInfo = null;
+let gameInfo = {};
+gameInfo.greenBalls = 0;
+gameInfo.redBalls = [];
 
 function BalPage() {
   let canvas;

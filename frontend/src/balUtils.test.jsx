@@ -7,7 +7,8 @@ import {
   moveRight,
   jump,
   jumpLeft,
-  jumpRight
+  jumpRight,
+  getGameInfo
 } from "./balUtils.js";
 
 describe("balUtils", () => {
