@@ -8,7 +8,7 @@ import {
   jump,
   jumpLeft,
   jumpRight,
-  getGameInfo
+  getGameInfo,
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -689,4 +689,62 @@ describe("balUtils", () => {
     expect(info8e.player).toBe(false);
   });
 
+  // ***** GAME INFO *****
+
+  let input9a = [
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1],
+    [1, 8, 0, 0, 1],
+    [1, 8, 3, 2, 1],
+    [1, 1, 1, 1, 1],
+  ];
+  let expectedOutput9a = {
+    greenBalls: 2,
+    redBalls: [
+      { x: 1, y: 2 },
+      { x: 1, y: 3 },
+    ],
+  };
+  it("getGameInfo A", () => {
+    expect(JSON.stringify(getGameInfo(input9a))).toBe(
+      JSON.stringify(expectedOutput9a)
+    );
+  });
+
+  let input9b = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 3, 1, 0, 0, 3, 3, 1],
+    [1, 8, 0, 0, 0, 0, 0, 0, 1, 1],
+    [1, 8, 1, 2, 0, 0, 3, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput9b = {
+    greenBalls: 4,
+    redBalls: [
+      { x: 1, y: 2 },
+      { x: 1, y: 3 },
+    ],
+  };
+  it("getGameInfo B", () => {
+    expect(JSON.stringify(getGameInfo(input9b))).toBe(
+      JSON.stringify(expectedOutput9b)
+    );
+  });
+
+  let input9c = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 1, 3, 1, 3, 0, 0, 3, 1],
+    [1, 0, 3, 0, 0, 0, 0, 0, 1, 1],
+    [1, 3, 3, 2, 0, 0, 3, 1, 3, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput9c = {
+    greenBalls: 8,
+    redBalls: [],
+  };
+  it("getGameInfo C", () => {
+    expect(JSON.stringify(getGameInfo(input9c))).toBe(
+      JSON.stringify(expectedOutput9c)
+    );
+  });
 });
