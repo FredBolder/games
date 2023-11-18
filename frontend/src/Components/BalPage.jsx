@@ -337,7 +337,6 @@ function BalPage() {
     if (info.player) {
       skipFalling = 0;
       updateScreen();
-      gameScheduler();
     }
     if (info.eating) {
       // TODO: Eating sound
