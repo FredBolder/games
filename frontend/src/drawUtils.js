@@ -1,8 +1,13 @@
-export function drawFilledBox(canvas, x1, y1, x2, y2, color) {
+export function drawBox(canvas, x, y, width, height, color) {
+  canvas.strokeStyle = color;
+  canvas.strokeRect(x, y, width, height);
+}
+
+export function drawFilledBox(canvas, x, y, width, height, color) {
     canvas.fillStyle = color;
-    canvas.fillRect(x1, y1, x2, y2);
+    canvas.fillRect(x, y, width, height);
     canvas.strokeStyle = color;
-    canvas.strokeRect(x1, y1, x2, y2);
+    canvas.strokeRect(x, y, width, height);
 }
 
 export function drawFilledCircle(canvas, xc, yc, radius, color) {
@@ -19,3 +24,4 @@ export function drawLine(canvas, x1, y1, x2, y2, color) {
     canvas.lineTo(x2, y2);
     canvas.stroke();
 }
+
