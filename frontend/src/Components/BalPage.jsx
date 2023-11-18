@@ -2,7 +2,7 @@ import React from "react";
 import { useRef, useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
+import { drawBox, drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
 import {
   stringArrayToNumberArray,
   checkFalling,
@@ -14,20 +14,19 @@ import {
   getGameInfo,
 } from "../balUtils.js";
 
+let canvas;
+let ctx;
 let currentLevel = 200;
 let gameData = [];
 let posX = -1;
 let posY = -1;
 let gameInterval;
-let skipFalling = 2;
+let skipFalling = 0;
 let gameInfo = {};
 gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
 
 function BalPage() {
-  let canvas;
-  let ctx;
-
   function drawLevel(ctx, data) {
     if (!data || data.length < 1) {
       return false;
@@ -43,7 +42,10 @@ function BalPage() {
       size1 = size2;
     }
     size1 = Math.round(size1);
-    drawFilledBox(ctx, 0, 0, canvas.width, canvas.height, "black");
+    let gameWidth = columns * size1;
+    let gameHeight = rows * size1;
+    let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);
+    drawFilledBox(ctx, leftMargin, 0, gameWidth, gameHeight, "black");
     let dxmin = 0;
     let dxmax = 0;
     let dymin = 0;
@@ -61,10 +63,15 @@ function BalPage() {
     let d2 = 0;
     let d3 = 0;
 
+    ctx.lineWidth = 1;
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.imageSmoothingEnabled = false;
     dymin = 0;
     for (let row = 0; row < rows; row++) {
       dymax = Math.round(dymin + size1) - 1;
-      dxmin = 0;
+      dxmin = leftMargin;
       for (let col = 0; col < columns; col++) {
         dxmax = Math.round(dxmin + size1) - 1;
         xmin = Math.round(dxmin);
@@ -78,6 +85,10 @@ function BalPage() {
 
         const colData = data[row][col];
         switch (colData) {
+          case 0:
+            // empty
+            //drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
+            break;
           case 1:
             // wall
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
@@ -97,8 +108,8 @@ function BalPage() {
             );
 
             eye = Math.round(w1 / 20);
-            if (eye < 2) {
-              eye = 2;
+            if (eye < 1) {
+              eye = 1;
             }
             d1 = size1 / 3.25;
             d2 = Math.round(w1 / 12);
@@ -177,8 +188,8 @@ function BalPage() {
             );
 
             eye = Math.round(w1 / 20);
-            if (eye < 2) {
-              eye = 2;
+            if (eye < 1) {
+              eye = 1;
             }
             d1 = size1 / 3.25;
             d2 = Math.round(w1 / 12);
@@ -203,7 +214,7 @@ function BalPage() {
             break;
           default:
             // empty
-            drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
             break;
         }
         dxmin += size1;
@@ -254,7 +265,7 @@ function BalPage() {
     e.target.blur();
   }
 
-  function handleClick(e) {
+  function handleKeyDown(e) {
     let info = {};
     info.player = false;
     info.eating = false;
@@ -324,8 +335,9 @@ function BalPage() {
       }
     }
     if (info.player) {
-      skipFalling = 1;
+      skipFalling = 0;
       updateScreen();
+      gameScheduler();
     }
     if (info.eating) {
       // TODO: Eating sound
@@ -337,16 +349,20 @@ function BalPage() {
     }
   }
 
+  function handleResize(e) {
+    updateScreen();
+  }
+
   const myRef = useRef(document);
 
   useEffect(() => {
     initLevel(200);
-    //updateScreen();
-    myRef.current.addEventListener("keydown", handleClick);
+    myRef.current.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleResize);
     gameInterval = setInterval(gameScheduler, 50);
 
     return () => {
-      myRef.current.removeEventListener("keydown", handleClick);
+      myRef.current.removeEventListener("keydown", handleKeyDown);
       clearInterval(gameInterval);
     };
   }, []);
@@ -361,7 +377,7 @@ function BalPage() {
   }
 
   return (
-    <div>
+    <div className="page">
       <Navbar />
       <div className="mainBody">
         <div className="hero-content">
