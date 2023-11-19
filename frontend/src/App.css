@@ -1,3 +1,90 @@
+.page {
+  width: 100%;
+  height: 100vh;
+}
+
+header {
+  width: 100%;
+  height: 3rem;
+}
+
+main {
+  width: 100%;
+  min-height: calc(100vh - 3rem);
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-image: url("./Images/background.jpg");
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+}
+
+.title {
+  color: whitesmoke;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media screen and (min-width: 600px) {
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+.button {
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  width: auto;
+  background-color: #ffffff;
+  color: black;
+  padding: 0.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.button-container {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  gap: 2rem;
+}
+
+
+/* Bal */
+
+.balPanel {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.gameCanvas {
+  height: 60%;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+
+.levelSelector {
+  color: white;
+  font-size: large;
+}
+
+
+/* from here TODO */
+
 .loginNavbar {
   display: flex;
   justify-content: space-between;
@@ -26,52 +113,8 @@
   margin-right: 0;
 }
 
-.mainBody {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("./Images/background.jpg");
-  background-repeat: repeat-x;
-  background-size: contain;
-}
 
-.hero-title {
-  color: whitesmoke;
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-}
 
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-container {
-  width: 60%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  gap: 50px;
-}
-
-.btn {
-  width: 150px;
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  color: black;
-  font-size: 1.5rem;
-  padding: 1rem;
-  border: 3px solid black;
-  border-radius: 20px;
-  cursor: pointer;
-}
 
 .loginBox {
   /* border: 4px solid green; */
@@ -118,17 +161,6 @@
   justify-content: center;
 }
 
-.login-button{
-  margin: 0 auto;
-  margin-top: 1.5rem;
-  width: 50%;
-  background-color: #ffffff;
-  color: black;
-  padding: 0.5rem;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
 .registerHeader {
   text-align: center;
 }
@@ -160,17 +192,6 @@
   text-align: center;
 }
 
-.register-button {
-  margin: 0 auto;
-  margin-top: 1.5rem;
-  width: 50%;
-  background-color: #ffffff;
-  color: black;
-  padding: 0.5rem;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
 .footerContainer {
   /* border: 2px solid red; */
   display: flex;
@@ -178,13 +199,3 @@
   align-items: center;
 }
 
-.gameCanvas {
-  width: 60%;
-  height: 60%;
-  margin-bottom: 25px;
-}
-
-.levelSelector {
-  color: white;
-  font-size: large;
-}

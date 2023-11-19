@@ -27,8 +27,10 @@ function LoginPage() {
 
   return (
     <>
-      <Navbar />
-      <div className="mainBody">
+      <header>
+        <Navbar />
+      </header>
+      <main>
         <div className="loginBox">
           <div className="loginBoxInfo">
             <div className="loginBoxInfos">
@@ -42,7 +44,7 @@ function LoginPage() {
                   <p>Password:</p>
                   <input name="password" type="password" />
                   <br />
-                  <input type="submit" value="Login" className="login-button"/>
+                  <input type="submit" value="Login" className="button" />
                 </form>
               </div>
             </div>
@@ -55,7 +57,7 @@ function LoginPage() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }

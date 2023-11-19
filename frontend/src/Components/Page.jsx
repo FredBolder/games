@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Page() {
   const navigate = useNavigate();
@@ -14,17 +14,21 @@ function Page() {
   }
 
   return (
-    <div className="pageContainer">
-      <Navbar />
-      <div className="mainBody">
-        <div className="hero-content">
-          <h1 className="hero-title">The Journey Begins Here</h1>
-          <div className="btn-container">
-            <button className="btn btn-primary" onClick={login}>Login</button>
-            <button className="btn btn-primary" onClick={register}>Register</button>
-          </div>
+    <div className="page">
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        <h1 className="title">The Journey Begins Here</h1>
+        <div className="button-container">
+          <button className="button" onClick={login}>
+            Login
+          </button>
+          <button className="button" onClick={register}>
+            Register
+          </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

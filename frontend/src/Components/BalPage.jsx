@@ -2,7 +2,12 @@ import React from "react";
 import { useRef, useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { drawBox, drawFilledBox, drawFilledCircle, drawLine } from "../drawUtils";
+import {
+  drawBox,
+  drawFilledBox,
+  drawFilledCircle,
+  drawLine,
+} from "../drawUtils";
 import {
   stringArrayToNumberArray,
   checkFalling,
@@ -377,10 +382,12 @@ function BalPage() {
 
   return (
     <div className="page">
-      <Navbar />
-      <div className="mainBody">
-        <div className="hero-content">
-          <h1 className="hero-title">Bal - The Game for Smart People</h1>
+      <header>
+        <Navbar />
+      </header>
+      <main>
+        <h1 className="title">Bal - The Game for Smart People</h1>
+        <div className="balPanel">
           <div className="levelSelector">
             <label>Level </label>
             <select
@@ -395,11 +402,11 @@ function BalPage() {
               <option value="4">4</option>
             </select>
           </div>
-          <canvas className="gameCanvas">
-            <p>Bal</p>
-          </canvas>
         </div>
-      </div>
+        <canvas className="gameCanvas">
+          <p>Bal</p>
+        </canvas>
+      </main>
     </div>
   );
 }
