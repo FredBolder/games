@@ -30,8 +30,10 @@ function RegisterPage() {
 
   return (
     <>
-      <Navbar />
-      <main className="mainBody">
+      <header>
+        <Navbar />
+      </header>
+      <main>
         <div className="loginBox">
           <div className="loginBoxInfo">
             <div className="loginBoxInfos">
@@ -59,7 +61,7 @@ function RegisterPage() {
                     className="form-input"
                   />
                   <br />
-                  <input type="submit" value="Register" />
+                  <input type="submit" value="Register" className="button" />
                 </form>
               </div>
             </div>
