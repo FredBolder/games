@@ -17,6 +17,9 @@ function charToNumber(c) {
     case "4":
       result = 4;
       break;
+    case "5":
+      result = 5;
+      break;
     case "8":
       result = 8;
       break;
@@ -45,6 +48,9 @@ function numberToChar(n) {
       break;
     case 4:
       result = "4";
+      break;
+    case 5:
+      result = "5";
       break;
     case 8:
       result = "8";
@@ -108,7 +114,7 @@ export function checkFalling(arr) {
 }
 
 function whiteOrBlue(n) {
-  return false; // Diana, you need to change only this line in this function.
+  return (n === 4 || n === 5);
 }
 
 export function moveLeft(arr, x, y) {
@@ -133,20 +139,20 @@ export function moveLeft(arr, x, y) {
       }
       if (x > 1) {
         // 1 white ball
-        if (row[x - 1] === 4 && row[x - 2] === 0) {
-          row[x] = 0;
+        if (whiteOrBlue(row[x - 1]) && row[x - 2] === 0) {
+          row[x - 2] = row[x - 1];
           row[x - 1] = 2;
-          row[x - 2] = 4;
+          row[x] = 0;
           result.player = true;
         }
       }
       if (x > 2) {
         // 2 white balls
-        if (row[x - 1] === 4 && row[x - 2] === 4 && row[x - 3] === 0) {
-          row[x] = 0;
+        if (whiteOrBlue(row[x - 1]) && whiteOrBlue(row[x - 2]) && row[x - 3] === 0) {
+          row[x - 3] = row[x - 2];
+          row[x - 2] = row[x - 1];
           row[x - 1] = 2;
-          row[x - 2] = 4;
-          row[x - 3] = 4;
+          row[x] = 0;
           result.player = true;
         }
       }
@@ -179,20 +185,20 @@ export function moveRight(arr, x, y) {
       }
       if (x < maxX - 1) {
         // 1 white ball
-        if (row[x + 1] === 4 && row[x + 2] === 0) {
-          row[x] = 0;
+        if (whiteOrBlue(row[x + 1]) && row[x + 2] === 0) {
+          row[x + 2] = row[x + 1];
           row[x + 1] = 2;
-          row[x + 2] = 4;
+          row[x] = 0;
           result.player = true;
         }
       }
       if (x < maxX - 2) {
         // 2 white balls
-        if (row[x + 1] === 4 && row[x + 2] === 4 && row[x + 3] === 0) {
-          row[x] = 0;
+        if (whiteOrBlue(row[x + 1]) && whiteOrBlue(row[x + 2]) && row[x + 3] === 0) {
+          row[x + 3] = row[x + 2];
+          row[x + 2] = row[x + 1];
           row[x + 1] = 2;
-          row[x + 2] = 4;
-          row[x + 3] = 4;
+          row[x] = 0;
           result.player = true;
         }
       }
@@ -288,7 +294,29 @@ export function checkRed(arr, x, y, redBalls) {
   result.x1 = -1;
   result.x2 = -1;
   result.y1 = -1;
-
-  // Code Michal
+  for (let i = 0; i < redBalls.length; i++) {
+    if (redBalls[i].y === y) {
+      result.y1 = y;
+      result.hit = true;
+      if (redBalls[i].x > x) {
+        result.x1 = x + 1;
+        result.x2 = redBalls[i].x - 1;
+      } else {
+        result.x1 = redBalls[i].x + 1;
+        result.x2 = x - 1;
+      }
+      if (result.x2 >= result.x1) {
+        for (let j = result.x1; j <= result.x2; j++) {
+          if (arr[y][j] !== 0) {
+            result.hit = false;
+            result.x1 = -1;
+            result.x2 = -1;
+            result.y1 = -1;
+          }
+        }
+      }
+    }
+  }
   return result;
 }
+
