@@ -67,7 +67,10 @@ main {
 
 .balPanel {
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 1rem;
+  gap: 2rem;
 }
 
 .gameCanvas {
@@ -91,11 +94,6 @@ main {
   padding: 10px 20px;
 }
 
-.logo h1 {
-  /*color: #000000;*/
-  /* margin: 0; */
-}
-
 .nav-links a {
   color: #000000;
   text-decoration: none;
@@ -105,11 +103,6 @@ main {
 .nav-links {
   display: flex;
   align-items: center;
-}
-
-/* Style for the last link to remove the margin */
-.nav-links a:last-child {
-  /*margin-right: 0;*/
 }
 
 .loginBox {

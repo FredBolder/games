@@ -24,6 +24,7 @@ let canvas;
 let ctx;
 let currentLevel = 200;
 let gameData = [];
+let gameOver = false;
 let posX = -1;
 let posY = -1;
 let gameInterval;
@@ -33,11 +34,20 @@ gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
 
 function BalPage() {
+  function checkGameOver() {
+    if (!gameOver) {
+      let redInfo = checkRed(gameData, posX, posY, gameInfo.redBalls);
+      if (redInfo.hit) {
+        gameOver = true;
+        updateScreen();
+      }
+    }
+  }
+
   function drawLevel(ctx, data) {
     if (!data || data.length < 1) {
       return false;
     }
-    let gameOver = false;
     const rows = data.length;
     const columns = data[0].length;
 
@@ -242,26 +252,27 @@ function BalPage() {
   function gameScheduler() {
     let info = {};
 
-    if (skipFalling <= 0) {
-      info = checkFalling(gameData);
-      if (info.player) {
-        posY++;
+    if (!gameOver) {
+      if (skipFalling <= 0) {
+        info = checkFalling(gameData);
+        if (info.player) {
+          posY++;
+        }
+        if (info.falling) {
+          updateScreen();
+        }
+      } else {
+        skipFalling--;
       }
-      if (info.falling) {
-        updateScreen();
-      }
-    } else {
-      skipFalling--;
-    }
 
-    if(checkRed(gameData,posX,posY,gameInfo.redBalls).hit){
-      alert("Game Over!");
+      checkGameOver();
     }
   }
 
   async function initLevel(n) {
     let level = n.toString();
     let data = [];
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
@@ -272,6 +283,7 @@ function BalPage() {
       posY = -1;
       data = response.data.gameData;
       gameData = stringArrayToNumberArray(data);
+      gameOver = false;
       updateScreen();
       gameInfo = getGameInfo(gameData);
     } catch (err) {
@@ -290,6 +302,9 @@ function BalPage() {
     info.player = false;
     info.eating = false;
 
+    if (gameOver) {
+      return false;
+    }
     //console.log(posX, posY, gameData.length);
     if (posX === -1 || posY === -1 || gameData.length === 0) {
       return false;
@@ -297,6 +312,7 @@ function BalPage() {
     if (e.shiftKey) {
       switch (e.key) {
         case "N":
+          // TODO: only for test, remove later
           currentLevel++;
           initLevel(currentLevel);
           break;
@@ -361,6 +377,7 @@ function BalPage() {
     if (info.player) {
       skipFalling = 1;
       updateScreen();
+      checkGameOver();
     }
     if (info.eating) {
       // TODO: Eating sound
@@ -374,6 +391,13 @@ function BalPage() {
 
   function handleResize(e) {
     updateScreen();
+  }
+
+  function tryAgain(e) {
+    const response = window.confirm("Initialize level?");
+    if (response) {
+      initLevel(currentLevel);
+    }
   }
 
   const myRef = useRef(document);
@@ -421,6 +445,9 @@ function BalPage() {
               <option value="4">4</option>
             </select>
           </div>
+          <button className="button" onClick={tryAgain}>
+            Try again
+          </button>
         </div>
         <canvas className="gameCanvas">
           <p>Bal</p>
