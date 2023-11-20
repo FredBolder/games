@@ -106,8 +106,8 @@ function getLevel(n) {
       data.push("1                                 1");
       data.push("1                                 1");
       data.push("1                                 1");
-      data.push("1U                                1");
-      data.push("111                             111");
+      data.push("1U               5                1");
+      data.push("111              5              111");
       data.push("131              2     4        131");
       data.push("11111111111111111111111111111111111");
       break;

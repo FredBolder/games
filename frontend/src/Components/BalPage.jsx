@@ -17,6 +17,7 @@ import {
   jumpLeft,
   jumpRight,
   getGameInfo,
+  checkRed,
 } from "../balUtils.js";
 
 let canvas;
@@ -137,7 +138,7 @@ function BalPage() {
             d2 = w1 / 3;
             d3 = w1 / 2;
             if (gameOver) {
-              ctx.strokeStyle = "rgb(255, 255, 255)";
+              ctx.strokeStyle = "white";
               ctx.beginPath();
               ctx.arc(
                 Math.round(xc),
@@ -149,7 +150,7 @@ function BalPage() {
               );
               ctx.stroke();
             } else {
-              ctx.strokeStyle = "rgb(255, 255, 255)";
+              ctx.strokeStyle = "white";
               ctx.beginPath();
               ctx.arc(
                 Math.round(xc),
@@ -182,16 +183,16 @@ function BalPage() {
               "white"
             );
             break;
-            case 5:
-              //light blue ball
-              drawFilledCircle(
-                ctx,
-                xmin + w1 * 0.5,
-                (row + 1) * w1 - w1 * 0.5,
-                w1 * 0.5,
-                "light blue"
-              );
-              break;
+          case 5:
+            //light blue ball
+            drawFilledCircle(
+              ctx,
+              xmin + w1 * 0.5,
+              (row + 1) * w1 - w1 * 0.5,
+              w1 * 0.5,
+              "lightskyblue"
+            );
+            break;
           case 8:
             // red ball
             drawFilledCircle(
@@ -251,6 +252,10 @@ function BalPage() {
       }
     } else {
       skipFalling--;
+    }
+
+    if(checkRed(gameData,posX,posY,gameInfo.redBalls).hit){
+      alert("Game Over!");
     }
   }
 
