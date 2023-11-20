@@ -9,6 +9,7 @@ import {
   jumpLeft,
   jumpRight,
   getGameInfo,
+  checkRed
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -747,4 +748,121 @@ describe("balUtils", () => {
       JSON.stringify(expectedOutput9c)
     );
   });
+
+  // ***** CHECK RED BALLS *****
+
+  let input10a = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 8, 0, 0, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput10a = {
+    hit: true,
+    x1: 3,
+    x2: 4,
+    y1: 3,
+  };
+  it("checkRed A", () => {
+    expect(JSON.stringify(checkRed(input10a, 5, 3, [{ x: 2, y: 3 }]))).toBe(
+      JSON.stringify(expectedOutput10a)
+    );
+  });
+
+  let input10b = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 8, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput10b = {
+    hit: true,
+    x1: 3,
+    x2: 4,
+    y1: 3,
+  };
+  it("checkRed B", () => {
+    expect(JSON.stringify(checkRed(input10b, 2, 3, [{ x: 5, y: 3 }]))).toBe(
+      JSON.stringify(expectedOutput10b)
+    );
+  });
+
+  let input10c = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 8, 0, 4, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput10c = {
+    hit: false,
+    x1: -1,
+    x2: -1,
+    y1: -1,
+  };
+  it("checkRed C", () => {
+    expect(JSON.stringify(checkRed(input10c, 5, 3, [{ x: 2, y: 3 }]))).toBe(
+      JSON.stringify(expectedOutput10c)
+    );
+  });
+
+  let input10d = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 4, 0, 8, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput10d = {
+    hit: false,
+    x1: -1,
+    x2: -1,
+    y1: -1,
+  };
+  it("checkRed D", () => {
+    expect(JSON.stringify(checkRed(input10d, 2, 3, [{ x: 5, y: 3 }]))).toBe(
+      JSON.stringify(expectedOutput10d)
+    );
+  });
+
+  let input10e = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 8, 0, 1],
+    [1, 0, 2, 0, 0, 1, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput10e = {
+    hit: false,
+    x1: -1,
+    x2: -1,
+    y1: -1,
+  };
+  it("checkRed E", () => {
+    expect(JSON.stringify(checkRed(input10e, 2, 3, [{ x: 5, y: 2 }]))).toBe(
+      JSON.stringify(expectedOutput10e)
+    );
+  });
+
+  let input10f = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 0, 0, 1],
+    [1, 0, 0, 0, 0, 8, 0, 1],
+    [1, 0, 2, 0, 8, 1, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput10f = {
+    hit: true,
+    x1: 3,
+    x2: 3,
+    y1: 3,
+  };
+  it("checkRed F", () => {
+    expect(JSON.stringify(checkRed(input10f, 2, 3, [{ x: 5, y: 2 }, { x: 4, y: 3 }]))).toBe(
+      JSON.stringify(expectedOutput10f)
+    );
+  });
+
 });

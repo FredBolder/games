@@ -107,6 +107,10 @@ export function checkFalling(arr) {
   return result;
 }
 
+function whiteOrBlue(n) {
+  return false; // Diana, you need to change only this line in this function.
+}
+
 export function moveLeft(arr, x, y) {
   let result = {};
   let row = arr[y];
@@ -275,5 +279,16 @@ export function getGameInfo(arr) {
       }
     }
   }
+  return result;
+}
+
+export function checkRed(arr, x, y, redBalls) {
+  let result = {};
+  result.hit = false;
+  result.x1 = -1;
+  result.x2 = -1;
+  result.y1 = -1;
+
+  // Code Michal
   return result;
 }
