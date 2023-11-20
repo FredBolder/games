@@ -281,6 +281,10 @@ function BalPage() {
     }
     if (e.shiftKey) {
       switch (e.key) {
+        case "N":
+          currentLevel++;
+          initLevel(currentLevel);
+          break;
         case "ArrowLeft":
           info = jumpLeft(gameData, posX, posY);
           if (info.player) {
@@ -340,7 +344,7 @@ function BalPage() {
       }
     }
     if (info.player) {
-      skipFalling = 0;
+      skipFalling = 1;
       updateScreen();
     }
     if (info.eating) {

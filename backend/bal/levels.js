@@ -89,12 +89,27 @@ function getLevel(n) {
       data.push("1     2     44          11111111");
       data.push("11111111111111111111111111111111");
       break;
-      case 204:
-        data.push("11111111111111111111111111111111");
-        data.push("131              2             1");
-        data.push("11111111111111111111111111111111");
-        break;
-      default:
+    default:
+      data.push("11111111111111111111111111111111111");
+      data.push("131                         D   131");
+      data.push("111                             111");
+      data.push("1               4                11");
+      data.push("1   111111111111111111111111     31");
+      data.push("1                                 1");
+      data.push("1     55555  5   5  5555     5    1");
+      data.push("1     5      55  5  5   5    5    1");
+      data.push("1     555    5 5 5  5   5    5    1");
+      data.push("1     5      5  55  5   5         1");
+      data.push("1     55555  5   5  5555     5    1");
+      data.push("1                                 1");
+      data.push("1 111111111111111111111111111111  1");
+      data.push("1                                 1");
+      data.push("1                                 1");
+      data.push("1                                 1");
+      data.push("1U                                1");
+      data.push("111                             111");
+      data.push("131              2     4        131");
+      data.push("11111111111111111111111111111111111");
       break;
   }
   return data;
