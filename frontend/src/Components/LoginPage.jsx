@@ -50,8 +50,10 @@ function LoginPage() {
             </div>
             <div className="loginBoxInfos">
               <h3>If you don't have an account yet:</h3>
-              <p>To fully use our site, you need to make an account,</p>
-              <p>what only takes 2 minutes.</p>
+              <p>
+                To fully use our site, you need to make an account, what only
+                takes 2 minutes.
+              </p>
               <p>To make an account, click here:</p>
               <Link to="/register">Register</Link>
             </div>
