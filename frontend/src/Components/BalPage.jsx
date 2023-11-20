@@ -182,6 +182,16 @@ function BalPage() {
               "white"
             );
             break;
+            case 5:
+              //light blue ball
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "light blue"
+              );
+              break;
           case 8:
             // red ball
             drawFilledCircle(
