@@ -959,78 +959,77 @@ describe("balUtils", () => {
       )
     ).toBe(JSON.stringify(expectedOutput10f));
   });
+
+  // ***** MOVE ELEVATORS *****
+
+  let input11a = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 6, 1],
+    [1, 0, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 4, 0, 0, 0, 1],
+    [1, 0, 0, 106, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput11a = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 4, 0, 0, 6, 1],
+    [1, 0, 0, 106, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info11a = moveElevators(input11a, [
+    { x: 6, y: 2, up: false },
+    { x: 3, y: 5, up: true },
+  ]);
+  it("moveElevators A", () => {
+    expect(JSON.stringify(input11a)).toBe(JSON.stringify(expectedOutput11a));
+  });
+
+  it("moveElevators A player", () => {
+    expect(JSON.stringify(info11a)).toBe(
+      JSON.stringify({ playerX: 3, playerY: 2 })
+    );
+  });
+
+  let input11b = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 0, 4, 5, 1],
+    [1, 0, 0, 4, 0, 6, 6, 1],
+    [1, 0, 0, 4, 0, 0, 0, 1],
+    [1, 0, 0, 4, 0, 0, 0, 1],
+    [1, 0, 0, 106, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 2, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput11b = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 0, 0, 5, 1],
+    [1, 0, 0, 0, 0, 4, 0, 1],
+    [1, 0, 0, 4, 0, 6, 6, 1],
+    [1, 0, 0, 4, 0, 0, 0, 1],
+    [1, 0, 0, 4, 0, 0, 0, 1],
+    [1, 0, 0, 6, 0, 0, 0, 1],
+    [1, 2, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info11b = moveElevators(input11b, [
+    { x: 5, y: 2, up: false },
+    { x: 6, y: 2, up: false },
+    { x: 3, y: 5, up: true },
+  ]);
+  it("moveElevators B", () => {
+    expect(JSON.stringify(input11b)).toBe(JSON.stringify(expectedOutput11b));
+  });
+
+  it("moveElevators B player", () => {
+    expect(JSON.stringify(info11b)).toBe(
+      JSON.stringify({ playerX: -1, playerY: -1 })
+    );
+  });
 });
-
-// ***** MOVE ELEVATORS *****
-
-let input11a = [
-  [1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 6, 1],
-  [1, 0, 0, 2, 0, 0, 0, 1],
-  [1, 0, 0, 4, 0, 0, 0, 1],
-  [1, 0, 0, 106, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1],
-];
-let expectedOutput11a = [
-  [1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 2, 0, 0, 0, 1],
-  [1, 0, 0, 4, 0, 0, 6, 1],
-  [1, 0, 0, 106, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1],
-];
-let info11a = moveElevators(input11a, [
-  { x: 6, y: 2, up: false },
-  { x: 3, y: 5, up: true },
-]);
-it("moveElevators A", () => {
-  expect(JSON.stringify(input11a)).toBe(JSON.stringify(expectedOutput11a));
-});
-
-it("moveElevators A player", () => {
-  expect(JSON.stringify(info11a)).toBe(
-    JSON.stringify({ playerX: 3, playerY: 2 })
-  );
-});
-
-let input11b = [
-  [1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 1, 0, 4, 5, 1],
-  [1, 0, 0, 4, 0, 6, 6, 1],
-  [1, 0, 0, 4, 0, 0, 0, 1],
-  [1, 0, 0, 4, 0, 0, 0, 1],
-  [1, 0, 0, 106, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 1],
-  [1, 2, 0, 0, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1],
-];
-let expectedOutput11b = [
-  [1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 1, 0, 0, 5, 1],
-  [1, 0, 0, 0, 0, 4, 0, 1],
-  [1, 0, 0, 4, 0, 6, 6, 1],
-  [1, 0, 0, 4, 0, 0, 0, 1],
-  [1, 0, 0, 4, 0, 0, 0, 1],
-  [1, 0, 0, 6, 0, 0, 0, 1],
-  [1, 2, 0, 0, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1],
-];
-let info11b = moveElevators(input11b, [
-  { x: 5, y: 2, up: false },
-  { x: 6, y: 2, up: false },
-  { x: 3, y: 5, up: true },
-]);
-it("moveElevators B", () => {
-  expect(JSON.stringify(input11b)).toBe(JSON.stringify(expectedOutput11b));
-});
-
-it("moveElevators B player", () => {
-  expect(JSON.stringify(info11b)).toBe(
-    JSON.stringify({ playerX: -1, playerY: -1 })
-  );
-});
-
