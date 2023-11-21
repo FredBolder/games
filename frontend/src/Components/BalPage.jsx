@@ -271,6 +271,7 @@ function BalPage() {
             );
             break;
           case 6:
+          case 106:
             // Elevator up/down
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
             d1 = w1 / 3;
@@ -584,6 +585,7 @@ function BalPage() {
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
+              <option value="5">5</option>
             </select>
           </div>
           <button className="button" onClick={tryAgain}>
