@@ -7,6 +7,7 @@ import {
   drawFilledBox,
   drawFilledCircle,
   drawLine,
+  drawText,
 } from "../drawUtils";
 import {
   stringArrayToNumberArray,
@@ -19,6 +20,24 @@ import {
   getGameInfo,
   checkRed,
 } from "../balUtils.js";
+import sndCatapult from "../Sounds/catapult.wav";
+import sndEat1 from "../Sounds/eat1.wav";
+import sndEat2 from "../Sounds/eat2.wav";
+import sndEat3 from "../Sounds/eat3.wav";
+import sndEat4 from "../Sounds/eat4.wav";
+import sndExplosion from "../Sounds/explosion.wav";
+import sndFloor1 from "../Sounds/floor1.wav";
+import sndFloor2 from "../Sounds/floor2.wav";
+import sndHinge from "../Sounds/hinge.wav";
+import sndKey from "../Sounds/key.wav";
+import sndLaserGun from "../Sounds/laser_gun.wav";
+import sndPain from "../Sounds/pain.wav";
+import sndPickaxe from "../Sounds/pickaxe.wav";
+import sndSplash1 from "../Sounds/splash1.wav";
+import sndSplash2 from "../Sounds/splash2.wav";
+import sndTake from "../Sounds/take.wav";
+import sndTeleport from "../Sounds/teleport.wav";
+import sndUnlock from "../Sounds/unlock.wav";
 
 let canvas;
 let ctx;
@@ -37,6 +56,41 @@ let posY = -1;
 let skipFalling = 0;
 
 function BalPage() {
+  function playSound(sound) {
+    let snd = null;
+    let n = 0;
+    switch (sound) {
+      case "eat":
+        n = Math.trunc(Math.random() * 4) + 1;
+        switch (n) {
+          case 1:
+            snd = sndEat1;
+            break;
+          case 2:
+            snd = sndEat2;
+            break;
+          case 3:
+            snd = sndEat3;
+            break;
+          case 4:
+            snd = sndEat4;
+            break;
+          default:
+            break;
+        }
+        break;
+      case "laser":
+        snd = sndLaserGun;
+        break;
+      default:
+        break;
+    }
+    if (snd !== sound) {
+      const audio = new Audio(snd);
+      audio.play();
+    }
+  }
+
   function checkGameOver() {
     if (!gameOver) {
       let redInfo = checkRed(gameData, posX, posY, gameInfo.redBalls);
@@ -46,6 +100,7 @@ function BalPage() {
         laserX2 = redInfo.x2;
         laserY = redInfo.y;
         updateScreen();
+        playSound("laser");
       }
     }
   }
@@ -84,6 +139,10 @@ function BalPage() {
     let d1 = 0;
     let d2 = 0;
     let d3 = 0;
+    let x1 = 0;
+    let y1 = 0;
+    let x2 = 0;
+    let y2 = 0;
 
     ctx.lineWidth = 1;
     ctx.shadowBlur = 0;
@@ -206,7 +265,54 @@ function BalPage() {
               xmin + w1 * 0.5,
               (row + 1) * w1 - w1 * 0.5,
               w1 * 0.5,
-              "lightskyblue"
+              "deepskyblue"
+            );
+            break;
+          case 6:
+            // Elevator up/down
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
+            d1 = w1 / 3;
+            d2 = w1 / 10;
+            d3 = w1 / 8;
+            drawLine(
+              ctx,
+              xc,
+              Math.round(yc - d1),
+              xc,
+              Math.round(yc + d1),
+              "white"
+            );
+            drawLine(
+              ctx,
+              xc,
+              Math.round(yc - d1),
+              Math.round(xc - d2),
+              Math.round(yc - d3),
+              "white"
+            );
+            drawLine(
+              ctx,
+              xc,
+              Math.round(yc - d1),
+              Math.round(xc + d2),
+              Math.round(yc - d3),
+              "white"
+            );
+            drawLine(
+              ctx,
+              xc,
+              Math.round(yc + d1),
+              Math.round(xc - d2),
+              Math.round(yc + d3),
+              "white"
+            );
+            drawLine(
+              ctx,
+              xc,
+              Math.round(yc + d1),
+              Math.round(xc + d2),
+              Math.round(yc + d3),
+              "white"
             );
             break;
           case 8:
@@ -254,10 +360,27 @@ function BalPage() {
       dymin += size1;
     }
     if (gameOver) {
-      // Code Michal - Text GAME OVER
+      x1 = leftMargin + gameWidth / 2;
+      y1 = gameHeight / 2;
+      drawText(
+        ctx,
+        x1,
+        y1,
+        "GAME OVER!",
+        "middle",
+        "white",
+        Math.round(gameHeight * 0.6),
+        Math.round(gameWidth * 0.9),
+        "red",
+        5
+      );
 
       if (laserX1 >= 0 && laserX2 >= 0 && laserY >= 0) {
-        // Code Michal - Laser beam
+        x1 = leftMargin + laserX1 * size1;
+        x2 = leftMargin + size1 + laserX2 * size1;
+        y1 = Math.round(laserY * size1 + size1 / 2);
+
+        drawLine(ctx, x1, y1, x2, y1, "yellow");
       }
     }
   }
@@ -396,8 +519,8 @@ function BalPage() {
       checkGameOver();
     }
     if (info.eating) {
-      // TODO: Eating sound
       gameInfo.greenBalls--;
+      playSound("eat");
       if (gameInfo.greenBalls <= 0) {
         currentLevel++;
         initLevel(currentLevel);
