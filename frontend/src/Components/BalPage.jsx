@@ -19,6 +19,7 @@ import {
   jumpRight,
   getGameInfo,
   checkRed,
+  moveElevators,
 } from "../balUtils.js";
 import sndCatapult from "../Sounds/catapult.wav";
 import sndEat1 from "../Sounds/eat1.wav";
@@ -44,6 +45,7 @@ let ctx;
 let currentLevel = 200;
 let gameData = [];
 let gameInfo = {};
+gameInfo.elevators = [];
 gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
 let gameInterval;

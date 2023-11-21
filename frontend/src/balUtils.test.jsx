@@ -9,7 +9,8 @@ import {
   jumpLeft,
   jumpRight,
   getGameInfo,
-  checkRed
+  checkRed,
+  moveElevators,
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -763,6 +764,7 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1],
   ];
   let expectedOutput9a = {
+    elevators: [],
     greenBalls: 2,
     redBalls: [
       { x: 1, y: 2 },
@@ -783,6 +785,7 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput9b = {
+    elevators: [],
     greenBalls: 4,
     redBalls: [
       { x: 1, y: 2 },
@@ -803,12 +806,36 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput9c = {
+    elevators: [],
     greenBalls: 8,
     redBalls: [],
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(input9c))).toBe(
       JSON.stringify(expectedOutput9c)
+    );
+  });
+
+  let input9d = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 3, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 6, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 106, 0, 2, 0, 4, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput9d = {
+    elevators: [
+      { x: 8, y: 2, up: false },
+      { x: 2, y: 5, up: true },
+    ],
+    greenBalls: 2,
+    redBalls: [],
+  };
+  it("getGameInfo D", () => {
+    expect(JSON.stringify(getGameInfo(input9d))).toBe(
+      JSON.stringify(expectedOutput9d)
     );
   });
 
@@ -923,9 +950,87 @@ describe("balUtils", () => {
     y: 3,
   };
   it("checkRed F", () => {
-    expect(JSON.stringify(checkRed(input10f, 2, 3, [{ x: 5, y: 2 }, { x: 4, y: 3 }]))).toBe(
-      JSON.stringify(expectedOutput10f)
-    );
+    expect(
+      JSON.stringify(
+        checkRed(input10f, 2, 3, [
+          { x: 5, y: 2 },
+          { x: 4, y: 3 },
+        ])
+      )
+    ).toBe(JSON.stringify(expectedOutput10f));
   });
-
 });
+
+// ***** MOVE ELEVATORS *****
+
+let input11a = [
+  [1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 6, 1],
+  [1, 0, 0, 2, 0, 0, 0, 1],
+  [1, 0, 0, 4, 0, 0, 0, 1],
+  [1, 0, 0, 106, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1],
+];
+let expectedOutput11a = [
+  [1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 2, 0, 0, 0, 1],
+  [1, 0, 0, 4, 0, 0, 6, 1],
+  [1, 0, 0, 106, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1],
+];
+let info11a = moveElevators(input11a, [
+  { x: 6, y: 2, up: false },
+  { x: 3, y: 5, up: true },
+]);
+it("moveElevators A", () => {
+  expect(JSON.stringify(input11a)).toBe(JSON.stringify(expectedOutput11a));
+});
+
+it("moveElevators A player", () => {
+  expect(JSON.stringify(info11a)).toBe(
+    JSON.stringify({ playerX: 3, playerY: 2 })
+  );
+});
+
+let input11b = [
+  [1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 1, 0, 4, 5, 1],
+  [1, 0, 0, 4, 0, 6, 6, 1],
+  [1, 0, 0, 4, 0, 0, 0, 1],
+  [1, 0, 0, 4, 0, 0, 0, 1],
+  [1, 0, 0, 106, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1],
+];
+let expectedOutput11b = [
+  [1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 1, 0, 0, 5, 1],
+  [1, 0, 0, 0, 0, 4, 0, 1],
+  [1, 0, 0, 4, 0, 6, 6, 1],
+  [1, 0, 0, 4, 0, 0, 0, 1],
+  [1, 0, 0, 4, 0, 0, 0, 1],
+  [1, 0, 0, 6, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1],
+];
+let info11b = moveElevators(input11b, [
+  { x: 5, y: 2, up: false },
+  { x: 6, y: 2, up: false },
+  { x: 3, y: 5, up: true },
+]);
+it("moveElevators B", () => {
+  expect(JSON.stringify(input11b)).toBe(JSON.stringify(expectedOutput11b));
+});
+
+it("moveElevators B player", () => {
+  expect(JSON.stringify(info11b)).toBe(
+    JSON.stringify({ playerX: -1, playerY: -1 })
+  );
+});
+
