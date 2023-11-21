@@ -35,7 +35,7 @@ export function drawText(
   height,
   maxWidth,
   outline,
-  outlineSize
+  outlineWidth
 ) {
   canvas.font = `${height}px sans-serif`;
   canvas.fillStyle = color;
@@ -62,6 +62,7 @@ export function drawText(
 
   canvas.fillText(text, x, y, maxWidth);
   canvas.strokeStyle = outline;
-  canvas.lineWidth = outlineSize;
+  canvas.lineWidth = outlineWidth;
   canvas.strokeText(text, x, y, maxWidth);
+  canvas.lineWidth = 1;
 }
