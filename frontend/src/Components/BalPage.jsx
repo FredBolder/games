@@ -24,14 +24,17 @@ let canvas;
 let ctx;
 let currentLevel = 200;
 let gameData = [];
-let gameOver = false;
-let posX = -1;
-let posY = -1;
-let gameInterval;
-let skipFalling = 0;
 let gameInfo = {};
 gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
+let gameInterval;
+let gameOver = false;
+let laserX1 = -1;
+let laserX2 = -1;
+let laserY = -1;
+let posX = -1;
+let posY = -1;
+let skipFalling = 0;
 
 function BalPage() {
   function checkGameOver() {
@@ -39,6 +42,9 @@ function BalPage() {
       let redInfo = checkRed(gameData, posX, posY, gameInfo.redBalls);
       if (redInfo.hit) {
         gameOver = true;
+        laserX1 = redInfo.x1;
+        laserX2 = redInfo.x2;
+        laserY = redInfo.y;
         updateScreen();
       }
     }
@@ -247,6 +253,13 @@ function BalPage() {
       }
       dymin += size1;
     }
+    if (gameOver) {
+      // Code Michal - Text GAME OVER
+
+      if (laserX1 >= 0 && laserX2 >= 0 && laserY >= 0) {
+        // Code Michal - Laser beam
+      }
+    }
   }
 
   function gameScheduler() {
@@ -283,6 +296,9 @@ function BalPage() {
       posY = -1;
       data = response.data.gameData;
       gameData = stringArrayToNumberArray(data);
+      laserX1 = -1;
+      laserX2 = -1;
+      laserY = -1;
       gameOver = false;
       updateScreen();
       gameInfo = getGameInfo(gameData);

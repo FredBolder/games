@@ -20,6 +20,10 @@ function charToNumber(c) {
     case "5":
       result = 5;
       break;
+    case "U":
+    case "D":
+      result = 6;
+      break;
     case "8":
       result = 8;
       break;
@@ -51,6 +55,9 @@ function numberToChar(n) {
       break;
     case 5:
       result = "5";
+      break;
+    case 6:
+      result = "U";
       break;
     case 8:
       result = "8";
@@ -293,10 +300,10 @@ export function checkRed(arr, x, y, redBalls) {
   result.hit = false;
   result.x1 = -1;
   result.x2 = -1;
-  result.y1 = -1;
+  result.y = -1;
   for (let i = 0; i < redBalls.length; i++) {
     if (redBalls[i].y === y) {
-      result.y1 = y;
+      result.y = y;
       result.hit = true;
       if (redBalls[i].x > x) {
         result.x1 = x + 1;
@@ -311,7 +318,7 @@ export function checkRed(arr, x, y, redBalls) {
             result.hit = false;
             result.x1 = -1;
             result.x2 = -1;
-            result.y1 = -1;
+            result.y = -1;
           }
         }
       }

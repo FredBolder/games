@@ -237,6 +237,27 @@ describe("balUtils", () => {
     expect(info4f.player).toBe(false);
   });
 
+  let input4g = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 0, 5, 4, 2, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput4g = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 5, 4, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let info4g = moveLeft(input4g, 4, 1);
+  it("moveLeft G", () => {
+    expect(JSON.stringify(input4g)).toBe(JSON.stringify(expectedOutput4g));
+  });
+  it("moveLeft G eating", () => {
+    expect(info4g.eating).toBe(false);
+  });
+  it("moveLeft G player", () => {
+    expect(info4g.player).toBe(true);
+  });
+
   let input5a = [
     [1, 1, 1, 1, 1, 1],
     [1, 0, 4, 0, 2, 1],
@@ -361,6 +382,48 @@ describe("balUtils", () => {
   });
   it("moveRight F player", () => {
     expect(info5f.player).toBe(false);
+  });
+
+  let input5g = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 4, 5, 4, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput5g = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 4, 5, 4, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info5g = moveRight(input5g, 1, 1);
+  it("moveRight G", () => {
+    expect(JSON.stringify(input5g)).toBe(JSON.stringify(expectedOutput5g));
+  });
+  it("moveRight G eating", () => {
+    expect(info5g.eating).toBe(false);
+  });
+  it("moveRight G player", () => {
+    expect(info5g.player).toBe(false);
+  });
+
+  let input5h = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 2, 5, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput5h = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 0, 2, 5, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let info5h = moveRight(input5h, 1, 1);
+  it("moveRight H", () => {
+    expect(JSON.stringify(input5h)).toBe(JSON.stringify(expectedOutput5h));
+  });
+  it("moveRight H eating", () => {
+    expect(info5h.eating).toBe(false);
+  });
+  it("moveRight H player", () => {
+    expect(info5h.player).toBe(true);
   });
 
   // ***** JUMP *****
@@ -762,7 +825,7 @@ describe("balUtils", () => {
     hit: true,
     x1: 3,
     x2: 4,
-    y1: 3,
+    y: 3,
   };
   it("checkRed A", () => {
     expect(JSON.stringify(checkRed(input10a, 5, 3, [{ x: 2, y: 3 }]))).toBe(
@@ -781,7 +844,7 @@ describe("balUtils", () => {
     hit: true,
     x1: 3,
     x2: 4,
-    y1: 3,
+    y: 3,
   };
   it("checkRed B", () => {
     expect(JSON.stringify(checkRed(input10b, 2, 3, [{ x: 5, y: 3 }]))).toBe(
@@ -800,7 +863,7 @@ describe("balUtils", () => {
     hit: false,
     x1: -1,
     x2: -1,
-    y1: -1,
+    y: -1,
   };
   it("checkRed C", () => {
     expect(JSON.stringify(checkRed(input10c, 5, 3, [{ x: 2, y: 3 }]))).toBe(
@@ -819,7 +882,7 @@ describe("balUtils", () => {
     hit: false,
     x1: -1,
     x2: -1,
-    y1: -1,
+    y: -1,
   };
   it("checkRed D", () => {
     expect(JSON.stringify(checkRed(input10d, 2, 3, [{ x: 5, y: 3 }]))).toBe(
@@ -838,7 +901,7 @@ describe("balUtils", () => {
     hit: false,
     x1: -1,
     x2: -1,
-    y1: -1,
+    y: -1,
   };
   it("checkRed E", () => {
     expect(JSON.stringify(checkRed(input10e, 2, 3, [{ x: 5, y: 2 }]))).toBe(
@@ -857,7 +920,7 @@ describe("balUtils", () => {
     hit: true,
     x1: 3,
     x2: 3,
-    y1: 3,
+    y: 3,
   };
   it("checkRed F", () => {
     expect(JSON.stringify(checkRed(input10f, 2, 3, [{ x: 5, y: 2 }, { x: 4, y: 3 }]))).toBe(
