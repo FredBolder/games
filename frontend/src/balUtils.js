@@ -21,6 +21,8 @@ function charToNumber(c) {
       result = 5;
       break;
     case "U":
+      result = 106;
+      break;
     case "D":
       result = 6;
       break;
@@ -56,8 +58,11 @@ function numberToChar(n) {
     case 5:
       result = "5";
       break;
-    case 6:
+    case 106:
       result = "U";
+      break;
+    case 6:
+      result = "D";
       break;
     case 8:
       result = "8";
@@ -276,6 +281,7 @@ export function jumpRight(arr, x, y) {
 
 export function getGameInfo(arr) {
   let result = {};
+  result.elevators = [];
   result.greenBalls = 0;
   result.redBalls = [];
 
@@ -289,6 +295,13 @@ export function getGameInfo(arr) {
         redBall.x = j;
         redBall.y = i;
         result.redBalls.push(redBall);
+      }
+      if (arr[i][j] === 106 || arr[i][j] === 6) {
+        let elevator = {};
+        elevator.x = j;
+        elevator.y = i;
+        elevator.up = (arr[i][j] === 106);
+        result.elevators.push(elevator);
       }
     }
   }
@@ -323,6 +336,18 @@ export function checkRed(arr, x, y, redBalls) {
         }
       }
     }
+  }
+  return result;
+}
+
+export function moveElevators(arr, elevators) {
+  let result = {};
+  result.playerX = -1; // Set to new position if player is moved
+  result.playerY = -1; // Set to new position if player is moved
+
+  for (let i = 0; i < elevators.length; i++) {
+    // Code Michal
+
   }
   return result;
 }
