@@ -100,7 +100,16 @@ export function numberArrayToStringArray(arr) {
   return result;
 }
 
-export function checkFalling(arr) {
+function updateRed(redBalls, x1, y1, x2, y2) {
+  for (let i = 0; i < redBalls.length; i++) {
+    if (redBalls.x === x1 && redBalls.y === y1) {
+      redBalls.x = x2;
+      redBalls.y = y2;
+    }
+  }
+}
+
+export function checkFalling(arr, redBalls) {
   let result = {};
   result.falling = false;
   result.player = false;
@@ -116,6 +125,9 @@ export function checkFalling(arr) {
         result.falling = true;
         if (element1 === 2) {
           result.player = true;
+        }
+        if (element1 === 8) {
+          updateRed(redBalls, j, i, j, i + 1);
         }
         arr[i + 1][j] = arr[i][j];
         arr[i][j] = 0;
@@ -340,14 +352,100 @@ export function checkRed(arr, x, y, redBalls) {
   return result;
 }
 
-export function moveElevators(arr, elevators) {
+export function moveElevators(arr, elevators, redBalls) {
   let result = {};
   result.playerX = -1; // Set to new position if player is moved
   result.playerY = -1; // Set to new position if player is moved
 
+  //console.log("moveElevators");
   for (let i = 0; i < elevators.length; i++) {
-    // Code Michal
+    let downPossible = false;
+    let upPossible = true;
+    let emptyUp = -1;
+    let x = 0;
+    let y = 0;
 
+    // Check in which directions it is possible to move
+    for (let j = elevators[i].y; j >= 0; j--) {
+      if (emptyUp === -1 && arr[j][elevators[i].x] === 0) {
+        emptyUp = j;
+      }
+      if (emptyUp === -1) {
+        if (![2, 4, 8, 6, 106].includes(arr[j][elevators[i].x])) {
+          upPossible = false;
+        }
+      }
+    }
+    if (emptyUp === -1) {
+      upPossible = false;
+    }
+    if (elevators[i].y < (arr.length - 1)) {
+      downPossible = (arr[elevators[i].y + 1][elevators[i].x] === 0);
+    }
+
+    //console.log("downPossible: ", downPossible);
+    //console.log("upPossible: ", upPossible);
+
+    // Change the direction of the elevator if needed
+    if (elevators[i].up) {
+      if (!upPossible && downPossible) {
+        elevators[i].up = false;
+        arr[elevators[i].y][elevators[i].x] = 6;
+      }
+    } else {
+      if (!downPossible && upPossible) {
+        elevators[i].up = true;
+        arr[elevators[i].y][elevators[i].x] = 106;
+      }
+    }
+
+    // Move the elevator and everything that is on top of it
+    x = elevators[i].x;
+    y = elevators[i].y;
+    if (elevators[i].up) {
+      // Move up
+      if (upPossible) {
+        for (let j = emptyUp; j < y; j++) {
+          arr[j][x] = arr[j + 1][x];
+          switch (arr[j][x]) {
+            case 2:
+              result.playerX = x;
+              result.playerY = j;
+              break;
+            case 8:
+              updateRed(redBalls, x, j + 1, x, j);
+              break;
+            default:
+              break;
+          }
+        }
+        elevators[i].y = y - 1;
+        arr[y][x] = 0;
+      }
+    } else {
+      // Move down
+      if (downPossible) {
+        arr[y + 1][x] = arr[y][x];
+        arr[y][x] = 0;
+        elevators[i].y = y + 1;
+        for (let j = arr.length - 2; j >= 0; j--) {
+          if (
+            arr[j + 1][x] === 0 &&
+            ([2, 4, 8].includes(arr[j][x]))
+          ) {
+            if (arr[j][x] === 2) {
+              result.playerX = x;
+              result.playerY = j + 1;
+            }
+            if (arr[j][x] === 8) {
+              updateRed(redBalls, x, j, x, j + 1);
+            }
+            arr[j + 1][x] = arr[j][x];
+            arr[j][x] = 0;
+          }
+        }
+      }
+    }
   }
   return result;
 }

@@ -53,7 +53,7 @@ describe("balUtils", () => {
     [1, 2, 0, 0, 4, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info3a = checkFalling(input3a);
+  let info3a = checkFalling(input3a, [{ x: 3, y: 1 }]);
   it("checkFalling A", () => {
     expect(JSON.stringify(input3a)).toBe(JSON.stringify(expectedOutput3a));
   });
@@ -78,7 +78,7 @@ describe("balUtils", () => {
     [1, 4, 4, 2, 8, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info3b = checkFalling(input3b);
+  let info3b = checkFalling(input3b, [{ x: 4, y: 3 }]);
   it("checkFalling B", () => {
     expect(JSON.stringify(input3b)).toBe(JSON.stringify(expectedOutput3b));
   });
@@ -101,7 +101,7 @@ describe("balUtils", () => {
     [1, 4, 2, 0, 1],
     [1, 1, 1, 1, 1],
   ];
-  let info3c = checkFalling(input3c);
+  let info3c = checkFalling(input3c, []);
   it("checkFalling C", () => {
     expect(JSON.stringify(input3c)).toBe(JSON.stringify(expectedOutput3c));
   });
@@ -985,7 +985,7 @@ describe("balUtils", () => {
   let info11a = moveElevators(input11a, [
     { x: 6, y: 2, up: false },
     { x: 3, y: 5, up: true },
-  ]);
+  ], []);
   it("moveElevators A", () => {
     expect(JSON.stringify(input11a)).toBe(JSON.stringify(expectedOutput11a));
   });
@@ -1022,7 +1022,7 @@ describe("balUtils", () => {
     { x: 5, y: 2, up: false },
     { x: 6, y: 2, up: false },
     { x: 3, y: 5, up: true },
-  ]);
+  ], []);
   it("moveElevators B", () => {
     expect(JSON.stringify(input11b)).toBe(JSON.stringify(expectedOutput11b));
   });

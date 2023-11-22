@@ -43,6 +43,7 @@ import sndUnlock from "../Sounds/unlock.wav";
 let canvas;
 let ctx;
 let currentLevel = 200;
+let elevatorCounter = 0;
 let gameData = [];
 let gameInfo = {};
 gameInfo.elevators = [];
@@ -390,21 +391,39 @@ function BalPage() {
 
   function gameScheduler() {
     let info = {};
+    let update = false;
 
     if (!gameOver) {
       if (skipFalling <= 0) {
-        info = checkFalling(gameData);
+        info = checkFalling(gameData, gameInfo.redBalls);
         if (info.player) {
           posY++;
         }
         if (info.falling) {
-          updateScreen();
+          update = true;
         }
       } else {
         skipFalling--;
       }
 
-      checkGameOver();
+      if (elevatorCounter > 0) {
+        elevatorCounter--;
+      } else {
+        elevatorCounter = 5;
+        info = moveElevators(gameData, gameInfo.elevators, gameInfo.redBalls);
+        if (info.playerX !== -1 && info.playerY !== -1) {
+          posX = info.playerX;
+          posY = info.playerY;
+        }
+        if (gameInfo.elevators.length > 0) {
+          update = true;
+        }
+      }
+
+      if (update) {
+        updateScreen();
+        checkGameOver();
+      }
     }
   }
 
