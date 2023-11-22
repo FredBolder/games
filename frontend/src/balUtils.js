@@ -26,6 +26,12 @@ function charToNumber(c) {
     case "D":
       result = 6;
       break;
+    case "L":
+      result = 7;
+      break;
+    case "R":
+      result = 107;
+      break;
     case "8":
       result = 8;
       break;
@@ -63,6 +69,12 @@ function numberToChar(n) {
       break;
     case 6:
       result = "D";
+      break;
+    case 7:
+      result = "L";
+      break;
+    case 107:
+      result = "R";
       break;
     case 8:
       result = "8";
@@ -295,6 +307,7 @@ export function getGameInfo(arr) {
   let result = {};
   result.elevators = [];
   result.greenBalls = 0;
+  result.horizontalElevators = [];
   result.redBalls = [];
 
   for (let i = 0; i < arr.length; i++) {
@@ -314,6 +327,13 @@ export function getGameInfo(arr) {
         elevator.y = i;
         elevator.up = (arr[i][j] === 106);
         result.elevators.push(elevator);
+      }
+      if (arr[i][j] === 107 || arr[i][j] === 7) {
+        let elevator = {};
+        elevator.x = j;
+        elevator.y = i;
+        elevator.right = (arr[i][j] === 107);
+        result.horizontalElevators.push(elevator);
       }
     }
   }
@@ -450,3 +470,11 @@ export function moveElevators(arr, elevators, redBalls) {
   return result;
 }
 
+export function moveHorizontalElevators(arr, elevators, redBalls) {
+  let result = {};
+  result.playerX = -1; // Set to new position if player is moved
+  result.playerY = -1; // Set to new position if player is moved
+
+  // Your code
+  return result;
+}
