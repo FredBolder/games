@@ -1070,9 +1070,10 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
   ];
+  let elevatorsInput12a = [{ x: 5, y: 6, right: false }];
   let info12a = moveHorizontalElevators(
     input12a,
-    [{ x: 5, y: 6, right: false }],
+    elevatorsInput12a,
     []
   );
   it("moveHorizontalElevators A", () => {
@@ -1082,6 +1083,12 @@ describe("balUtils", () => {
   it("moveHorizontalElevators A player", () => {
     expect(JSON.stringify(info12a)).toBe(
       JSON.stringify({ playerX: 4, playerY: 4 })
+    );
+  });
+
+  it("moveHorizontalElevators A elevators", () => {
+    expect(JSON.stringify(elevatorsInput12a)).toBe(
+      JSON.stringify([{ x: 4, y: 6, right: false }])
     );
   });
 
@@ -1096,6 +1103,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
   ];
+  let elevatorsInput12b = [{ x: 5, y: 6, right: true }];
   let expectedOutput12b = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 3, 0, 0, 0, 0, 0, 1],
@@ -1109,7 +1117,7 @@ describe("balUtils", () => {
   ];
   let info12b = moveHorizontalElevators(
     input12b,
-    [{ x: 5, y: 6, right: true }],
+    elevatorsInput12b,
     []
   );
   it("moveHorizontalElevators B", () => {
@@ -1122,11 +1130,17 @@ describe("balUtils", () => {
     );
   });
 
+  it("moveHorizontalElevators B elevators", () => {
+    expect(JSON.stringify(elevatorsInput12b)).toBe(
+      JSON.stringify([{ x: 6, y: 6, right: true }])
+    );
+  });
+
   let input12c = [
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 3, 0, 0, 0, 0, 0, 1],
     [1, 8, 0, 0, 0, 4, 0, 1],
-    [1, 107, 0, 0, 0, 5, 0, 1],
+    [1, 107, 0, 0, 0, 4, 0, 1],
     [1, 0, 0, 0, 5, 2, 0, 1],
     [1, 0, 0, 0, 0, 4, 0, 1],
     [1, 0, 0, 0, 0, 7, 0, 1],
@@ -1139,23 +1153,29 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1, 1],
     [1, 3, 0, 0, 0, 0, 0, 1],
     [1, 0, 8, 0, 0, 4, 0, 1],
-    [1, 0, 107, 0, 0, 5, 0, 1],
+    [1, 0, 107, 0, 0, 4, 0, 1],
     [1, 0, 0, 0, 5, 2, 0, 1],
     [1, 0, 0, 0, 4, 0, 0, 1],
     [1, 0, 0, 0, 7, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 107, 1],
+    [1, 0, 0, 0, 0, 107, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let elevatorsInput12c = [
+    { x: 1, y: 3, right: true },
+    { x: 5, y: 6, right: false },
+    { x: 6, y: 8, right: true },
+  ];
+  let elevatorsExpected12c = [
+    { x: 2, y: 3, right: true },
+    { x: 4, y: 6, right: false },
+    { x: 5, y: 8, right: false },
   ];
   let redInput12c = [{ x: 1, y: 2 }];
   let info12c = moveHorizontalElevators(
     input12c,
-    [
-      { x: 1, y: 3, right: true },
-      { x: 5, y: 6, right: false },
-      { x: 6, y: 8, right: true },
-    ],
+    elevatorsInput12c,
     redInput12c
   );
   it("moveHorizontalElevators C", () => {
@@ -1166,6 +1186,10 @@ describe("balUtils", () => {
     expect(JSON.stringify(info12c)).toBe(
       JSON.stringify({ playerX: -1, playerY: -1 })
     );
+  });
+
+  it("moveHorizontalElevators C elevators", () => {
+    expect(JSON.stringify(elevatorsInput12c)).toBe(JSON.stringify(elevatorsExpected12c));
   });
 
   it("moveHorizontalElevators C red", () => {
