@@ -59,6 +59,8 @@ let posY = -1;
 let skipFalling = 0;
 
 function BalPage() {
+  const [green, setGreen] = useState(0);
+
   function playSound(sound) {
     let snd = null;
     let n = 0;
@@ -447,6 +449,7 @@ function BalPage() {
       gameOver = false;
       updateScreen();
       gameInfo = getGameInfo(gameData);
+      setGreen(gameInfo.greenBalls);
     } catch (err) {
       console.log(err);
     }
@@ -542,6 +545,7 @@ function BalPage() {
     }
     if (info.eating) {
       gameInfo.greenBalls--;
+      setGreen(gameInfo.greenBalls);
       playSound("eat");
       if (gameInfo.greenBalls <= 0) {
         currentLevel++;
@@ -592,7 +596,7 @@ function BalPage() {
       <main>
         <h1 className="title">Bal - The Game for Smart People</h1>
         <div className="balPanel">
-          <div className="levelSelector">
+          <div>
             <label>Level </label>
             <select
               name="level"
@@ -611,6 +615,7 @@ function BalPage() {
           <button className="button" onClick={tryAgain}>
             Try again
           </button>
+          <div>Green Left: {green}</div>
         </div>
         <canvas className="gameCanvas">
           <p>Bal</p>
