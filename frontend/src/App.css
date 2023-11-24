@@ -44,7 +44,6 @@ main {
 
 .button {
   margin: 0 auto;
-  margin-top: 1.5rem;
   width: auto;
   background-color: #ffffff;
   color: black;
@@ -71,6 +70,8 @@ main {
   align-items: center;
   margin-bottom: 1rem;
   gap: 2rem;
+  width: 25%;
+  color: white;
 }
 
 .gameCanvas {
@@ -80,8 +81,8 @@ main {
 }
 
 .levelSelector {
-  color: white;
   font-size: large;
+  display: flex;
 }
 
 /* from here TODO */
