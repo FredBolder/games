@@ -84,7 +84,7 @@ function test() {
     [1, 0, 0, 0, 4, 0, 0, 1],
     [1, 0, 0, 0, 7, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 7, 0, 1],
+    [1, 0, 0, 0, 0, 0, 7, 1],
     [1, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1],
   ];
@@ -96,7 +96,7 @@ function test() {
   let elevatorsExpected12c = [
     { x: 2, y: 3, right: true },
     { x: 4, y: 6, right: false },
-    { x: 5, y: 8, right: false },
+    { x: 6, y: 8, right: false },
   ];
   let redInput12c = [{ x: 1, y: 2 }];
   let info12c = moveHorizontalElevators(

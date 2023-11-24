@@ -20,6 +20,7 @@ import {
   getGameInfo,
   checkRed,
   moveElevators,
+  moveHorizontalElevators,
 } from "../balUtils.js";
 import sndCatapult from "../Sounds/catapult.wav";
 import sndEat1 from "../Sounds/eat1.wav";
@@ -327,7 +328,14 @@ function BalPage() {
             d1 = w1 / 3;
             d2 = w1 / 10;
             d3 = w1 / 8;
-            drawLine(ctx, Math.round(xc - d1), yc, Math.round(xc + d1), yc,"white");
+            drawLine(
+              ctx,
+              Math.round(xc - d1),
+              yc,
+              Math.round(xc + d1),
+              yc,
+              "white"
+            );
             drawLine(
               ctx,
               Math.round(xc - d1),
@@ -396,6 +404,16 @@ function BalPage() {
             d2 = w1 / 5;
             drawLine(ctx, xc - d1, yc + d2, xc + d1, yc + d2, "white");
             break;
+          case 9:
+            // yellow ball
+            drawFilledCircle(
+              ctx,
+              xmin + w1 * 0.5,
+              (row + 1) * w1 - w1 * 0.5,
+              w1 * 0.5,
+              "yellow"
+            );
+            break;
           default:
             // empty
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
@@ -453,6 +471,15 @@ function BalPage() {
       } else {
         elevatorCounter = 5;
         info = moveElevators(gameData, gameInfo.elevators, gameInfo.redBalls);
+        if (info.playerX !== -1 && info.playerY !== -1) {
+          posX = info.playerX;
+          posY = info.playerY;
+        }
+        if (gameInfo.elevators.length > 0) {
+          update = true;
+        }
+
+        info = moveHorizontalElevators(gameData, gameInfo.horizontalElevators, gameInfo.redBalls);
         if (info.playerX !== -1 && info.playerY !== -1) {
           posX = info.playerX;
           posY = info.playerY;
