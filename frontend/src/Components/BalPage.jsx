@@ -319,6 +319,48 @@ function BalPage() {
               "white"
             );
             break;
+          //elevator left/right
+          case 7:
+          case 107:
+            // Elevator left/right
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
+            d1 = w1 / 3;
+            d2 = w1 / 10;
+            d3 = w1 / 8;
+            drawLine(ctx, Math.round(xc - d1), yc, Math.round(xc + d1), yc,"white");
+            drawLine(
+              ctx,
+              Math.round(xc - d1),
+              yc,
+              Math.round(xc - d3),
+              Math.round(yc - d2),
+              "white"
+            );
+            drawLine(
+              ctx,
+              Math.round(xc - d1),
+              yc,
+              Math.round(xc - d3),
+              Math.round(yc + d2),
+              "white"
+            );
+            drawLine(
+              ctx,
+              Math.round(xc + d1),
+              yc,
+              Math.round(xc + d3),
+              Math.round(yc - d2),
+              "white"
+            );
+            drawLine(
+              ctx,
+              Math.round(xc + d1),
+              yc,
+              Math.round(xc + d3),
+              Math.round(yc + d2),
+              "white"
+            );
+            break;
           case 8:
             // red ball
             drawFilledCircle(
