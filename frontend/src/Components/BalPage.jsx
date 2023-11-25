@@ -589,6 +589,7 @@ function BalPage() {
           info = jump(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY--;
+            elevatorCounter++; // To prevent that you fall from the elevator
           }
           break;
         case "q":
