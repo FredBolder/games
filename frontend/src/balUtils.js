@@ -1,3 +1,8 @@
+function canMoveAlone(n) {
+  // Object that can move, but not together with another object
+  return ([9, 28, 84, 85, 86].includes(n));
+}
+
 function charToNumber(c) {
   let result = 0;
 
@@ -127,6 +132,16 @@ function updateRed(redBalls, x1, y1, x2, y2) {
   }
 }
 
+function updateYellow(yellowBalls, x1, y1, x2, y2, direction) {
+  for (let i = 0; i < yellowBalls.length; i++) {
+    if (yellowBalls[i].x === x1 && yellowBalls[i].y === y1) {
+      yellowBalls[i].x = x2;
+      yellowBalls[i].y = y2;
+      yellowBalls[i].direction = direction;
+    }
+  }
+}
+
 export function checkFalling(arr, redBalls) {
   let result = {};
   result.falling = false;
@@ -159,7 +174,7 @@ function whiteOrBlue(n) {
   return n === 4 || n === 5;
 }
 
-export function moveLeft(arr, x, y) {
+export function moveLeft(arr, x, y, yellowBalls = []) {
   let result = {};
   let row = arr[y];
   result.eating = false;
@@ -180,8 +195,11 @@ export function moveLeft(arr, x, y) {
         }
       }
       if (x > 1) {
-        // 1 white ball
-        if (whiteOrBlue(row[x - 1]) && row[x - 2] === 0) {
+        // 1 object
+        if ((whiteOrBlue(row[x - 1]) || canMoveAlone(row[x - 1])) && row[x - 2] === 0) {
+          if (row[x - 1] === 9) {
+            updateYellow(yellowBalls, x - 1, y, x - 2, y, "left");
+          }
           row[x - 2] = row[x - 1];
           row[x - 1] = 2;
           row[x] = 0;
@@ -207,7 +225,7 @@ export function moveLeft(arr, x, y) {
   return result;
 }
 
-export function moveRight(arr, x, y) {
+export function moveRight(arr, x, y, yellowBalls = []) {
   let result = {};
   let row = arr[y];
   let maxX = 0;
@@ -230,8 +248,11 @@ export function moveRight(arr, x, y) {
         }
       }
       if (x < maxX - 1) {
-        // 1 white ball
-        if (whiteOrBlue(row[x + 1]) && row[x + 2] === 0) {
+        // 1 object
+        if ((whiteOrBlue(row[x + 1]) || canMoveAlone(row[x + 1])) && row[x + 2] === 0) {
+          if (row[x + 1] === 9) {
+            updateYellow(yellowBalls, x + 1, y, x + 2, y, "right");
+          }
           row[x + 2] = row[x + 1];
           row[x + 1] = 2;
           row[x] = 0;
@@ -257,19 +278,31 @@ export function moveRight(arr, x, y) {
   return result;
 }
 
-export function jump(arr, x, y) {
+export function jump(arr, x, y, yellowBalls = []) {
   let result = {};
   result.eating = false;
   result.player = false;
-
-  if (arr.length > 0 && y > 0) {
-    if (arr[y - 1][x] === 0 || arr[y - 1][x] === 3) {
-      if (arr[y - 1][x] === 3) {
-        result.eating = true;
+  if (arr.length > 0) {
+    if (y > 0) {
+      if (arr[y - 1][x] === 0 || arr[y - 1][x] === 3) {
+        if (arr[y - 1][x] === 3) {
+          result.eating = true;
+        }
+        arr[y - 1][x] = 2;
+        arr[y][x] = 0;
+        result.player = true;
       }
-      arr[y - 1][x] = 2;
-      arr[y][x] = 0;
-      result.player = true;
+    }
+    if (y > 1) {
+      if (canMoveAlone(arr[y - 1][x]) && arr[y - 2][x] === 0) {
+        if (arr[y - 1][x] === 9) {
+          updateYellow(yellowBalls, x, y - 1, x, y - 2, "up");
+        }
+        arr[y - 2][x] = arr[y - 1][x];
+        arr[y - 1][x] = 2;
+        arr[y][x] = 0;
+        result.player = true;
+      }
     }
   }
   return result;
@@ -323,6 +356,7 @@ export function getGameInfo(arr) {
   result.greenBalls = 0;
   result.horizontalElevators = [];
   result.redBalls = [];
+  result.yellowBalls = [];
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -348,6 +382,13 @@ export function getGameInfo(arr) {
         elevator.y = i;
         elevator.right = arr[i][j] === 107;
         result.horizontalElevators.push(elevator);
+      }
+      if (arr[i][j] === 9) {
+        let yellowBall = {};
+        yellowBall.x = j;
+        yellowBall.y = i;
+        yellowBall.direction = "none";
+        result.yellowBalls.push(yellowBall);
       }
     }
   }
@@ -561,4 +602,34 @@ export function moveHorizontalElevators(arr, elevators, redBalls) {
     }
   }
   return result;
+}
+
+export function moveYellowBalls(arr, yellowBalls) {
+  for (let i = 0; i < yellowBalls.length; i++) {
+    let moved = false;
+    let xOld = yellowBalls[i].x;
+    let yOld = yellowBalls[i].y;
+    switch (yellowBalls[i].direction) {
+      case "left":
+        // Code Michal (Make first one direction complete, so you can copy code)
+        break;
+      case "right":
+        // Code Michal
+        break;
+      case "up":
+        // Code Michal
+        break;
+      case "up":
+        // Code Michal
+        break;
+      default:
+        break;
+    }
+    if (moved) {
+      arr[yOld][xOld] = 0;
+      arr[yellowBalls[i].y][yellowBalls[i].x] = 9;
+    } else {
+      yellowBalls[i].direction = "none";
+    }
+  }
 }

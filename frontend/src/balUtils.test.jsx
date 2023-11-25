@@ -12,6 +12,7 @@ import {
   checkRed,
   moveElevators,
   moveHorizontalElevators,
+  moveYellowBalls,
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -772,6 +773,7 @@ describe("balUtils", () => {
       { x: 1, y: 2 },
       { x: 1, y: 3 },
     ],
+    yellowBalls: [],
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(input9a))).toBe(
@@ -794,6 +796,7 @@ describe("balUtils", () => {
       { x: 1, y: 2 },
       { x: 1, y: 3 },
     ],
+    yellowBalls: [],
   };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(input9b))).toBe(
@@ -813,6 +816,7 @@ describe("balUtils", () => {
     greenBalls: 8,
     horizontalElevators: [],
     redBalls: [],
+    yellowBalls: [],
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(input9c))).toBe(
@@ -825,7 +829,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 3, 3, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 6, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 9, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 106, 0, 2, 0, 4, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
@@ -837,6 +841,7 @@ describe("balUtils", () => {
     greenBalls: 2,
     horizontalElevators: [],
     redBalls: [],
+    yellowBalls: [{ x: 1, y: 4, direction: "none" }],
   };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(input9d))).toBe(
@@ -1188,5 +1193,207 @@ describe("balUtils", () => {
 
   it("moveHorizontalElevators C red", () => {
     expect(JSON.stringify(redInput12c)).toBe(JSON.stringify([{ x: 2, y: 2 }]));
+  });
+
+  // ***** MOVE YELLOW BALLS *****
+
+  let input13a = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 9, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13a = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 9, 0, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13a = [{ x: 3, y: 2, direction: "left" }];
+  moveYellowBalls(input13a, yellow13a);
+  it("moveYellowBalls A", () => {
+    expect(JSON.stringify(input13a)).toBe(JSON.stringify(expectedOutput13a));
+  });
+
+  it("moveYellowBalls A yellow", () => {
+    expect(JSON.stringify(yellow13a)).toBe(
+      JSON.stringify([{ x: 2, y: 2, direction: "left" }])
+    );
+  });
+
+  let input13b = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 9, 0, 0, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13b = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 9, 0, 0, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13b = [{ x: 1, y: 2, direction: "left" }];
+  moveYellowBalls(input13b, yellow13b);
+  it("moveYellowBalls B", () => {
+    expect(JSON.stringify(input13b)).toBe(JSON.stringify(expectedOutput13b));
+  });
+
+  it("moveYellowBalls B yellow", () => {
+    expect(JSON.stringify(yellow13b)).toBe(
+      JSON.stringify([{ x: 1, y: 2, direction: "none" }])
+    );
+  });
+
+  let input13c = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 9, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13c = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 9, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13c = [{ x: 5, y: 2, direction: "right" }];
+  moveYellowBalls(input13c, yellow13c);
+  it("moveYellowBalls C", () => {
+    expect(JSON.stringify(input13c)).toBe(JSON.stringify(expectedOutput13c));
+  });
+
+  it("moveYellowBalls C yellow", () => {
+    expect(JSON.stringify(yellow13c)).toBe(
+      JSON.stringify([{ x: 6, y: 2, direction: "right" }])
+    );
+  });
+
+  let input13d = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 85, 0, 9, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13d = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 85, 0, 9, 2, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13d = [{ x: 3, y: 2, direction: "right" }];
+  moveYellowBalls(input13d, yellow13d);
+  it("moveYellowBalls D", () => {
+    expect(JSON.stringify(input13d)).toBe(JSON.stringify(expectedOutput13d));
+  });
+
+  it("moveYellowBalls D yellow", () => {
+    expect(JSON.stringify(yellow13d)).toBe(
+      JSON.stringify([{ x: 3, y: 2, direction: "none" }])
+    );
+  });
+
+  let input13e = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 9, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 9, 84, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13e = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 9, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 9, 0, 1],
+    [1, 0, 2, 0, 0, 84, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13e = [
+    { x: 1, y: 2, direction: "up" },
+    { x: 4, y: 4, direction: "right" },
+  ];
+  moveYellowBalls(input13e, yellow13e);
+  it("moveYellowBalls E", () => {
+    expect(JSON.stringify(input13e)).toBe(JSON.stringify(expectedOutput13e));
+  });
+
+  it("moveYellowBalls E yellow", () => {
+    expect(JSON.stringify(yellow13e)).toBe(
+      JSON.stringify([
+        { x: 1, y: 1, direction: "up" },
+        { x: 5, y: 3, direction: "up" },
+      ])
+    );
+  });
+
+  let input13f = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 86, 0, 0, 0, 0, 0, 1],
+    [1, 9, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 9, 0, 1],
+    [1, 0, 2, 0, 0, 84, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13f = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 86, 0, 0, 0, 0, 0, 1],
+    [1, 9, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 9, 84, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13f = [
+    { x: 1, y: 2, direction: "up" },
+    { x: 5, y: 3, direction: "down" },
+  ];
+  moveYellowBalls(input13f, yellow13f);
+  it("moveYellowBalls F", () => {
+    expect(JSON.stringify(input13f)).toBe(JSON.stringify(expectedOutput13f));
+  });
+
+  it("moveYellowBalls F yellow", () => {
+    expect(JSON.stringify(yellow13f)).toBe(
+      JSON.stringify([
+        { x: 1, y: 2, direction: "down" },
+        { x: 4, y: 4, direction: "left" },
+      ])
+    );
+  });
+
+  let input13g = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 9, 86, 1],
+    [1, 0, 0, 0, 0, 9, 1, 1],
+    [1, 9, 0, 0, 0, 0, 0, 1],
+    [1, 85, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput13g = [
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 9, 86, 1],
+    [1, 0, 0, 0, 0, 9, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 85, 9, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow13g = [
+    { x: 5, y: 1, direction: "right" },
+    { x: 5, y: 2, direction: "right" },
+    { x: 1, y: 3, direction: "down" },
+  ];
+  moveYellowBalls(input13g, yellow13g);
+  it("moveYellowBalls G", () => {
+    expect(JSON.stringify(input13g)).toBe(JSON.stringify(expectedOutput13g));
+  });
+
+  it("moveYellowBalls G yellow", () => {
+    expect(JSON.stringify(yellow13g)).toBe(
+      JSON.stringify([
+        { x: 5, y: 1, direction: "left" },
+        { x: 5, y: 2, direction: "none" },
+        { x: 2, y: 4, direction: "right" },
+      ])
+    );
   });
 });
