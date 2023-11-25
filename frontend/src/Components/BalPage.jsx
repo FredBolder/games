@@ -21,6 +21,7 @@ import {
   checkRed,
   moveElevators,
   moveHorizontalElevators,
+  moveYellowBalls,
 } from "../balUtils.js";
 import sndCatapult from "../Sounds/catapult.wav";
 import sndEat1 from "../Sounds/eat1.wav";
@@ -50,6 +51,7 @@ let gameInfo = {};
 gameInfo.elevators = [];
 gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
+gameInfo.yellowBalls = [];
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -570,21 +572,21 @@ function BalPage() {
       switch (e.key) {
         case "ArrowLeft":
         case "a":
-          info = moveLeft(gameData, posX, posY);
+          info = moveLeft(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posX--;
           }
           break;
         case "ArrowRight":
         case "d":
-          info = moveRight(gameData, posX, posY);
+          info = moveRight(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posX++;
           }
           break;
         case "ArrowUp":
         case "w":
-          info = jump(gameData, posX, posY);
+          info = jump(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY--;
           }
