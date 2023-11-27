@@ -17,11 +17,11 @@ th, td {
   padding: 0.25rem;
 }
 
-tr:nth-child(even) {
+tr:nth-child(odd) td {
   background-color: #004400;
 }
 
-tr:nth-child(odd) {
+tr:nth-child(even) td {
   background-color: #005500;
 }
 
