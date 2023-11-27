@@ -43,6 +43,18 @@ function charToNumber(c) {
     case "9":
       result = 9;
       break;
+    case "p":
+      result = 28;
+      break;
+    case "C":
+      result = 84;
+      break;
+    case "c":
+      result = 85;
+      break;
+    case "+":
+      result = 86;
+      break;
     default:
       result = 0;
       break;
@@ -89,6 +101,18 @@ function numberToChar(n) {
       break;
     case 9:
       result = "9";
+      break;
+    case 28:
+      result = "p";
+      break;
+    case 84:
+      result = "C";
+      break;
+    case 85:
+      result = "c";
+      break;
+    case 86:
+      result = "+";
       break;
     default:
       result = " ";
