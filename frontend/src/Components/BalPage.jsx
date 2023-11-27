@@ -419,6 +419,27 @@ function BalPage() {
               "yellow"
             );
             break;
+          case 28:
+            // purple ball
+            drawFilledCircle(
+              ctx,
+              xmin + w1 * 0.5,
+              (row + 1) * w1 - w1 * 0.5,
+              w1 * 0.5,
+              "darkmagenta"
+            );
+            break;
+          case 84:
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
+            drawLine(ctx, xmin, ymax, xmax, ymin, "black");
+            break;
+          case 85:
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
+            drawLine(ctx, xmin, ymin, xmax, ymax, "black");
+            break;
+          case 86:
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
+            break;
           default:
             // empty
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
@@ -484,7 +505,11 @@ function BalPage() {
           update = true;
         }
 
-        info = moveHorizontalElevators(gameData, gameInfo.horizontalElevators, gameInfo.redBalls);
+        info = moveHorizontalElevators(
+          gameData,
+          gameInfo.horizontalElevators,
+          gameInfo.redBalls
+        );
         if (info.playerX !== -1 && info.playerY !== -1) {
           posX = info.playerX;
           posY = info.playerY;

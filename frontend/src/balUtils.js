@@ -1,6 +1,6 @@
 function canMoveAlone(n) {
   // Object that can move, but not together with another object
-  return ([9, 28, 84, 85, 86].includes(n));
+  return [9, 28, 84, 85, 86].includes(n);
 }
 
 function charToNumber(c) {
@@ -42,6 +42,18 @@ function charToNumber(c) {
       break;
     case "9":
       result = 9;
+      break;
+    case "p":
+      result = 28;
+      break;
+    case "C":
+      result = 84;
+      break;
+    case "c":
+      result = 85;
+      break;
+    case "+":
+      result = 86;
       break;
     default:
       result = 0;
@@ -89,6 +101,18 @@ function numberToChar(n) {
       break;
     case 9:
       result = "9";
+      break;
+    case 28:
+      result = "p";
+      break;
+    case 84:
+      result = "C";
+      break;
+    case 85:
+      result = "c";
+      break;
+    case 86:
+      result = "+";
       break;
     default:
       result = " ";
@@ -196,7 +220,10 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
       }
       if (x > 1) {
         // 1 object
-        if ((whiteOrBlue(row[x - 1]) || canMoveAlone(row[x - 1])) && row[x - 2] === 0) {
+        if (
+          (whiteOrBlue(row[x - 1]) || canMoveAlone(row[x - 1])) &&
+          row[x - 2] === 0
+        ) {
           if (row[x - 1] === 9) {
             updateYellow(yellowBalls, x - 1, y, x - 2, y, "left");
           }
@@ -249,7 +276,10 @@ export function moveRight(arr, x, y, yellowBalls = []) {
       }
       if (x < maxX - 1) {
         // 1 object
-        if ((whiteOrBlue(row[x + 1]) || canMoveAlone(row[x + 1])) && row[x + 2] === 0) {
+        if (
+          (whiteOrBlue(row[x + 1]) || canMoveAlone(row[x + 1])) &&
+          row[x + 2] === 0
+        ) {
           if (row[x + 1] === 9) {
             updateYellow(yellowBalls, x + 1, y, x + 2, y, "right");
           }
