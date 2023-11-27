@@ -1,6 +1,6 @@
 function canMoveAlone(n) {
   // Object that can move, but not together with another object
-  return ([9, 28, 84, 85, 86].includes(n));
+  return [9, 28, 84, 85, 86].includes(n);
 }
 
 function charToNumber(c) {
@@ -196,7 +196,10 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
       }
       if (x > 1) {
         // 1 object
-        if ((whiteOrBlue(row[x - 1]) || canMoveAlone(row[x - 1])) && row[x - 2] === 0) {
+        if (
+          (whiteOrBlue(row[x - 1]) || canMoveAlone(row[x - 1])) &&
+          row[x - 2] === 0
+        ) {
           if (row[x - 1] === 9) {
             updateYellow(yellowBalls, x - 1, y, x - 2, y, "left");
           }
@@ -249,7 +252,10 @@ export function moveRight(arr, x, y, yellowBalls = []) {
       }
       if (x < maxX - 1) {
         // 1 object
-        if ((whiteOrBlue(row[x + 1]) || canMoveAlone(row[x + 1])) && row[x + 2] === 0) {
+        if (
+          (whiteOrBlue(row[x + 1]) || canMoveAlone(row[x + 1])) &&
+          row[x + 2] === 0
+        ) {
           if (row[x + 1] === 9) {
             updateYellow(yellowBalls, x + 1, y, x + 2, y, "right");
           }
@@ -620,16 +626,92 @@ export function moveYellowBalls(arr, yellowBalls) {
     let yOld = yellowBalls[i].y;
     switch (yellowBalls[i].direction) {
       case "left":
-        // Code Michal (Make first one direction complete, so you can copy code)
+        if (arr[yOld][xOld - 1] === 0) {
+          moved = true;
+          yellowBalls[i].x--;
+        }
+        if (arr[yOld][xOld - 1] === 86) {
+          moved = true;
+          yellowBalls[i].direction = "right";
+        }
+        if (arr[yOld][xOld - 1] === 84 && arr[yOld + 1][xOld - 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "down";
+          yellowBalls[i].x--;
+          yellowBalls[i].y++;
+        }
+        if (arr[yOld][xOld - 1] === 85 && arr[yOld - 1][xOld - 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "up";
+          yellowBalls[i].x--;
+          yellowBalls[i].y--;
+        }
         break;
       case "right":
-        // Code Michal
+        if (arr[yOld][xOld + 1] === 0) {
+          moved = true;
+          yellowBalls[i].x++;
+        }
+        if (arr[yOld][xOld + 1] === 86) {
+          moved = true;
+          yellowBalls[i].direction = "left";
+        }
+        if (arr[yOld][xOld + 1] === 84 && arr[yOld - 1][xOld + 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "up";
+          yellowBalls[i].x++;
+          yellowBalls[i].y--;
+        }
+        if (arr[yOld][xOld + 1] === 85 && arr[yOld + 1][xOld + 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "down";
+          yellowBalls[i].x++;
+          yellowBalls[i].y++;
+        }
         break;
       case "up":
-        // Code Michal
+        if (arr[yOld - 1][xOld] === 0) {
+          moved = true;
+          yellowBalls[i].y--;
+        }
+        if (arr[yOld - 1][xOld] === 86) {
+          moved = true;
+          yellowBalls[i].direction = "down";
+        }
+        if (arr[yOld - 1][xOld] === 84 && arr[yOld - 1][xOld + 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "right";
+          yellowBalls[i].x++;
+          yellowBalls[i].y--;
+        }
+        if (arr[yOld - 1][xOld] === 85 && arr[yOld - 1][xOld - 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "left";
+          yellowBalls[i].x--;
+          yellowBalls[i].y--;
+        }
         break;
-      case "up":
-        // Code Michal
+      case "down":
+        if (arr[yOld + 1][xOld] === 0) {
+          moved = true;
+          yellowBalls[i].y++;
+        }
+        if (arr[yOld + 1][xOld] === 86) {
+          moved = true;
+          yellowBalls[i].direction = "up";
+        }
+        if (arr[yOld + 1][xOld] === 84 && arr[yOld + 1][xOld - 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "left";
+          yellowBalls[i].x--;
+          yellowBalls[i].y++;
+        }
+        if (arr[yOld + 1][xOld] === 85 && arr[yOld + 1][xOld + 1] === 0) {
+          moved = true;
+          yellowBalls[i].direction = "right";
+          yellowBalls[i].x++;
+          yellowBalls[i].y++;
+        }
         break;
       default:
         break;
