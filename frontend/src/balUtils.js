@@ -360,7 +360,12 @@ export function pushDown(arr, x, y, yellowBalls = []) {
   let result = {};
   result.player = false;
   if (arr.length > 0) {
-    // Code michal, see code jump for example
+    if (arr[y][x] === 2 && arr[y + 1][x] === 28 && arr[y + 2][x] === 0) {
+      arr[y][x] = 0;
+      arr[y + 1][x] = 2;
+      arr[y + 2][x] = 28;
+      result.player = true;
+    }
   }
   return result;
 }
