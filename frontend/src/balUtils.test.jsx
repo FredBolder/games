@@ -13,6 +13,7 @@ import {
   moveElevators,
   moveHorizontalElevators,
   moveYellowBalls,
+  pushDown,
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -427,6 +428,54 @@ describe("balUtils", () => {
   });
   it("moveRight H player", () => {
     expect(info5h.player).toBe(true);
+  });
+
+  let input5i = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 2, 28, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput5i = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 0, 2, 28, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let info5i = moveRight(input5i, 1, 1);
+  it("moveRight I", () => {
+    expect(JSON.stringify(input5i)).toBe(JSON.stringify(expectedOutput5i));
+  });
+  it("moveRight I eating", () => {
+    expect(info5i.eating).toBe(false);
+  });
+  it("moveRight I player", () => {
+    expect(info5i.player).toBe(true);
+  });
+
+  let input5j = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 2, 9, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput5j = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 0, 2, 9, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let yellow5j = [{ x: 2, y: 1, direction: "none" }];
+  let info5j = moveRight(input5j, 1, 1, yellow5j);
+  it("moveRight J", () => {
+    expect(JSON.stringify(input5j)).toBe(JSON.stringify(expectedOutput5j));
+  });
+  it("moveRight J eating", () => {
+    expect(info5j.eating).toBe(false);
+  });
+  it("moveRight J player", () => {
+    expect(info5j.player).toBe(true);
+  });
+  it("moveRight J yellow", () => {
+    expect(JSON.stringify(yellow5j)).toBe(
+      JSON.stringify([{ x: 3, y: 1, direction: "right" }])
+    );
   });
 
   // ***** JUMP *****
@@ -1437,5 +1486,95 @@ describe("balUtils", () => {
         { x: 3, y: 4, direction: "none" },
       ])
     );
+  });
+
+  // ***** PUSH DOWN *****
+
+  let input14a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 2, 0, 0, 1],
+    [1, 1, 1, 9, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput14a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 2, 1, 1, 1],
+    [1, 0, 0, 9, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let yellow14a = [{ x: 3, y: 3, direction: "none" }];
+  let info14a = pushDown(input14a, 3, 2, yellow14a);
+  it("pushDown A", () => {
+    expect(JSON.stringify(input14a)).toBe(JSON.stringify(expectedOutput14a));
+  });
+
+  it("pushDown A yellow", () => {
+    expect(JSON.stringify(yellow14a)).toBe(
+      JSON.stringify([{ x: 3, y: 4, direction: "down" }])
+    );
+  });
+
+  it("pushDown A player", () => {
+    expect(JSON.stringify(info14a)).toBe(JSON.stringify({ player: true }));
+  });
+
+  let input14b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 2, 0, 0, 1],
+    [1, 1, 1, 28, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput14b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 2, 1, 1, 1],
+    [1, 0, 0, 28, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info14b = pushDown(input14b, 3, 2, []);
+  it("pushDown B", () => {
+    expect(JSON.stringify(input14b)).toBe(JSON.stringify(expectedOutput14b));
+  });
+
+  it("pushDown B player", () => {
+    expect(JSON.stringify(info14b)).toBe(JSON.stringify({ player: true }));
+  });
+
+  let input14c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 2, 0, 0, 1],
+    [1, 1, 1, 28, 1, 1, 1],
+    [1, 0, 0, 28, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput14c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 2, 0, 0, 1],
+    [1, 1, 1, 28, 1, 1, 1],
+    [1, 0, 0, 28, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info14c = pushDown(input14c, 3, 2, []);
+  it("pushDown C", () => {
+    expect(JSON.stringify(input14c)).toBe(JSON.stringify(expectedOutput14c));
+  });
+
+  it("pushDown C player", () => {
+    expect(JSON.stringify(info14c)).toBe(JSON.stringify({ player: false }));
   });
 });

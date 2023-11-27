@@ -350,6 +350,15 @@ export function jumpRight(arr, x, y) {
   return result;
 }
 
+export function pushDown(arr, x, y, yellowBalls = []) {
+  let result = {};
+  result.player = false;
+  if (arr.length > 0) {
+    // Code michal, see code jump for example
+  }
+  return result;
+}
+
 export function getGameInfo(arr) {
   let result = {};
   result.elevators = [];

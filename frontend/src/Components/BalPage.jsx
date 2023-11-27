@@ -22,6 +22,7 @@ import {
   moveElevators,
   moveHorizontalElevators,
   moveYellowBalls,
+  pushDown,
 } from "../balUtils.js";
 import sndCatapult from "../Sounds/catapult.wav";
 import sndEat1 from "../Sounds/eat1.wav";
