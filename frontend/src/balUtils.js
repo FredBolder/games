@@ -313,7 +313,7 @@ export function jump(arr, x, y, yellowBalls = []) {
   result.eating = false;
   result.player = false;
   if (arr.length > 0) {
-    if (y > 0) {
+    if (y > 0 && arr[y + 1][x] !== 0) {
       if (arr[y - 1][x] === 0 || arr[y - 1][x] === 3) {
         if (arr[y - 1][x] === 3) {
           result.eating = true;
@@ -323,7 +323,7 @@ export function jump(arr, x, y, yellowBalls = []) {
         result.player = true;
       }
     }
-    if (y > 1) {
+    if (y > 1 && arr[y + 1][x] !== 0) {
       if (canMoveAlone(arr[y - 1][x]) && arr[y - 2][x] === 0) {
         if (arr[y - 1][x] === 9) {
           updateYellow(yellowBalls, x, y - 1, x, y - 2, "up");
@@ -343,7 +343,7 @@ export function jumpLeft(arr, x, y) {
   result.eating = false;
   result.player = false;
   if (arr.length > 0) {
-    if (y > 0 && x > 0) {
+    if (y > 0 && x > 0 && arr[y + 1][x] !== 0) {
       if (arr[y - 1][x] === 0) {
         if (arr[y - 1][x - 1] === 0 || arr[y - 1][x - 1] === 3) {
           if (arr[y - 1][x - 1] === 3) {
@@ -364,7 +364,7 @@ export function jumpRight(arr, x, y) {
   result.eating = false;
   result.player = false;
   if (arr.length > 0) {
-    if (y > 0 && x < arr[0].length - 1) {
+    if (y > 0 && x < arr[0].length - 1 && arr[y + 1][x] !== 0) {
       if (arr[y - 1][x] === 0) {
         if (arr[y - 1][x + 1] === 0 || arr[y - 1][x + 1] === 3) {
           if (arr[y - 1][x + 1] === 3) {

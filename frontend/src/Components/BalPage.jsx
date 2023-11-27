@@ -60,6 +60,7 @@ let laserX2 = -1;
 let laserY = -1;
 let posX = -1;
 let posY = -1;
+let series;
 let skipFalling = 0;
 let yellowCounter = 0;
 
@@ -561,10 +562,24 @@ function BalPage() {
     }
   }
 
-  function changeLevel(e) {
-    currentLevel = Number(e.target.value) + 199;
-    initLevel(currentLevel);
-    e.target.blur();
+  function loadSeries(e) {
+    let n = Number(series.value);
+    const response = window.confirm(`Load the first level of series ${n}?`);
+    if (response) {
+      switch (n) {
+        case 1:
+          currentLevel = 200;
+          break;
+        case 6:
+          currentLevel = 700;
+          break;
+        default:
+          currentLevel = 200;
+          break;
+      }
+      initLevel(currentLevel);
+      series.blur();
+    }
   }
 
   function handleKeyDown(e) {
@@ -694,6 +709,7 @@ function BalPage() {
   }, []);
 
   function updateScreen() {
+    series = document.getElementById("series");
     canvas = document.querySelector(".gameCanvas");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -711,20 +727,13 @@ function BalPage() {
         <h1 className="title">Bal - The Game for Smart People</h1>
         <div className="balPanel">
           <div>
-            <label>Level </label>
-            <select
-              name="level"
-              id="level"
-              defaultValue="1"
-              onChange={changeLevel}
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
+            <select name="series" className="selector" id="series">
+              <option value="1">Series 1</option>
+              <option value="6">Series 6</option>
             </select>
+            <button className="button" onClick={loadSeries}>
+              Load
+            </button>
           </div>
           <button className="button" onClick={tryAgain}>
             Try again

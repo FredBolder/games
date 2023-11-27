@@ -80,9 +80,8 @@ main {
   margin-bottom: 1rem;
 }
 
-.levelSelector {
-  font-size: large;
-  display: flex;
+.selector {
+  margin: 5px;
 }
 
 /* from here TODO */
@@ -136,6 +135,7 @@ main {
   justify-content: center;
   align-items: center;
 }
+
 /*
  .loginBox {
   border: 4px solid green; 
