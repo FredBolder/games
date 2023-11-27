@@ -61,6 +61,7 @@ let laserY = -1;
 let posX = -1;
 let posY = -1;
 let skipFalling = 0;
+let yellowCounter = 0;
 
 function BalPage() {
   const [green, setGreen] = useState(0);
@@ -519,6 +520,14 @@ function BalPage() {
         }
       }
 
+      if (yellowCounter > 0) {
+        yellowCounter--;
+      } else {
+        yellowCounter = 1;
+        moveYellowBalls(gameData, gameInfo.yellowBalls);
+        update = true;
+      }
+
       if (update) {
         updateScreen();
         checkGameOver();
@@ -630,6 +639,13 @@ function BalPage() {
           if (info.player) {
             posX++;
             posY--;
+          }
+          break;
+        case "ArrowDown":
+        case "s":
+          info = pushDown(gameData, posX, posY, gameInfo.yellowBalls);
+          if (info.player) {
+            posY++;
           }
           break;
         default:

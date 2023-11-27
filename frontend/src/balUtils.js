@@ -383,11 +383,14 @@ export function jumpRight(arr, x, y) {
 export function pushDown(arr, x, y, yellowBalls = []) {
   let result = {};
   result.player = false;
-  if (arr.length > 0) {
-    if (arr[y][x] === 2 && arr[y + 1][x] === 28 && arr[y + 2][x] === 0) {
-      arr[y][x] = 0;
+  if (arr.length > 0 && y < arr.length - 2) {
+    if (canMoveAlone(arr[y + 1][x]) && arr[y + 2][x] === 0) {
+      arr[y + 2][x] = arr[y + 1][x];
       arr[y + 1][x] = 2;
-      arr[y + 2][x] = 28;
+      arr[y][x] = 0;
+      if (arr[y + 2][x] === 9) {
+        updateYellow(yellowBalls, x, y + 1, x, y + 2, "down");
+      }
       result.player = true;
     }
   }
