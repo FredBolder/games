@@ -65,8 +65,6 @@ main {
 }
 
 .button {
-  margin: 0 auto;
-  width: auto;
   background-color: #ffffff;
   color: black;
   padding: 0.5rem;
@@ -91,9 +89,9 @@ main {
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
-  gap: 2rem;
-  width: 25%;
+  width: 50%;
   color: white;
+  gap: 2rem;
 }
 
 .gameCanvas {

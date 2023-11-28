@@ -66,6 +66,7 @@ let yellowCounter = 0;
 
 function BalPage() {
   const [green, setGreen] = useState(0);
+  const [levelNumber, setLevelNumber] = useState(0);
   const [showHelp, setShowHelp] = useState(false);
 
   function playSound(sound) {
@@ -546,6 +547,7 @@ function BalPage() {
     let data = [];
 
     try {
+      setLevelNumber(n);
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
         { level: level }
@@ -735,6 +737,7 @@ function BalPage() {
       <main>
         <h1 className="title">Bal - The Game for Smart People</h1>
         <div className="balPanel">
+          <div>Level: {levelNumber}</div>
           <div>
             <select name="series" className="selector" id="series">
               <option value="1">Series 1</option>
@@ -747,7 +750,7 @@ function BalPage() {
           <button className="button" onClick={tryAgain}>
             Try again
           </button>
-          <div>Green Left: {green}</div>
+          <div>Green: {green}</div>
           <button className="button" onClick={help}>
             Help
           </button>
