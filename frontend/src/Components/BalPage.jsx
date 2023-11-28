@@ -497,7 +497,7 @@ function BalPage() {
     let info = {};
     let update = false;
 
-    if (!gameOver) {
+    if (!gameOver && gameData) {
       if (skipFalling <= 0) {
         info = checkFalling(gameData, gameInfo.redBalls);
         if (info.player) {
