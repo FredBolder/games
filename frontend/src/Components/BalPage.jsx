@@ -50,6 +50,7 @@ let elevatorCounter = 0;
 let gameData = [];
 let gameInfo = {};
 gameInfo.elevators = [];
+gameInfo.horizontalElevators = [];
 gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
 gameInfo.yellowBalls = [];
