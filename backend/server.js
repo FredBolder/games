@@ -31,11 +31,10 @@ app.get("/", (req, res) => {
   //res.send("Server is ready");
   //res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 
-  var path = require('path');
-  var filePath = "./frontend/dist/index.html"
-  var resolvedPath = path.resolve(filePath);
+  let filePath = "./frontend/dist/index.html"
+  let resolvedPath = path.resolve(filePath);
   console.log(resolvedPath);
-  return res.sendFile(resolvedPath);
+  res.sendFile(resolvedPath);
 });
 
 app.use(notFound);
