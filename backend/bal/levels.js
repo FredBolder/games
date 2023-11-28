@@ -1,3 +1,23 @@
+import fs from "fs";
+
+function loadFromFile(n) {
+  let fn = `./bal/${n}.dat`;
+  let d = "";
+  let data = [];
+
+  try {
+    d = fs.readFileSync(fn, { encoding: 'utf8', flag: 'r' });
+    data = d.split("\n");
+  } catch (error) {
+    console.log(error);
+    data = [];
+    data.push("11111");
+    data.push("17141");
+    data.push("11111");
+  }
+  return data;
+}
+
 function getLevel(n) {
   let data = [];
   switch (n) {
@@ -486,17 +506,7 @@ function getLevel(n) {
       data.push("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
       break;
     case 700:
-      data.push("11111111111111111111111111111111");
-      data.push("1C                            c1");
-      data.push("1                              1");
-      data.push("1                              1");
-      data.push("1             1   111          1");
-      data.push("1                  3           1");
-      data.push("1                              1");
-      data.push("1             Upp              1");
-      data.push("1             1                1");
-      data.push("1c        9 +   2             C1");
-      data.push("11111111111111111111111111111111");
+      data = loadFromFile(n);
       break;
     default:
       data.push("11111111111111111111111111111111111");
