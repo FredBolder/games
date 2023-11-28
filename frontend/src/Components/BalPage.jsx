@@ -71,9 +71,15 @@ function BalPage() {
 
   async function addLevel(n) {
     let level = n.toString();
-    const response = await axios.post(
-      `${import.meta.env.VITE_BE_URL}/api/users/bal/`,
-      { level: level }
+    // const response = await axios.post(
+    //   `${import.meta.env.VITE_BE_URL}/api/users/bal/`,
+    //   { level: level }
+    // );
+
+    await axios.post(
+      `${import.meta.env.VITE_BE_URL}/api/users/bal`,
+      { level: level },
+      { withCredentials: true }
     );
   }
 
