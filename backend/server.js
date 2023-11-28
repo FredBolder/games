@@ -7,6 +7,9 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
+import url from "url";
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 connectDB();
 
@@ -16,6 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 app.use(cookieParser())
 
@@ -23,7 +27,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/bal", balRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Server is ready");
+  //res.send("Server is ready");
+  res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
 
 app.use(notFound);

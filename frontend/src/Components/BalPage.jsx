@@ -69,6 +69,14 @@ function BalPage() {
   const [levelNumber, setLevelNumber] = useState(0);
   const [showHelp, setShowHelp] = useState(false);
 
+  async function addLevel(n) {
+    let level = n.toString();
+    const response = await axios.post(
+      `${import.meta.env.VITE_BE_URL}/api/users/bal/`,
+      { level: level }
+    );
+  }
+
   function playSound(sound) {
     let snd = null;
     let n = 0;
@@ -685,6 +693,7 @@ function BalPage() {
       playSound("eat");
       checkGameOver();
       if (!gameOver && gameInfo.greenBalls <= 0) {
+        addLevel(currentLevel);
         currentLevel++;
         initLevel(currentLevel);
       }

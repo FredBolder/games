@@ -113,7 +113,41 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Add level
+//route     PUT /api/users/bal
+//@access   Private
+const addLevel = asyncHandler(async (req, res) => {
+  let levels = [];
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (!user.balLevels) {
+      user.balLevels = "";
+    }
+    if (user.balLevels === "") {
+      levels = [];
+    } else {
+      levels = user.balLevels.split(",");
+    }
+    if (!levels.includes(req.body.level)) {
+      levels.push(req.body.level);
+      user.balLevels = levels.join(",");
+    }
+
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      balLevels: updatedUser.balLevels,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+
 export {
+  addLevel,
   loginUser,
   registerUser,
   logoutUser,
