@@ -683,7 +683,8 @@ function BalPage() {
       gameInfo.greenBalls--;
       setGreen(gameInfo.greenBalls);
       playSound("eat");
-      if (gameInfo.greenBalls <= 0) {
+      checkGameOver();
+      if (!gameOver && gameInfo.greenBalls <= 0) {
         currentLevel++;
         initLevel(currentLevel);
       }
