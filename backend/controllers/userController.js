@@ -116,7 +116,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 //@desc     Add level
 //route     PUT /api/users/bal
 //@access   Private
-const addLevel = asyncHandler(async (req, res) => {
+const addLevel = async (req, res) => {
   let levels = [];
   const user = await User.findById(req.user._id);
 
@@ -143,7 +143,7 @@ const addLevel = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
-});
+};
 
 
 export {
