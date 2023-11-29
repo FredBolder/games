@@ -17,8 +17,7 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-//app.use(cors({origin: "https://games-frontend.onrender.com"}));
-app.use(cors({ origin: ['http://localhost:5173', "https://games-frontend.onrender.com"], credentials: true }))
+app.use(cors({ origin: ['https://games-41ql.onrender.com/'], credentials: true }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
