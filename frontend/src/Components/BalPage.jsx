@@ -675,6 +675,7 @@ function BalPage() {
       switch (e.key) {
         case "ArrowLeft":
         case "a":
+        case "4":
           info = moveLeft(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posX--;
@@ -682,6 +683,7 @@ function BalPage() {
           break;
         case "ArrowRight":
         case "d":
+        case "6":
           info = moveRight(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posX++;
@@ -689,6 +691,7 @@ function BalPage() {
           break;
         case "ArrowUp":
         case "w":
+        case "8":
           info = jump(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY--;
@@ -696,6 +699,7 @@ function BalPage() {
           }
           break;
         case "q":
+        case "7":
           info = jumpLeft(gameData, posX, posY);
           if (info.player) {
             posX--;
@@ -703,6 +707,7 @@ function BalPage() {
           }
           break;
         case "e":
+        case "9":
           info = jumpRight(gameData, posX, posY);
           if (info.player) {
             posX++;
@@ -711,6 +716,7 @@ function BalPage() {
           break;
         case "ArrowDown":
         case "s":
+        case "2":
           info = pushDown(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY++;
@@ -833,14 +839,15 @@ function BalPage() {
               same as a yellow ball, but when you push a purple ball, it will go
               only one position further. You cannot push a ball through a one
               direction or a door with a lock. You can control the blue ball
-              with the arrow keys or the letter keys.
+              with the letter keys, the arrow keys or the number keys.
             </p>
             <table>
               <thead>
                 <tr>
                   <th scope="col">Action</th>
                   <th scope="col">Letter key</th>
-                  <th scope="col">Cursor key</th>
+                  <th scope="col">Arrow key</th>
+                  <th scope="col">Number key</th>
                 </tr>
               </thead>
               <tbody>
@@ -848,31 +855,37 @@ function BalPage() {
                   <td>Walk left</td>
                   <td>A</td>
                   <td>Arrow left</td>
+                  <td>4</td>
                 </tr>
                 <tr>
                   <td>Walk right</td>
                   <td>D</td>
                   <td>Arrow right</td>
+                  <td>6</td>
                 </tr>
                 <tr>
                   <td>Jump / Push up</td>
                   <td>W</td>
                   <td>Arrow up</td>
+                  <td>8</td>
                 </tr>
                 <tr>
                   <td>Jump left</td>
                   <td>Q</td>
                   <td>Shift + Arrow left</td>
+                  <td>7</td>
                 </tr>
                 <tr>
                   <td>Jump right</td>
                   <td>E</td>
                   <td>Shift + Arrow right</td>
+                  <td>9</td>
                 </tr>
                 <tr>
                   <td>Push down</td>
                   <td>S</td>
                   <td>Arrow down</td>
+                  <td>2</td>
                 </tr>
               </tbody>
             </table>
