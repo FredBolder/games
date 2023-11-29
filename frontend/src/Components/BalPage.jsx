@@ -889,6 +889,10 @@ function BalPage() {
                 </tr>
               </tbody>
             </table>
+            <p>
+              If you have already solved a certain level before, there is a Next button 
+              available to continue with the next level.
+            </p>
           </div>
         ) : (
           <canvas className="gameCanvas">
