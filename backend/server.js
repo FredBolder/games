@@ -17,25 +17,19 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-app.use(cors({ origin: ['https://games-41ql.onrender.com/'], credentials: true }))
+app.use(cors({ origin: ['https://games-41ql.onrender.com/', "http://localhost:5173/"], credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.resolve("./frontend/dist/")))
+app.use(express.static(path.resolve("./frontend/dist/")));
 
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/bal", balRoutes);
 
 app.get("/", (req, res) => {
-  //res.send("Server is ready");
-  //res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
-
-  let filePath = "./frontend/dist/index.html"
-  let resolvedPath = path.resolve(filePath);
-  console.log(resolvedPath);
-  res.sendFile(resolvedPath);
+  res.sendFile(path.resolve("./frontend/dist/index.html"));
 });
 
 app.use(notFound);

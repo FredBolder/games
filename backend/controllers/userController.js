@@ -113,7 +113,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc     Add level
+//@desc     Add completed level
 //route     PUT /api/users/bal
 //@access   Private
 const addLevel = async (req, res) => {
@@ -133,9 +133,7 @@ const addLevel = async (req, res) => {
       levels.push(req.body.level);
       user.balLevels = levels.join(",");
     }
-
     const updatedUser = await user.save();
-
     res.status(200).json({
       balLevels: updatedUser.balLevels,
     });
@@ -145,9 +143,29 @@ const addLevel = async (req, res) => {
   }
 };
 
+//@desc     Get completed levels
+//route     Get /api/users/bal
+//@access   Private
+const getLevels = async (req, res) => {
+  let levels = [];
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (!user.balLevels) {
+      user.balLevels = "";
+    }
+    res.status(200).json({
+      balLevels: user.balLevels,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+};
 
 export {
   addLevel,
+  getLevels,
   loginUser,
   registerUser,
   logoutUser,

@@ -44,6 +44,7 @@ import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 
 let canvas;
+let completed = [];
 let ctx;
 let currentLevel = 200;
 let elevatorCounter = 0;
@@ -59,6 +60,7 @@ let gameOver = false;
 let laserX1 = -1;
 let laserX2 = -1;
 let laserY = -1;
+let nextButton = false;
 let posX = -1;
 let posY = -1;
 let series;
@@ -68,20 +70,48 @@ let yellowCounter = 0;
 function BalPage() {
   const [green, setGreen] = useState(0);
   const [levelNumber, setLevelNumber] = useState(0);
+  const [showNext, setShowNext] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
   async function addLevel(n) {
     let level = n.toString();
-    // const response = await axios.post(
-    //   `${import.meta.env.VITE_BE_URL}/api/users/bal/`,
-    //   { level: level }
-    // );
 
-    await axios.post(
-      `${import.meta.env.VITE_BE_URL}/api/users/bal`,
-      { level: level },
-      { withCredentials: true }
-    );
+    if (!completed.includes(level)) {
+      completed.push(level);
+    }
+    try {
+      let response = await axios.post(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal`,
+        { level: level },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async function getCompleted() {
+    try {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal`,
+        { withCredentials: true }
+      );
+      const balLevels = response.data.balLevels;
+      if (balLevels === "") {
+        completed = [];
+      } else {
+        completed = balLevels.split(",");
+      }
+      //alert(completed.toString());
+      updateNextButton();
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  function updateNextButton() {
+    nextButton = completed.includes(currentLevel.toString());
+    setShowNext(nextButton);
   }
 
   function playSound(sound) {
@@ -563,6 +593,7 @@ function BalPage() {
 
     try {
       setLevelNumber(n);
+      updateNextButton();
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
         { level: level }
@@ -711,6 +742,14 @@ function BalPage() {
     updateScreen();
   }
 
+  function nextLevelClick(e) {
+    const response = window.confirm("Load the next level?");
+    if (response) {
+      currentLevel++;
+      initLevel(currentLevel);
+    }
+  }
+
   function tryAgain(e) {
     const response = window.confirm("Initialize level?");
     if (response) {
@@ -721,6 +760,7 @@ function BalPage() {
   const myRef = useRef(document);
 
   useEffect(() => {
+    getCompleted();
     initLevel(200);
     //myRef.current.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keydown", handleKeyDown);
@@ -767,6 +807,11 @@ function BalPage() {
           <button className="button" onClick={tryAgain}>
             Try again
           </button>
+          {showNext && (
+            <button className="button" onClick={nextLevelClick}>
+              Next
+            </button>
+          )}
           <div>Green: {green}</div>
           <button className="button" onClick={help}>
             Help

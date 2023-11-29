@@ -6,6 +6,7 @@ import {
   getUserProfile,
   updateUserProfile,
   addLevel,
+  getLevels,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -20,6 +21,7 @@ router
   .put(protect, updateUserProfile);
 
 router.post("/bal", protect, addLevel);
+router.get("/bal", protect, getLevels);
 
 
 export default router;
