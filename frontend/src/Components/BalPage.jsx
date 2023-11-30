@@ -828,13 +828,15 @@ function BalPage() {
     getCompleted();
     initLevel(200, false);
     getLast();
-    //myRef.current.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keydown", handleKeyDown);
+    myRef.current.addEventListener("keydown", handleKeyDown);
+    //window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("resize", handleResize);
     gameInterval = setInterval(gameScheduler, 50);
 
     return () => {
       myRef.current.removeEventListener("keydown", handleKeyDown);
+      //window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleResize);
       clearInterval(gameInterval);
     };
   }, []);
