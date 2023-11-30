@@ -1577,4 +1577,90 @@ describe("balUtils", () => {
   it("pushDown C player", () => {
     expect(JSON.stringify(info14c)).toBe(JSON.stringify({ player: false }));
   });
+
+  // ***** ONE DIRECTION PORTS *****
+
+  let input15a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 3, 1],
+    [1, 0, 2, 10, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 3, 1],
+    [1, 0, 0, 10, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15a = moveRight(input15a, 2, 2, []);
+  it("oneDirectionPorts A", () => {
+    expect(JSON.stringify(input15a)).toBe(JSON.stringify(expectedOutput15a));
+  });
+
+  it("oneDirectionPorts A player", () => {
+    expect(JSON.stringify(info15a.player)).toBe(JSON.stringify(true));
+  });
+
+  let input15b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 11, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 2, 11, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15b = moveLeft(input15b, 4, 2, []);
+  it("oneDirectionPorts B", () => {
+    expect(JSON.stringify(input15b)).toBe(JSON.stringify(expectedOutput15b));
+  });
+
+  it("oneDirectionPorts B player", () => {
+    expect(JSON.stringify(info15b.player)).toBe(JSON.stringify(true));
+  });
+
+  let input15c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 2, 11, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 2, 11, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15c = moveRight(input15c, 2, 2, []);
+  it("oneDirectionPorts C", () => {
+    expect(JSON.stringify(input15c)).toBe(JSON.stringify(expectedOutput15c));
+  });
+
+  it("oneDirectionPorts C player", () => {
+    expect(JSON.stringify(info15c.player)).toBe(JSON.stringify(false));
+  });
+
+  let input15d = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 10, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15d = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 10, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15d = moveLeft(input15d, 4, 2, []);
+  it("oneDirectionPorts D", () => {
+    expect(JSON.stringify(input15d)).toBe(JSON.stringify(expectedOutput15d));
+  });
+
+  it("oneDirectionPorts D player", () => {
+    expect(JSON.stringify(info15d.player)).toBe(JSON.stringify(false));
+  });
 });

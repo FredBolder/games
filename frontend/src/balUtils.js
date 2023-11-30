@@ -55,6 +55,12 @@ function charToNumber(c) {
     case "+":
       result = 86;
       break;
+    case ">":
+      result = 10;
+      break;
+    case "<":
+      result = 11;
+      break;
     default:
       result = 0;
       break;
@@ -113,6 +119,12 @@ function numberToChar(n) {
       break;
     case 86:
       result = "+";
+      break;
+    case 10:
+      result = ">";
+      break;
+    case 11:
+      result = "<";
       break;
     default:
       result = " ";
@@ -208,7 +220,7 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
     if (arr[y + 1][x] !== 0) {
       if (x > 0) {
         // empty space
-        if (row[x - 1] === 0 || row[x - 1] === 3) {
+        if (!result.player && (row[x - 1] === 0 || row[x - 1] === 3)) {
           // green ball
           if (row[x - 1] === 3) {
             result.eating = true;
@@ -221,6 +233,7 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
       if (x > 1) {
         // 1 object
         if (
+          !result.player &&
           (whiteOrBlue(row[x - 1]) || canMoveAlone(row[x - 1])) &&
           row[x - 2] === 0
         ) {
@@ -232,10 +245,16 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
           row[x] = 0;
           result.player = true;
         }
+        if (!result.player && row[x - 1] === 11 && row[x - 2] === 0) {
+          row[x - 2] = 2;
+          row[x] = 0;
+          result.player = true;
+        }
       }
       if (x > 2) {
         // 2 white balls
         if (
+          !result.player &&
           whiteOrBlue(row[x - 1]) &&
           whiteOrBlue(row[x - 2]) &&
           row[x - 3] === 0
@@ -264,7 +283,7 @@ export function moveRight(arr, x, y, yellowBalls = []) {
       maxX = arr[0].length - 1;
       if (x < maxX) {
         // empty space
-        if (row[x + 1] === 0 || row[x + 1] === 3) {
+        if (!result.player && (row[x + 1] === 0 || row[x + 1] === 3)) {
           // green ball
           if (row[x + 1] === 3) {
             result.eating = true;
@@ -277,6 +296,7 @@ export function moveRight(arr, x, y, yellowBalls = []) {
       if (x < maxX - 1) {
         // 1 object
         if (
+          !result.player &&
           (whiteOrBlue(row[x + 1]) || canMoveAlone(row[x + 1])) &&
           row[x + 2] === 0
         ) {
@@ -288,10 +308,16 @@ export function moveRight(arr, x, y, yellowBalls = []) {
           row[x] = 0;
           result.player = true;
         }
+        if (!result.player && row[x + 1] === 10 && row[x + 2] === 0) {
+          row[x + 2] = 2;
+          row[x] = 0;
+          result.player = true;
+        }
       }
       if (x < maxX - 2) {
         // 2 white balls
         if (
+          !result.player &&
           whiteOrBlue(row[x + 1]) &&
           whiteOrBlue(row[x + 2]) &&
           row[x + 3] === 0

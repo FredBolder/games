@@ -502,6 +502,18 @@ function BalPage() {
               "yellow"
             );
             break;
+          case 10:
+            // one direction to right >
+            drawBox(ctx, xmin, ymin, w1, w2, "white");
+            drawLine(ctx, xmin, ymin, xmax, ymin + w2 / 2, "white");
+            drawLine(ctx, xmin, ymax, xmax, ymin + w2 / 2, "white");
+            break;
+          case 11:
+            // one direction to left <
+            drawBox(ctx, xmin, ymin, w1, w2, "white");
+            drawLine(ctx, xmax, ymin, xmin, ymin + w2 / 2, "white");
+            drawLine(ctx, xmax, ymax, xmin, ymin + w2 / 2, "white");
+            break;
           case 28:
             // purple ball
             drawFilledCircle(
