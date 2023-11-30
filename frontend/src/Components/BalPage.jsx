@@ -73,6 +73,10 @@ function BalPage() {
   const [showNext, setShowNext] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
+  function credentials() {
+    return import.meta.env.VITE_NODE_ENV !== "development";
+  }
+
   async function addLevel(n) {
     let level = n.toString();
 
@@ -83,7 +87,7 @@ function BalPage() {
       let response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/users/bal/addcompleted`,
         { level: level },
-        { withCredentials: true }
+        { withCredentials: credentials() }
       );
     } catch (error) {
       alert(error);
@@ -94,7 +98,7 @@ function BalPage() {
     try {
       let response = await axios.get(
         `${import.meta.env.VITE_BE_URL}/api/users/bal/getcompleted`,
-        { withCredentials: true }
+        { withCredentials: credentials() }
       );
       const balLevels = response.data.balLevels;
       if (balLevels === "") {
@@ -116,7 +120,7 @@ function BalPage() {
       let response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/users/bal/setlast`,
         { level: level },
-        { withCredentials: true }
+        { withCredentials: credentials() }
       );
     } catch (error) {
       alert(error);
@@ -127,7 +131,7 @@ function BalPage() {
     try {
       let response = await axios.get(
         `${import.meta.env.VITE_BE_URL}/api/users/bal/getlast`,
-        { withCredentials: true }
+        { withCredentials: credentials() }
       );
       let level = response.data.balLastPlayed;
       if (level !== "") {

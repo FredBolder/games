@@ -17,20 +17,36 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-app.use(cors({ origin: ['https://games-41ql.onrender.com/', "http://localhost:5173/", "http://localhost:5000/"], credentials: true }));
+if (process.env.NODE_ENV === "development") {
+  console.log("CORS FOR DEVELOPMENT");
+  app.use(cors());
+} else {
+  console.log("CORS FOR PUBLISHING");
+  app.use(cors({ origin: ['https://games-41ql.onrender.com/', "http://localhost:5173/", "http://localhost:5000/"], credentials: true }));
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.resolve("./frontend/dist/")));
+if (process.env.NODE_ENV === "development") {
+  app.use(express.static(path.resolve("../frontend/dist/")));
+} else {
+  app.use(express.static(path.resolve("./frontend/dist/")));
+}
 
 app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/bal", balRoutes);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve("./frontend/dist/index.html"));
-});
+if (process.env.NODE_ENV === "development") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve("../frontend/dist/index.html"));
+  });
+} else {
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve("./frontend/dist/index.html"));
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);
