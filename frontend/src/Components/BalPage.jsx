@@ -132,9 +132,7 @@ function BalPage() {
       let level = response.data.balLastPlayed;
       if (level !== "") {
         level = Number(level);
-        const loadLevel = window.confirm(
-          `Continue with level ${level}?`
-        );
+        const loadLevel = window.confirm(`Continue with level ${level}?`);
         if (loadLevel) {
           currentLevel = level;
           initLevel(currentLevel);
@@ -623,13 +621,15 @@ function BalPage() {
     setShowHelp(!showHelp);
   }
 
-  async function initLevel(n) {
+  async function initLevel(n, setLastPlayed = true) {
     let level = n.toString();
     let data = [];
 
     try {
       setLevelNumber(n);
-      setLast(n);
+      if (setLastPlayed) {
+        setLast(n);
+      }
       updateNextButton();
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
@@ -804,7 +804,7 @@ function BalPage() {
 
   useEffect(() => {
     getCompleted();
-    initLevel(200);
+    initLevel(200, false);
     getLast();
     //myRef.current.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keydown", handleKeyDown);
