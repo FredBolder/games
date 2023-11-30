@@ -215,6 +215,7 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
   let row = arr[y];
   result.eating = false;
   result.player = false;
+  result.oneDirection = false;
 
   if (arr.length > 0) {
     if (arr[y + 1][x] !== 0) {
@@ -249,6 +250,7 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
           row[x - 2] = 2;
           row[x] = 0;
           result.player = true;
+          result.oneDirection = true;
         }
       }
       if (x > 2) {
@@ -277,6 +279,7 @@ export function moveRight(arr, x, y, yellowBalls = []) {
   let maxX = 0;
   result.eating = false;
   result.player = false;
+  result.oneDirection = false;
 
   if (arr.length > 0) {
     if (arr[y + 1][x] !== 0) {
@@ -312,6 +315,7 @@ export function moveRight(arr, x, y, yellowBalls = []) {
           row[x + 2] = 2;
           row[x] = 0;
           result.player = true;
+          result.oneDirection = true;
         }
       }
       if (x < maxX - 2) {

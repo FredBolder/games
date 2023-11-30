@@ -728,6 +728,9 @@ function BalPage() {
           info = moveLeft(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posX--;
+            if (info.oneDirection) {
+              posX--;
+            }
           }
           break;
         case "ArrowRight":
@@ -736,6 +739,9 @@ function BalPage() {
           info = moveRight(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posX++;
+            if (info.oneDirection) {
+              posX++;
+            }
           }
           break;
         case "ArrowUp":
