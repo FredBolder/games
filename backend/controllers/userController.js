@@ -32,8 +32,9 @@ const registerUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
+    res.status(200).send("User already exists");
+    return;
+    //throw new Error("User already exists");
   }
 
   const user = await User.create({
@@ -45,13 +46,14 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (user) {
-    generateToken(res, user._id);
-    res.status(201).json({
-      _id: user._id,
-      firstName: user.firstName,
-      userName: user.userName,
-      email: user.email,
-    });
+    // generateToken(res, user._id);
+    // res.status(201).json({
+    //   _id: user._id,
+    //   firstName: user.firstName,
+    //   userName: user.userName,
+    //   email: user.email,
+    // });
+    res.sendStatus(201);
   } else {
     res.status(400);
     throw new Error("Invalid user data");
@@ -114,7 +116,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 //@desc     Add completed level
-//route     PUT /api/users/bal/addcompleted
+//route     POST /api/users/bal/addcompleted
 //@access   Private
 const addLevel = asyncHandler(async (req, res) => {
   let levels = [];
@@ -144,7 +146,7 @@ const addLevel = asyncHandler(async (req, res) => {
 });
 
 //@desc     Get completed levels
-//route     Get /api/users/bal/getcompleted
+//route     GET /api/users/bal/getcompleted
 //@access   Private
 const getLevels = asyncHandler(async (req, res) => {
   let levels = [];
@@ -164,7 +166,7 @@ const getLevels = asyncHandler(async (req, res) => {
 });
 
 //@desc     Set last played level
-//route     PUT /api/users/bal/setlast
+//route     POST /api/users/bal/setlast
 //@access   Private
 const setLast = asyncHandler(async (req, res) => {
   let levels = [];
@@ -183,7 +185,7 @@ const setLast = asyncHandler(async (req, res) => {
 });
 
 //@desc     get last played level
-//route     Get /api/users/bal/getlast
+//route     GET /api/users/bal/getlast
 //@access   Private
 const getLast = asyncHandler(async (req, res) => {
   let levels = [];

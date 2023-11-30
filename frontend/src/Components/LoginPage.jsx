@@ -1,11 +1,14 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import InfoContext from "../Context/InfoContext";
 import Navbar from "./Navbar";
 import axios from "axios";
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { setLoggedIn, loggedIn } = useContext(InfoContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -18,6 +21,7 @@ function LoginPage() {
         `${import.meta.env.VITE_BE_URL}/api/users/login`,
         userCredentials
       );
+      setLoggedIn(true);
       navigate("/bal");
     } catch (err) {
       //console.log(err);

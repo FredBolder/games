@@ -20,11 +20,14 @@ function RegisterPage() {
         `${import.meta.env.VITE_BE_URL}/api/users/register`,
         userData
       );
-      navigate("/login");
-      alert("User Registered Succesfully!");
+      if (response.status === 200) {
+        alert(response.data);
+      } else {
+        navigate("/login");
+        alert("User Registered Succesfully!");
+      }
     } catch (err) {
-      //console.log(err);
-      alert(err);
+      alert(err.message);
     }
   };
 
