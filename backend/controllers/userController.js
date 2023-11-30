@@ -114,9 +114,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 //@desc     Add completed level
-//route     PUT /api/users/bal
+//route     PUT /api/users/bal/addcompleted
 //@access   Private
-const addLevel = async (req, res) => {
+const addLevel = asyncHandler(async (req, res) => {
   let levels = [];
   const user = await User.findById(req.user._id);
 
@@ -141,12 +141,12 @@ const addLevel = async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
-};
+});
 
 //@desc     Get completed levels
-//route     Get /api/users/bal
+//route     Get /api/users/bal/getcompleted
 //@access   Private
-const getLevels = async (req, res) => {
+const getLevels = asyncHandler(async (req, res) => {
   let levels = [];
   const user = await User.findById(req.user._id);
 
@@ -161,11 +161,52 @@ const getLevels = async (req, res) => {
     res.status(404);
     throw new Error("User not found");
   }
-};
+});
+
+//@desc     Set last played level
+//route     PUT /api/users/bal/setlast
+//@access   Private
+const setLast = asyncHandler(async (req, res) => {
+  let levels = [];
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.balLastPlayed = req.body.level;
+    const updatedUser = await user.save();
+    res.status(200).json({
+      balLastPlayed: updatedUser.balLastPlayed,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+//@desc     get last played level
+//route     Get /api/users/bal/getlast
+//@access   Private
+const getLast = asyncHandler(async (req, res) => {
+  let levels = [];
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (!user.balLastPlayed) {
+      user.balLastPlayed = "";
+    }
+    res.status(200).json({
+      balLastPlayed: user.balLastPlayed,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
 
 export {
   addLevel,
   getLevels,
+  setLast,
+  getLast,
   loginUser,
   registerUser,
   logoutUser,

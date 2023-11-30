@@ -81,7 +81,7 @@ function BalPage() {
     }
     try {
       let response = await axios.post(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal`,
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/addcompleted`,
         { level: level },
         { withCredentials: true }
       );
@@ -93,7 +93,7 @@ function BalPage() {
   async function getCompleted() {
     try {
       let response = await axios.get(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal`,
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/getcompleted`,
         { withCredentials: true }
       );
       const balLevels = response.data.balLevels;
@@ -104,6 +104,42 @@ function BalPage() {
       }
       //alert(completed.toString());
       updateNextButton();
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async function setLast(n) {
+    let level = n.toString();
+
+    try {
+      let response = await axios.post(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/setlast`,
+        { level: level },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async function getLast() {
+    try {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/getlast`,
+        { withCredentials: true }
+      );
+      let level = response.data.balLastPlayed;
+      if (level !== "") {
+        level = Number(level);
+        const loadLevel = window.confirm(
+          `Continue with level ${level}?`
+        );
+        if (loadLevel) {
+          currentLevel = level;
+          initLevel(currentLevel);
+        }
+      }
     } catch (error) {
       alert(error);
     }
@@ -593,6 +629,7 @@ function BalPage() {
 
     try {
       setLevelNumber(n);
+      setLast(n);
       updateNextButton();
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
@@ -768,6 +805,7 @@ function BalPage() {
   useEffect(() => {
     getCompleted();
     initLevel(200);
+    getLast();
     //myRef.current.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("resize", handleResize);
@@ -890,8 +928,8 @@ function BalPage() {
               </tbody>
             </table>
             <p>
-              If you have already solved a certain level before, there is a Next button 
-              available to continue with the next level.
+              If you have already solved a certain level before, there is a Next
+              button available to continue with the next level.
             </p>
           </div>
         ) : (

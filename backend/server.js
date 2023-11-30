@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use("/api/users", userRoutes);
 app.use("/api/bal", balRoutes);
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.resolve("./frontend/dist/index.html"));
 });
 

@@ -22,6 +22,9 @@ const userSchema = mongoose.Schema(
     },
     balLevels: {
       type: String,
+    },
+    balLastPlayed: {
+      type: String,
     }
   },
   {

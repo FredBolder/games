@@ -7,6 +7,8 @@ import {
   updateUserProfile,
   addLevel,
   getLevels,
+  setLast,
+  getLast,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -20,8 +22,9 @@ router
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 
-router.post("/bal", protect, addLevel);
-router.get("/bal", protect, getLevels);
-
+router.post("/bal/addcompleted", protect, addLevel);
+router.get("/bal/getcompleted", protect, getLevels);
+router.post("/bal/setlast", protect, setLast);
+router.get("/bal/getlast", protect, getLast);
 
 export default router;
