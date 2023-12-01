@@ -42,6 +42,7 @@ import sndSplash2 from "../Sounds/splash2.wav";
 import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
+import Footer from "./Footer";
 
 let canvas;
 let completed = [];
@@ -856,10 +857,10 @@ function BalPage() {
 
   return (
     <div className="page">
-      <header>
-        <Navbar />
-      </header>
       <main>
+        <header>
+          <Navbar />
+        </header>
         <h1 className="title">Bal - The Game for Smart People</h1>
         <div className="balPanel">
           <div>Level: {levelNumber}</div>
@@ -961,6 +962,7 @@ function BalPage() {
             <p>Bal</p>
           </canvas>
         )}
+        <Footer />
       </main>
     </div>
   );
