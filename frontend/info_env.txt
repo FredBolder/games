@@ -1,2 +1,3 @@
+VITE_NODE_ENV=development
 VITE_BE_URL=http://localhost:5000
 #VITE_BE_URL=https://games-41ql.onrender.com
