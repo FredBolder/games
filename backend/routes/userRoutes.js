@@ -9,6 +9,8 @@ import {
   getLevels,
   setLast,
   getLast,
+  saveSettings,
+  loadSettings
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -26,5 +28,7 @@ router.post("/bal/addcompleted", protect, addLevel);
 router.get("/bal/getcompleted", protect, getLevels);
 router.post("/bal/setlast", protect, setLast);
 router.get("/bal/getlast", protect, getLast);
+router.post("/bal/savesettings", protect, saveSettings);
+router.get("/bal/loadsettings", protect, loadSettings);
 
 export default router;

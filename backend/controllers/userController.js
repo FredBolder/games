@@ -204,11 +204,50 @@ const getLast = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Save settings
+//route     POST /api/users/bal/savesettings
+//@access   Private
+const saveSettings = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.balSettings = req.body.balSettings;
+    const updatedUser = await user.save();
+    res.status(200).json({
+      balSettings: updatedUser.balSettings,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+//@desc     Load settings
+//route     GET /api/users/bal/loadsettings
+//@access   Private
+const loadSettings = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (!user.balSettings) {
+      user.balSettings = JSON.stringify({ sound: false, nicerGraphics: false });
+    }
+    res.status(200).json({
+      balSettings: user.balSettings,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 export {
   addLevel,
   getLevels,
   setLast,
   getLast,
+  saveSettings,
+  loadSettings,
   loginUser,
   registerUser,
   logoutUser,
