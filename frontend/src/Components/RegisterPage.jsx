@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -33,10 +34,10 @@ function RegisterPage() {
 
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
       <main>
+        <header>
+          <Navbar />
+        </header>
         <div className="loginBox">
           <div className="loginBoxInfo">
             <div className="loginBoxInfos">
@@ -64,19 +65,22 @@ function RegisterPage() {
                     className="form-input"
                   />
                   <br />
-                  <input type="submit" value="Register" className="button" />
+                  <div className="registerSubmit">
+                    <input type="submit" value="Register" className="button" />
+                  </div>
                 </form>
               </div>
             </div>
 
             <div className="alternate-LoginBox">
               <div className="social-register">
-                <h3>Register also with your Google account:</h3>
-                <p>Here will be Google window</p>
+                <h3>Here will be the picture to add:</h3>
+                <p>Picture that i will make on monday</p>
               </div>
             </div>
           </div>
         </div>
+        <Footer />
       </main>
     </>
   );

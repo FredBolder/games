@@ -5,6 +5,7 @@ import { useContext } from "react";
 import InfoContext from "../Context/InfoContext";
 import Navbar from "./Navbar";
 import axios from "axios";
+import Footer from "./Footer";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -31,10 +32,10 @@ function LoginPage() {
 
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
       <main>
+        <header>
+          <Navbar />
+        </header>
         <div className="loginBox">
           <div className="loginBoxInfo">
             <div className="loginBoxInfos">
@@ -63,6 +64,7 @@ function LoginPage() {
             </div>
           </div>
         </div>
+        <Footer />
       </main>
     </>
   );
