@@ -61,6 +61,12 @@ function charToNumber(c) {
     case "<":
       result = 11;
       break;
+    case "^":
+      result = 87;
+      break;
+    case "v":
+      result = 88;
+      break;
     default:
       result = 0;
       break;
@@ -125,6 +131,12 @@ function numberToChar(n) {
       break;
     case 11:
       result = "<";
+      break;
+    case 87:
+      result = "^";
+      break;
+    case 88:
+      result = "v";
       break;
     default:
       result = " ";
@@ -342,9 +354,11 @@ export function jump(arr, x, y, yellowBalls = []) {
   let result = {};
   result.eating = false;
   result.player = false;
+  result.oneDirection = false;
+
   if (arr.length > 0) {
     if (y > 0 && arr[y + 1][x] !== 0) {
-      if (arr[y - 1][x] === 0 || arr[y - 1][x] === 3) {
+      if (!result.player && (arr[y - 1][x] === 0 || arr[y - 1][x] === 3)) {
         if (arr[y - 1][x] === 3) {
           result.eating = true;
         }
@@ -354,7 +368,7 @@ export function jump(arr, x, y, yellowBalls = []) {
       }
     }
     if (y > 1 && arr[y + 1][x] !== 0) {
-      if (canMoveAlone(arr[y - 1][x]) && arr[y - 2][x] === 0) {
+      if (!result.player && canMoveAlone(arr[y - 1][x]) && arr[y - 2][x] === 0) {
         if (arr[y - 1][x] === 9) {
           updateYellow(yellowBalls, x, y - 1, x, y - 2, "up");
         }
@@ -362,6 +376,12 @@ export function jump(arr, x, y, yellowBalls = []) {
         arr[y - 1][x] = 2;
         arr[y][x] = 0;
         result.player = true;
+      }
+      if (!result.player && arr[y - 1][x] === 87 && arr[y - 2][x] === 0) {
+        arr[y - 2][x] = 2;
+        arr[y][x] = 0;
+        result.player = true;
+        result.oneDirection = true;
       }
     }
   }
@@ -413,8 +433,10 @@ export function jumpRight(arr, x, y) {
 export function pushDown(arr, x, y, yellowBalls = []) {
   let result = {};
   result.player = false;
+  result.oneDirection = false;
+
   if (arr.length > 0 && y < arr.length - 2) {
-    if (canMoveAlone(arr[y + 1][x]) && arr[y + 2][x] === 0) {
+    if (!result.player && canMoveAlone(arr[y + 1][x]) && arr[y + 2][x] === 0) {
       arr[y + 2][x] = arr[y + 1][x];
       arr[y + 1][x] = 2;
       arr[y][x] = 0;
@@ -422,6 +444,12 @@ export function pushDown(arr, x, y, yellowBalls = []) {
         updateYellow(yellowBalls, x, y + 1, x, y + 2, "down");
       }
       result.player = true;
+    }
+    if (!result.player && arr[y + 1][x] === 88 && arr[y + 2][x] === 0) {
+      arr[y + 2][x] = 2;
+      arr[y][x] = 0;
+      result.player = true;
+      result.oneDirection = true;
     }
   }
   return result;

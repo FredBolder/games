@@ -297,11 +297,10 @@ describe("balUtils", () => {
   it("moveRight B", () => {
     expect(JSON.stringify(input5b)).toBe(JSON.stringify(expectedOutput5b));
   });
-  it("moveRight B eating", () => {
-    expect(info5b.eating).toBe(false);
-  });
-  it("moveRight B player", () => {
-    expect(info5b.player).toBe(true);
+  it("moveRight B info", () => {
+    expect(JSON.stringify(info5b)).toBe(
+      JSON.stringify({ eating: false, player: true, oneDirection: false })
+    );
   });
 
   let input5c = [
@@ -1520,8 +1519,10 @@ describe("balUtils", () => {
     );
   });
 
-  it("pushDown A player", () => {
-    expect(JSON.stringify(info14a)).toBe(JSON.stringify({ player: true }));
+  it("pushDown A info", () => {
+    expect(JSON.stringify(info14a)).toBe(
+      JSON.stringify({ player: true, oneDirection: false })
+    );
   });
 
   let input14b = [
@@ -1547,8 +1548,10 @@ describe("balUtils", () => {
     expect(JSON.stringify(input14b)).toBe(JSON.stringify(expectedOutput14b));
   });
 
-  it("pushDown B player", () => {
-    expect(JSON.stringify(info14b)).toBe(JSON.stringify({ player: true }));
+  it("pushDown B info", () => {
+    expect(JSON.stringify(info14b)).toBe(
+      JSON.stringify({ player: true, oneDirection: false })
+    );
   });
 
   let input14c = [
@@ -1574,8 +1577,10 @@ describe("balUtils", () => {
     expect(JSON.stringify(input14c)).toBe(JSON.stringify(expectedOutput14c));
   });
 
-  it("pushDown C player", () => {
-    expect(JSON.stringify(info14c)).toBe(JSON.stringify({ player: false }));
+  it("pushDown C info", () => {
+    expect(JSON.stringify(info14c)).toBe(
+      JSON.stringify({ player: false, oneDirection: false })
+    );
   });
 
   // ***** ONE DIRECTION PORTS *****
@@ -1593,12 +1598,14 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1],
   ];
   let info15a = moveRight(input15a, 2, 2, []);
-  it("oneDirectionPorts A", () => {
+  it("One direction ports A", () => {
     expect(JSON.stringify(input15a)).toBe(JSON.stringify(expectedOutput15a));
   });
 
-  it("oneDirectionPorts A player", () => {
-    expect(JSON.stringify(info15a.player)).toBe(JSON.stringify(true));
+  it("One direction ports A info", () => {
+    expect(JSON.stringify(info15a)).toBe(
+      JSON.stringify({ eating: false, player: true, oneDirection: true })
+    );
   });
 
   let input15b = [
@@ -1614,11 +1621,11 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1],
   ];
   let info15b = moveLeft(input15b, 4, 2, []);
-  it("oneDirectionPorts B", () => {
+  it("One direction ports B", () => {
     expect(JSON.stringify(input15b)).toBe(JSON.stringify(expectedOutput15b));
   });
 
-  it("oneDirectionPorts B player", () => {
+  it("One direction ports B player", () => {
     expect(JSON.stringify(info15b.player)).toBe(JSON.stringify(true));
   });
 
@@ -1635,11 +1642,11 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1],
   ];
   let info15c = moveRight(input15c, 2, 2, []);
-  it("oneDirectionPorts C", () => {
+  it("One direction ports C", () => {
     expect(JSON.stringify(input15c)).toBe(JSON.stringify(expectedOutput15c));
   });
 
-  it("oneDirectionPorts C player", () => {
+  it("One direction ports C player", () => {
     expect(JSON.stringify(info15c.player)).toBe(JSON.stringify(false));
   });
 
@@ -1656,11 +1663,161 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1],
   ];
   let info15d = moveLeft(input15d, 4, 2, []);
-  it("oneDirectionPorts D", () => {
+  it("One direction ports D", () => {
     expect(JSON.stringify(input15d)).toBe(JSON.stringify(expectedOutput15d));
   });
 
-  it("oneDirectionPorts D player", () => {
+  it("One direction ports D player", () => {
     expect(JSON.stringify(info15d.player)).toBe(JSON.stringify(false));
+  });
+
+  let input15e = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15e = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 2, 0, 0, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15e = jump(input15e, 2, 3, []);
+  it("One direction ports E", () => {
+    expect(JSON.stringify(input15e)).toBe(JSON.stringify(expectedOutput15e));
+  });
+
+  it("One direction ports E info", () => {
+    expect(JSON.stringify(info15e)).toBe(
+      JSON.stringify({ eating: false, player: true, oneDirection: true })
+    );
+  });
+
+  let input15f = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 4, 0, 0, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15f = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 4, 0, 0, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15f = jump(input15f, 2, 3, []);
+  it("One direction ports F", () => {
+    expect(JSON.stringify(input15f)).toBe(JSON.stringify(expectedOutput15f));
+  });
+
+  it("One direction ports F info", () => {
+    expect(JSON.stringify(info15f)).toBe(
+      JSON.stringify({ eating: false, player: false, oneDirection: false })
+    );
+  });
+
+  let input15g = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 2, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15g = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 0, 0, 2, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15g = pushDown(input15g, 4, 1, []);
+  it("One direction ports G", () => {
+    expect(JSON.stringify(input15g)).toBe(JSON.stringify(expectedOutput15g));
+  });
+
+  it("One direction ports G info", () => {
+    expect(JSON.stringify(info15g)).toBe(
+      JSON.stringify({ player: true, oneDirection: true })
+    );
+  });
+
+  let input15h = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 2, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 0, 0, 4, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15h = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 2, 0, 1],
+    [1, 1, 87, 1, 88, 1, 1],
+    [1, 0, 0, 0, 4, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15h = pushDown(input15h, 4, 1, []);
+  it("One direction ports H", () => {
+    expect(JSON.stringify(input15h)).toBe(JSON.stringify(expectedOutput15h));
+  });
+
+  it("One direction ports G info", () => {
+    expect(JSON.stringify(info15h)).toBe(
+      JSON.stringify({ player: false, oneDirection: false })
+    );
+  });
+
+  let input15i = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 2, 0, 1],
+    [1, 1, 88, 1, 87, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15i = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 2, 0, 1],
+    [1, 1, 88, 1, 87, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15i = pushDown(input15i, 4, 1, []);
+  it("One direction ports I", () => {
+    expect(JSON.stringify(input15i)).toBe(JSON.stringify(expectedOutput15i));
+  });
+
+  it("One direction ports I info", () => {
+    expect(JSON.stringify(info15i)).toBe(
+      JSON.stringify({ player: false, oneDirection: false })
+    );
+  });
+
+  let input15j = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 1, 88, 1, 88, 1, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput15j = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 1, 88, 1, 88, 1, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info15j = jump(input15j, 2, 3, []);
+  it("One direction ports J", () => {
+    expect(JSON.stringify(input15j)).toBe(JSON.stringify(expectedOutput15j));
+  });
+
+  it("One direction ports J info", () => {
+    expect(JSON.stringify(info15j)).toBe(
+      JSON.stringify({ eating: false, player: false, oneDirection: false })
+    );
   });
 });

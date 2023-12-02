@@ -45,7 +45,6 @@ import sndUnlock from "../Sounds/unlock.wav";
 import Footer from "./Footer";
 import imgBlueHappy from "../Images/blue_bal_happy.png";
 
-
 let canvas;
 let cbGraphics = null;
 let cbSound = null;
@@ -588,6 +587,18 @@ function BalPage() {
           case 86:
             drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
             break;
+          case 87:
+            // one direction up ^
+            drawBox(ctx, xmin, ymin, w1, w2, "white");
+            drawLine(ctx, xmin, ymax, xc, ymin, "white");
+            drawLine(ctx, xmax, ymax, xc, ymin, "white");
+            break;
+          case 88:
+            // one direction down v
+            drawBox(ctx, xmin, ymin, w1, w2, "white");
+            drawLine(ctx, xmin, ymin, xc, ymax, "white");
+            drawLine(ctx, xmax, ymin, xc, ymax, "white");
+            break;
           default:
             // empty
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
@@ -809,6 +820,9 @@ function BalPage() {
           info = jump(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY--;
+            if (info.oneDirection) {
+              posY--;
+            }
             elevatorCounter++; // To prevent that you fall from the elevator
           }
           break;
@@ -834,6 +848,9 @@ function BalPage() {
           info = pushDown(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY++;
+            if (info.oneDirection) {
+              posY++;
+            }
           }
           break;
         default:
@@ -1048,7 +1065,7 @@ function BalPage() {
             <p>Bal</p>
           </canvas>
         )}
-        <div style={{display: "none"}}>
+        <div style={{ display: "none" }}>
           <img id="happy" src={imgBlueHappy} />
         </div>
         <Footer />
