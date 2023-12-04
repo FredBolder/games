@@ -44,6 +44,8 @@ import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 import Footer from "./Footer";
 import imgBlueHappy from "../Images/blue_bal_happy.svg";
+import imgBlueSad from "../Images/blue_bal_sad.svg";
+import imgRed from "../Images/red_bal.svg";
 
 let canvas;
 let cbGraphics = null;
@@ -52,6 +54,8 @@ let completed = [];
 let ctx;
 let currentLevel = 200;
 let elementHappy;
+let elementRed;
+let elementSad;
 let elevatorCounter = 0;
 let gameData = [];
 let gameInfo = {};
@@ -318,10 +322,11 @@ function BalPage() {
             }
 
             if (settings.nicerGraphics) {
-              //const pattern = ctx.createPattern(imgBlueHappy, "no-repeat");
-              //ctx.fillStyle = pattern;
-              //ctx.fillRect(xmin, ymin, w1, w2);
-              ctx.drawImage(elementHappy, xmin, ymin, w1, w2);
+              if (gameOver) {
+                ctx.drawImage(elementSad, xmin, ymin, w1, w2);
+              } else {
+                ctx.drawImage(elementHappy, xmin, ymin, w1, w2);
+              }
             } else {
               drawFilledCircle(
                 ctx,
@@ -511,38 +516,42 @@ function BalPage() {
             break;
           case 8:
             // red ball
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.5,
-              w1 * 0.5,
-              "red"
-            );
+            if (settings.nicerGraphics) {
+              ctx.drawImage(elementRed, xmin, ymin, w1, w2);
+            } else {
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "red"
+              );
 
-            eye = Math.round(w1 / 20);
-            if (eye < 1) {
-              eye = 1;
+              eye = Math.round(w1 / 20);
+              if (eye < 1) {
+                eye = 1;
+              }
+              d1 = size1 / 3.25;
+              d2 = Math.round(w1 / 12);
+              drawFilledCircle(
+                ctx,
+                Math.round(dxmin + d1),
+                Math.round(yc - d2),
+                eye,
+                "white"
+              );
+              drawFilledCircle(
+                ctx,
+                Math.round(dxmax - d1),
+                Math.round(yc - d2),
+                eye,
+                "white"
+              );
+
+              d1 = w1 / 6;
+              d2 = w1 / 5;
+              drawLine(ctx, xc - d1, yc + d2, xc + d1, yc + d2, "white");
             }
-            d1 = size1 / 3.25;
-            d2 = Math.round(w1 / 12);
-            drawFilledCircle(
-              ctx,
-              Math.round(dxmin + d1),
-              Math.round(yc - d2),
-              eye,
-              "white"
-            );
-            drawFilledCircle(
-              ctx,
-              Math.round(dxmax - d1),
-              Math.round(yc - d2),
-              eye,
-              "white"
-            );
-
-            d1 = w1 / 6;
-            d2 = w1 / 5;
-            drawLine(ctx, xc - d1, yc + d2, xc + d1, yc + d2, "white");
             break;
           case 9:
             // yellow ball
@@ -794,6 +803,7 @@ function BalPage() {
       switch (e.key) {
         case "ArrowLeft":
         case "a":
+        case "A":
         case "4":
           info = moveLeft(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
@@ -805,6 +815,7 @@ function BalPage() {
           break;
         case "ArrowRight":
         case "d":
+        case "D":
         case "6":
           info = moveRight(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
@@ -816,6 +827,7 @@ function BalPage() {
           break;
         case "ArrowUp":
         case "w":
+        case "W":
         case "8":
           info = jump(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
@@ -827,6 +839,7 @@ function BalPage() {
           }
           break;
         case "q":
+        case "Q":
         case "7":
           info = jumpLeft(gameData, posX, posY);
           if (info.player) {
@@ -835,6 +848,7 @@ function BalPage() {
           }
           break;
         case "e":
+        case "E":
         case "9":
           info = jumpRight(gameData, posX, posY);
           if (info.player) {
@@ -844,6 +858,7 @@ function BalPage() {
           break;
         case "ArrowDown":
         case "s":
+        case "S":
         case "2":
           info = pushDown(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
@@ -898,6 +913,8 @@ function BalPage() {
 
   useEffect(() => {
     elementHappy = document.getElementById("happy");
+    elementSad = document.getElementById("sad");
+    elementRed = document.getElementById("red");
     getCompleted();
     initLevel(200, false);
     cbGraphics = document.getElementById("graphics");
@@ -1033,7 +1050,8 @@ function BalPage() {
               same as a yellow ball, but when you push a purple ball, it will go
               only one position further. You cannot push a ball through a one
               direction or a door with a lock. You can control the blue ball
-              with the letter keys, the arrow keys or the number keys.
+              with the letter keys, the arrow keys, the number keys or the arrow
+              buttons.
             </p>
             <table>
               <thead>
@@ -1103,6 +1121,12 @@ function BalPage() {
         </div>
         <div style={{ display: "none" }}>
           <img id="happy" src={imgBlueHappy} />
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="sad" src={imgBlueSad} />
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="red" src={imgRed} />
         </div>
         <Footer />
       </main>
