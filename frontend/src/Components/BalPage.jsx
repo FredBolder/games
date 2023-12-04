@@ -43,7 +43,7 @@ import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 import Footer from "./Footer";
-import imgBlueHappy from "../Images/blue_bal_happy.png";
+import imgBlueHappy from "../Images/blue_bal_happy.svg";
 
 let canvas;
 let cbGraphics = null;
