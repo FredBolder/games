@@ -115,6 +115,49 @@ main {
   border-radius: 15px;
 }
 
+/* Menu */
+
+.menu-button {
+  background-color: #0000FF;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.menu {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.menu-content div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.menu-content input {
+  margin-right: 0.5rem;
+}
+
+.menu:hover .menu-content {
+  display: block;
+}
+
+.menu:hover .menu-button {
+  background-color: #0000CC;
+} 
+
 /* from here TODO */
 
 .loginNavbar {

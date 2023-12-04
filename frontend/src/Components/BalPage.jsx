@@ -43,11 +43,15 @@ import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 import Footer from "./Footer";
+import imgBlueHappy from "../Images/blue_bal_happy.png";
 
 let canvas;
+let cbGraphics = null;
+let cbSound = null;
 let completed = [];
 let ctx;
 let currentLevel = 200;
+let elementHappy;
 let elevatorCounter = 0;
 let gameData = [];
 let gameInfo = {};
@@ -65,6 +69,7 @@ let nextButton = false;
 let posX = -1;
 let posY = -1;
 let series;
+let settings = { sound: true, nicerGraphics: false };
 let skipFalling = 0;
 let yellowCounter = 0;
 
@@ -148,6 +153,38 @@ function BalPage() {
     }
   }
 
+  async function loadSettings() {
+    try {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/loadsettings`,
+        { withCredentials: credentials() }
+      );
+      let balSettings = JSON.parse(response.data.balSettings);
+      settings.nicerGraphics = balSettings.nicerGraphics;
+      settings.sound = balSettings.sound;
+      if (cbGraphics !== null) {
+        cbGraphics.checked = settings.nicerGraphics;
+      }
+      if (cbSound !== null) {
+        cbSound.checked = settings.sound;
+      }
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async function saveSettings() {
+    try {
+      let response = await axios.post(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/savesettings`,
+        { balSettings: JSON.stringify(settings) },
+        { withCredentials: credentials() }
+      );
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   function updateNextButton() {
     nextButton = completed.includes(currentLevel.toString());
     setShowNext(nextButton);
@@ -156,35 +193,38 @@ function BalPage() {
   function playSound(sound) {
     let snd = null;
     let n = 0;
-    switch (sound) {
-      case "eat":
-        n = Math.trunc(Math.random() * 4) + 1;
-        switch (n) {
-          case 1:
-            snd = sndEat1;
-            break;
-          case 2:
-            snd = sndEat2;
-            break;
-          case 3:
-            snd = sndEat3;
-            break;
-          case 4:
-            snd = sndEat4;
-            break;
-          default:
-            break;
-        }
-        break;
-      case "laser":
-        snd = sndLaserGun;
-        break;
-      default:
-        break;
-    }
-    if (snd !== sound) {
-      const audio = new Audio(snd);
-      audio.play();
+
+    if (settings.sound) {
+      switch (sound) {
+        case "eat":
+          n = Math.trunc(Math.random() * 4) + 1;
+          switch (n) {
+            case 1:
+              snd = sndEat1;
+              break;
+            case 2:
+              snd = sndEat2;
+              break;
+            case 3:
+              snd = sndEat3;
+              break;
+            case 4:
+              snd = sndEat4;
+              break;
+            default:
+              break;
+          }
+          break;
+        case "laser":
+          snd = sndLaserGun;
+          break;
+        default:
+          break;
+      }
+      if (snd !== sound) {
+        const audio = new Audio(snd);
+        audio.play();
+      }
     }
   }
 
@@ -268,7 +308,6 @@ function BalPage() {
             //drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
             break;
           case 1:
-            // wall
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
             break;
           case 2:
@@ -277,62 +316,70 @@ function BalPage() {
               posX = col;
               posY = row;
             }
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.5,
-              w1 * 0.5,
-              "blue"
-            );
 
-            eye = Math.round(w1 / 20);
-            if (eye < 1) {
-              eye = 1;
-            }
-            d1 = size1 / 3.25;
-            d2 = Math.round(w1 / 12);
-            drawFilledCircle(
-              ctx,
-              Math.round(dxmin + d1),
-              Math.round(yc - d2),
-              eye,
-              "white"
-            );
-            drawFilledCircle(
-              ctx,
-              Math.round(dxmax - d1),
-              Math.round(yc - d2),
-              eye,
-              "white"
-            );
-
-            d1 = w1 / 3.5;
-            d2 = w1 / 3;
-            d3 = w1 / 2;
-            if (gameOver) {
-              ctx.strokeStyle = "white";
-              ctx.beginPath();
-              ctx.arc(
-                Math.round(xc),
-                Math.round(yc + d3),
-                Math.round(w1 - 2 * d1),
-                1.25 * Math.PI,
-                1.75 * Math.PI,
-                false
-              );
-              ctx.stroke();
+            if (settings.nicerGraphics) {
+              //const pattern = ctx.createPattern(imgBlueHappy, "no-repeat");
+              //ctx.fillStyle = pattern;
+              //ctx.fillRect(xmin, ymin, w1, w2);
+              ctx.drawImage(elementHappy, xmin, ymin, w1, w2);
             } else {
-              ctx.strokeStyle = "white";
-              ctx.beginPath();
-              ctx.arc(
-                Math.round(xc),
-                Math.round(ymin + d2),
-                Math.round(w1 - 2 * d1),
-                0.25 * Math.PI,
-                0.75 * Math.PI,
-                false
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "blue"
               );
-              ctx.stroke();
+
+              eye = Math.round(w1 / 20);
+              if (eye < 1) {
+                eye = 1;
+              }
+              d1 = size1 / 3.25;
+              d2 = Math.round(w1 / 12);
+              drawFilledCircle(
+                ctx,
+                Math.round(dxmin + d1),
+                Math.round(yc - d2),
+                eye,
+                "white"
+              );
+              drawFilledCircle(
+                ctx,
+                Math.round(dxmax - d1),
+                Math.round(yc - d2),
+                eye,
+                "white"
+              );
+
+              d1 = w1 / 3.5;
+              d2 = w1 / 3;
+              d3 = w1 / 2;
+              if (gameOver) {
+                ctx.strokeStyle = "white";
+                ctx.beginPath();
+                ctx.arc(
+                  Math.round(xc),
+                  Math.round(yc + d3),
+                  Math.round(w1 - 2 * d1),
+                  1.25 * Math.PI,
+                  1.75 * Math.PI,
+                  false
+                );
+                ctx.stroke();
+              } else {
+                ctx.strokeStyle = "white";
+                ctx.beginPath();
+                ctx.arc(
+                  Math.round(xc),
+                  Math.round(ymin + d2),
+                  Math.round(w1 - 2 * d1),
+                  0.25 * Math.PI,
+                  0.75 * Math.PI,
+                  false
+                );
+                ctx.stroke();
+              }
             }
             break;
           case 3:
@@ -540,6 +587,18 @@ function BalPage() {
           case 86:
             drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
             break;
+          case 87:
+            // one direction up ^
+            drawBox(ctx, xmin, ymin, w1, w2, "white");
+            drawLine(ctx, xmin, ymax, xc, ymin, "white");
+            drawLine(ctx, xmax, ymax, xc, ymin, "white");
+            break;
+          case 88:
+            // one direction down v
+            drawBox(ctx, xmin, ymin, w1, w2, "white");
+            drawLine(ctx, xmin, ymin, xc, ymax, "white");
+            drawLine(ctx, xmax, ymin, xc, ymax, "white");
+            break;
           default:
             // empty
             drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
@@ -689,6 +748,12 @@ function BalPage() {
     }
   }
 
+  function handleChangeSettings(e) {
+    settings.nicerGraphics = cbGraphics.checked;
+    settings.sound = cbSound.checked;
+    saveSettings();
+  }
+
   function handleKeyDown(e) {
     let info = {};
     info.player = false;
@@ -755,6 +820,9 @@ function BalPage() {
           info = jump(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY--;
+            if (info.oneDirection) {
+              posY--;
+            }
             elevatorCounter++; // To prevent that you fall from the elevator
           }
           break;
@@ -780,6 +848,9 @@ function BalPage() {
           info = pushDown(gameData, posX, posY, gameInfo.yellowBalls);
           if (info.player) {
             posY++;
+            if (info.oneDirection) {
+              posY++;
+            }
           }
           break;
         default:
@@ -826,9 +897,14 @@ function BalPage() {
   const myRef = useRef(document);
 
   useEffect(() => {
+    elementHappy = document.getElementById("happy");
     getCompleted();
     initLevel(200, false);
+    cbGraphics = document.getElementById("graphics");
+    cbSound = document.getElementById("sound");
+    loadSettings();
     getLast();
+
     myRef.current.addEventListener("keydown", handleKeyDown);
     //window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("resize", handleResize);
@@ -882,6 +958,33 @@ function BalPage() {
             </button>
           )}
           <div>Green: {green}</div>
+
+          <div class="menu">
+            <button class="menu-button">Preferences</button>
+            <div class="menu-content">
+              <div>
+                <input
+                  type="checkbox"
+                  id="sound"
+                  name="sound"
+                  value="sound"
+                  onChange={handleChangeSettings}
+                />
+                <label for="sound">Sound</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="graphics"
+                  name="graphics"
+                  value="graphics"
+                  onChange={handleChangeSettings}
+                />
+                <label for="graphics">Nicer graphics</label>
+              </div>
+            </div>
+          </div>
+
           <button className="button" onClick={help}>
             Help
           </button>
@@ -962,6 +1065,9 @@ function BalPage() {
             <p>Bal</p>
           </canvas>
         )}
+        <div style={{ display: "none" }}>
+          <img id="happy" src={imgBlueHappy} />
+        </div>
         <Footer />
       </main>
     </div>

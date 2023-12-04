@@ -25,6 +25,9 @@ const userSchema = mongoose.Schema(
     },
     balLastPlayed: {
       type: String,
+    },
+    balSettings: {
+      type: String,
     }
   },
   {
