@@ -121,10 +121,11 @@ main {
   display: flex;
   justify-content: space-between;
   /*align-items: flex-start;*/
-  background-color: rgba(0, 0, 0, 0.45);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.55);
+  /*border-bottom: 2px solid rgba(28, 34, 7, 1);*/
   color: white;
   padding: 10px 20px;
+  box-shadow: 0px 5px 5px black;
 }
 
 .nav-links a {
@@ -143,7 +144,7 @@ main {
   background-color: rgba(0, 0, 0, 0.45);
   min-width: 500px;
   border-radius: 70px;
-  border: 3px solid rgba(0, 0, 0, 0.65);
+  /*border: 3px solid rgba(0, 0, 0, 0.65);*/
   padding: 2rem;
   width: 50%;
   height: 50vh;
@@ -151,6 +152,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
+    0px -3px 3px black;
 }
 
 .loginBoxInfo {
@@ -225,6 +228,8 @@ main {
   color: white;
   width: 100%;
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.55);
+  box-shadow: 0px -5px 5px black;
 }
 
 /* MICHALS CHANGES, HE WILL MAKE IT IN THE RIGHT PLACES */
@@ -253,6 +258,17 @@ input[type="submit"] {
 .registerSubmit {
   display: flex;
   justify-content: center;
+}
+
+.registerSubmit input {
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.65);
+  color: black;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 30px;
+  box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
 }
 
 form p {
