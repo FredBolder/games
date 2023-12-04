@@ -66,10 +66,12 @@ main {
 }
 
 .button {
-  background-color: #ffffff;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 255, 255, 0.85);
   color: black;
-  padding: 0.5rem;
-  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 30px;
   cursor: pointer;
 }
 
@@ -87,12 +89,27 @@ main {
 
 .balPanel {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin-bottom: 1rem;
-  width: 50%;
+  width: 60%;
+  height: 10%;
   color: white;
-  gap: 2rem;
+}
+
+.balPanelText {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.balPanelText2 {
+  font-size: 1.4rem;
+}
+
+.balPanelSelector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .gameCanvas {
@@ -102,9 +119,20 @@ main {
 }
 
 .selector {
-  margin: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  margin-right: 5px;
+  color: white;
+  font-size: 1rem;
 }
 
+/*whats up with that one?? - MICHAL*/
+.selector option {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/*cant set up height and width - MICHAL*/
 .help {
   background: darkgreen;
   color: whitesmoke;
@@ -117,14 +145,6 @@ main {
 
 /* Menu */
 
-.menu-button {
-  background-color: #0000FF;
-  color: white;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
 .menu {
   position: relative;
   display: inline-block;
@@ -135,9 +155,10 @@ main {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 200px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
+
+/*here styling for properties button - MICHAL*/
 
 .menu-content div {
   color: black;
@@ -153,10 +174,6 @@ main {
 .menu:hover .menu-content {
   display: block;
 }
-
-.menu:hover .menu-button {
-  background-color: #0000CC;
-} 
 
 /* from here TODO */
 
@@ -290,13 +307,14 @@ input[type="email"] {
   font-size: 1.2rem;
 }
 
-input[type="submit"] {
+/*input[type="submit"] {
   width: 50%;
   margin-top: 1rem;
   align-self: center;
   background-color: rgba(255, 255, 255, 0.9);
   color: black;
 }
+*/
 
 .registerSubmit {
   display: flex;
@@ -305,6 +323,7 @@ input[type="submit"] {
 
 .registerSubmit input {
   padding: 1rem 2rem;
+  margin-top: 0.75rem;
   background-color: rgba(255, 255, 255, 0.65);
   color: black;
   border: none;
@@ -317,4 +336,21 @@ input[type="submit"] {
 form p {
   font-size: 1.2rem;
   margin-left: 0.5rem;
+}
+
+.moveButtons {
+  width: 60%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.moveButtons button {
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-radius: 30px;
+  box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
 }

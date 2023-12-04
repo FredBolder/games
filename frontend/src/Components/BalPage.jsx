@@ -931,6 +931,30 @@ function BalPage() {
     drawLevel(ctx, gameData);
   }
 
+  function buttonJumpLeft(e) {
+    handleKeyDown({ key: "7", shiftKey: false });
+  }
+
+  function buttonJumpRight(e) {
+    handleKeyDown({ key: "9", shiftKey: false });
+  }
+
+  function buttonMoveLeft(e) {
+    handleKeyDown({ key: "4", shiftKey: false });
+  }
+
+  function buttonMoveRight(e) {
+    handleKeyDown({ key: "6", shiftKey: false });
+  }
+
+  function buttonJump(e) {
+    handleKeyDown({ key: "8", shiftKey: false });
+  }
+
+  function buttonDown(e) {
+    handleKeyDown({ key: "2", shiftKey: false });
+  }
+
   return (
     <div className="page">
       <main>
@@ -939,8 +963,10 @@ function BalPage() {
         </header>
         <h1 className="title">Bal - The Game for Smart People</h1>
         <div className="balPanel">
-          <div>Level: {levelNumber}</div>
-          <div>
+          <div className="balPanelText">
+            Level: <span className="balPanelText2">{levelNumber}</span>
+          </div>
+          <div className="balPanelSelector">
             <select name="series" className="selector" id="series">
               <option value="1">Series 1</option>
               <option value="6">Series 6</option>
@@ -957,10 +983,16 @@ function BalPage() {
               Next
             </button>
           )}
-          <div>Green: {green}</div>
+          <div className="balPanelText">
+            Green: <span className="balPanelText2">{green}</span>
+          </div>
+
+          <button className="button" onClick={help}>
+            Help
+          </button>
 
           <div class="menu">
-            <button class="menu-button">Preferences</button>
+            <button class="button">Preferences ⇩</button>
             <div class="menu-content">
               <div>
                 <input
@@ -984,10 +1016,6 @@ function BalPage() {
               </div>
             </div>
           </div>
-
-          <button className="button" onClick={help}>
-            Help
-          </button>
         </div>
         {showHelp ? (
           <div className="help" onClick={help}>
@@ -1065,6 +1093,14 @@ function BalPage() {
             <p>Bal</p>
           </canvas>
         )}
+        <div className="moveButtons">
+          <button onClick={buttonJumpLeft}>⬁</button>
+          <button onClick={buttonMoveLeft}>⇦</button>
+          <button onClick={buttonJump}>⇧</button>
+          <button onClick={buttonDown}>⇩</button>
+          <button onClick={buttonMoveRight}>⇨</button>
+          <button onClick={buttonJumpRight}>⬀</button>
+        </div>
         <div style={{ display: "none" }}>
           <img id="happy" src={imgBlueHappy} />
         </div>

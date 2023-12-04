@@ -20,14 +20,16 @@ function Page() {
         <header>
           <Navbar />
         </header>
-        <h1 className="title">The Journey Begins Here</h1>
-        <div className="button-container">
-          <button className="button" onClick={login}>
-            Login
-          </button>
-          <button className="button" onClick={register}>
-            Register
-          </button>
+        <div className="pageInfo">
+          <h1 className="title">The Journey Begins Here</h1>
+          <div className="button-container">
+            <button className="button" onClick={login}>
+              Login
+            </button>
+            <button className="button" onClick={register}>
+              Register
+            </button>
+          </div>
         </div>
         <Footer />
       </main>
