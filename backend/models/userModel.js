@@ -13,6 +13,12 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
+      validate: {
+        validator: function(v) {
+          return /^.+@(?:[\w-]+\.)+\w+$/.test(v);
+        },
+        message: props => `${props.value} is not a email address!`
+      },
       required: true,
       unique: true,
     },
