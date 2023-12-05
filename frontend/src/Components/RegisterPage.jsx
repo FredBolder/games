@@ -3,11 +3,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { fixUserData, validateUserData } from "../utils";
 
 function RegisterPage() {
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
+    let msg = "";
+
     e.preventDefault();
     try {
       const userData = {
@@ -17,6 +20,11 @@ function RegisterPage() {
         password: e.target["password"].value,
         password2: e.target["password2"].value,
       };
+      fixUserData(userData);
+      msg = validateUserData(userData);
+      if (msg !== "") {
+        throw new Error(msg); 
+      }
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/users/register`,
         userData
