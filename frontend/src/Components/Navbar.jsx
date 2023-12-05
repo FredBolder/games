@@ -34,9 +34,14 @@ function Navbar() {
       <div className="logo">
         <h1>Games</h1>
       </div>
+      <div>
+        <button class="button">Tennis Game</button>
+      </div>
       {loggedIn ? (
         <div className="nav-links">
-          <Link onClick={logoutClick} to="/Login">Logout</Link>
+          <Link onClick={logoutClick} to="/Login">
+            Logout
+          </Link>
         </div>
       ) : (
         <div className="nav-links">
