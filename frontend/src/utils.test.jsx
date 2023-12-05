@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { fixUserData, validateUserData } from "./utils";
 
+describe("utils", () => {
+
 const input1 = {
   firstName: "jOhN",
   userName: " herO",
@@ -20,4 +22,6 @@ const expectedOutput1 = {
 fixUserData(input1);
 it("fixUserData", () => {
   expect(JSON.stringify(input1)).toBe(JSON.stringify(expectedOutput1));
+});
+
 });
