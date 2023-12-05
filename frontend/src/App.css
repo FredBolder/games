@@ -37,7 +37,7 @@ main {
   height: fit-content;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   background-image: url("./Images/background.jpg");
   background-repeat: repeat-x;
@@ -180,9 +180,7 @@ main {
 .loginNavbar {
   display: flex;
   justify-content: space-between;
-  /*align-items: flex-start;*/
   background-color: rgba(0, 0, 0, 0.55);
-  /*border-bottom: 2px solid rgba(28, 34, 7, 1);*/
   color: white;
   padding: 10px 20px;
   box-shadow: 0px 5px 5px black;
@@ -191,6 +189,8 @@ main {
 .nav-links a {
   color: white;
   text-decoration: none;
+  font-size: 1rem;
+  font-weight: 900;
   margin-left: 30px;
 }
 
@@ -200,14 +200,12 @@ main {
 }
 
 .loginBox {
-  /* border: 4px solid green; */
   background-color: rgba(0, 0, 0, 0.45);
   min-width: 500px;
   border-radius: 70px;
-  /*border: 3px solid rgba(0, 0, 0, 0.65);*/
-  padding: 2rem;
+  padding: 1.5rem;
   width: 50%;
-  height: 50vh;
+  height: fit-content;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -220,12 +218,14 @@ main {
   /* border: 3px solid pink; */
   display: flex;
   flex-direction: row;
-  color: whitesmoke;
+  color: white;
+  height: 100%;
 }
 
 .loginBoxInfos {
   /* border: 2px solid yellow; */
   width: 50%;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -233,63 +233,37 @@ main {
   align-items: center;
 }
 
-/*
- .loginBox {
-  border: 4px solid green; 
-  background-color: rgba(0, 0, 0, 0.61);
-  min-width: 500px;
-  border-radius: 150px;
-  padding: 2rem;
-  width: 50%;
-  height: 60%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-} */
-
-.registerHeader {
-  text-align: center;
-}
-
 .registerHeader h3 {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: calc(0.6rem + 1vw);
   margin-bottom: 1.5rem;
   margin-top: 1.5rem;
 }
 
 .registerForm {
-  /* border: 2px solid brown; */
-  width: 60%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  height: 100%;
+}
+
+.registerPhoto {
+  width: 90%;
 }
 
 .form-label {
   margin-bottom: 0.5rem;
-}
-
-.alternate-LoginBox {
-  /* border: 2px solid purple; */
-  width: 50%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  font-size: calc(0.4rem + 1vh);
 }
 
 .footerContainer {
-  position: fixed;
-  bottom: 10px;
-  left: 0;
   color: white;
   width: 100%;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.55);
   box-shadow: 0px -5px 5px black;
+  margin-bottom: 0.5rem;
 }
 
 /* MICHALS CHANGES, HE WILL MAKE IT IN THE RIGHT PLACES */
@@ -301,20 +275,11 @@ input[type="email"] {
   margin-bottom: 0.5rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
-  height: 1.5rem;
   padding-left: 0.5rem;
   color: white;
-  font-size: 1.2rem;
+  height: 1.5rem;
+  font-size: 1.3rem;
 }
-
-/*input[type="submit"] {
-  width: 50%;
-  margin-top: 1rem;
-  align-self: center;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: black;
-}
-*/
 
 .registerSubmit {
   display: flex;
@@ -327,19 +292,19 @@ input[type="email"] {
   background-color: rgba(255, 255, 255, 0.65);
   color: black;
   border: none;
-  font-size: 1rem;
+  font-size: 100%;
   font-weight: 700;
   border-radius: 30px;
   box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
 }
 
 form p {
-  font-size: 1.2rem;
+  font-size: 100%;
   margin-left: 0.5rem;
 }
 
 .moveButtons {
-  width: 60%;
+  width: 40%;
   margin-top: 2rem;
   display: flex;
   justify-content: space-evenly;

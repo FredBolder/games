@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { fixUserData, validateUserData } from "../utils";
+import imgRedBig from "../Images/red_bal_big.svg";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function RegisterPage() {
       fixUserData(userData);
       msg = validateUserData(userData);
       if (msg !== "") {
-        throw new Error(msg); 
+        throw new Error(msg);
       }
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/users/register`,
@@ -80,10 +81,9 @@ function RegisterPage() {
               </div>
             </div>
 
-            <div className="alternate-LoginBox">
-              <div className="social-register">
-                <h3>Here will be the picture to add:</h3>
-                <p>Picture that i will make on monday</p>
+            <div className="loginBoxInfos">
+              <div className="registerPhoto">
+                <img src={imgRedBig} alt="Red Ball" />
               </div>
             </div>
           </div>
