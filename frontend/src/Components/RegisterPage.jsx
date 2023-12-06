@@ -4,7 +4,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { fixUserData, validateUserData } from "../utils";
-import imgRedBig from "../Images/red_bal_big.svg";
+import imgRedBig from "../Images/red_ball_big.svg";
 
 function RegisterPage() {
   const navigate = useNavigate();

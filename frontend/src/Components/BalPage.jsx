@@ -43,9 +43,10 @@ import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 import Footer from "./Footer";
-import imgBlueHappy from "../Images/blue_bal_happy.svg";
-import imgBlueSad from "../Images/blue_bal_sad.svg";
-import imgRed from "../Images/red_bal.svg";
+import imgBlueHappy from "../Images/blue_ball_happy.svg";
+import imgBlueSad from "../Images/blue_ball_sad.svg";
+import imgRed from "../Images/red_ball.svg";
+import imgGreen from "../Images/green_ball.svg";
 
 let canvas;
 let cbGraphics = null;
@@ -53,6 +54,7 @@ let cbSound = null;
 let completed = [];
 let ctx;
 let currentLevel = 200;
+let elementGreen;
 let elementHappy;
 let elementRed;
 let elementSad;
@@ -389,13 +391,17 @@ function BalPage() {
             break;
           case 3:
             // green ball
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.75,
-              w1 * 0.25,
-              "green"
-            );
+            if (settings.nicerGraphics) {
+              ctx.drawImage(elementGreen, xmin + (w1 * 0.25), ymin, w1 * 0.5, w2 * 0.5);
+            } else {
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.75,
+                w1 * 0.25,
+                "green"
+              );
+            }
             break;
           case 4:
             // white ball
@@ -915,6 +921,8 @@ function BalPage() {
     elementHappy = document.getElementById("happy");
     elementSad = document.getElementById("sad");
     elementRed = document.getElementById("red");
+    elementGreen = document.getElementById("green");
+
     getCompleted();
     initLevel(200, false);
     cbGraphics = document.getElementById("graphics");
@@ -1127,6 +1135,9 @@ function BalPage() {
         </div>
         <div style={{ display: "none" }}>
           <img id="red" src={imgRed} />
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="green" src={imgGreen} />
         </div>
         <Footer />
       </main>
