@@ -974,7 +974,8 @@ function BalPage() {
     elementYellow = document.getElementById("yellow");
 
     getCompleted();
-    initLevel(200, false);
+    currentLevel = 200;
+    initLevel(currentLevel, false);
     cbGraphics = document.getElementById("graphics");
     cbSound = document.getElementById("sound");
     loadSettings();
