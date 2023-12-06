@@ -793,6 +793,22 @@ function BalPage() {
     }
   }
 
+  function clickSeries1(e) {
+    const response = window.confirm(`Load the first level of series 1?`);
+    if (response) {
+      currentLevel = 200;
+      initLevel(currentLevel);
+    }
+  }
+
+  function clickSeries2(e) {
+    const response = window.confirm(`Load the first level of series 2?`);
+    if (response) {
+      currentLevel = 700;
+      initLevel(currentLevel);
+    }
+  }
+
   function handleChangeSettings(e) {
     settings.nicerGraphics = cbGraphics.checked;
     settings.sound = cbSound.checked;
@@ -1025,14 +1041,16 @@ function BalPage() {
           <div className="balPanelText">
             Level: <span className="balPanelText2">{levelNumber}</span>
           </div>
-          <div className="balPanelSelector">
-            <select name="series" className="selector" id="series">
-              <option value="1">Series 1</option>
-              <option value="6">Series 6</option>
-            </select>
-            <button className="button" onClick={loadSeries}>
-              Load
-            </button>
+          <div class="menu">
+            <button class="button">Load</button>
+            <div class="menu-content">
+              <div>
+                <label onClick={clickSeries1}>Series 1</label>
+              </div>
+              <div>
+                <label onClick={clickSeries2}>Series 2</label>
+              </div>
+            </div>
           </div>
           <button className="button" onClick={tryAgain}>
             Try again
@@ -1051,7 +1069,7 @@ function BalPage() {
           </button>
 
           <div class="menu">
-            <button class="button">Preferences ⇩</button>
+            <button class="button">Settings</button>
             <div class="menu-content">
               <div>
                 <input
