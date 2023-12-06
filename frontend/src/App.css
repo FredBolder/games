@@ -158,7 +158,7 @@ main {
   z-index: 1;
 }
 
-/*here styling for properties button - MICHAL*/
+/*here styling for "properties" button - MICHAL*/
 
 .menu-content div {
   color: black;
@@ -174,8 +174,6 @@ main {
 .menu:hover .menu-content {
   display: block;
 }
-
-/* from here TODO */
 
 .loginNavbar {
   display: flex;
@@ -233,7 +231,8 @@ main {
   align-items: center;
 }
 
-.registerHeader h3 {
+.registerHeader h3,
+.loginBoxInfo h3 {
   text-align: center;
   font-size: calc(0.6rem + 1vw);
   margin-bottom: 1.5rem;
@@ -265,7 +264,8 @@ input[type="email"] {
   font-size: 1.3rem;
 }
 
-.registerSubmit {
+.registerSubmit,
+.loginSubmit {
   display: flex;
   justify-content: center;
 }
@@ -299,8 +299,9 @@ form p {
   height: fit-content;
   margin: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
     0px -3px 3px black;
 }
@@ -308,20 +309,46 @@ form p {
 .loginBoxInfo {
   /* border: 3px solid pink; */
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   color: white;
   height: 100%;
+  width: 50%;
+}
+
+.loginBoxOne {
+  width: 40%;
+}
+
+.loginBoxTwo {
+  width: 60%;
 }
 
 .loginBoxInfos {
-  /* border: 2px solid yellow; */
-  width: 50%;
   height: 100%;
+  width: 80%;
   margin: auto;
+}
+
+.loginSubmit {
+  padding-top: 1.2rem;
+}
+
+.loginBoxInfos p {
+  margin-bottom: 0.5rem;
+  font-size: calc(0.6rem + 1vh);
+  font-weight: 300;
+  text-align: center;
+}
+
+.loginToRegister {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.loginLink {
+  box-shadow: 2px 2px 0px inset #808080, -2px -2px 0px inset #1d1d1d;
+  text-decoration: none;
 }
 
 .form-label {
@@ -329,13 +356,13 @@ form p {
   font-size: calc(0.4rem + 1vh);
 }
 
-.footerContainer {
-  color: white;
-  width: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.55);
-  box-shadow: 0px -5px 5px black;
-  margin-bottom: 0.5rem;
+.loginPicture {
+  display: flex;
+  justify-content: center;
+}
+
+.loginPicture img {
+  width: 90%;
 }
 
 /* MICHALS CHANGES, HE WILL MAKE IT IN THE RIGHT PLACES */
@@ -355,4 +382,13 @@ form p {
   font-weight: 700;
   border-radius: 30px;
   box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
+}
+
+.footerContainer {
+  color: white;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.55);
+  box-shadow: 0px -5px 5px black;
+  margin-bottom: 0.5rem;
 }
