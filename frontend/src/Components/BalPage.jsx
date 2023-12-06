@@ -1020,7 +1020,7 @@ function BalPage() {
         <header>
           <Navbar />
         </header>
-        <h1 className="title">Bal - The Game for Smart People</h1>
+        <div className="title">Bal - The Game for Smart People</div>
         <div className="balPanel">
           <div className="balPanelText">
             Level: <span className="balPanelText2">{levelNumber}</span>
