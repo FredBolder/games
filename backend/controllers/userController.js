@@ -230,7 +230,7 @@ const loadSettings = asyncHandler(async (req, res) => {
 
   if (user) {
     if (!user.balSettings) {
-      user.balSettings = JSON.stringify({ sound: true, nicerGraphics: false });
+      user.balSettings = JSON.stringify({ sound: true, nicerGraphics: true });
     }
     res.status(200).json({
       balSettings: user.balSettings,

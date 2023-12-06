@@ -83,7 +83,7 @@ let nextButton = false;
 let posX = -1;
 let posY = -1;
 let series;
-let settings = { sound: true, nicerGraphics: false };
+let settings = { sound: true, nicerGraphics: true };
 let skipFalling = 0;
 let yellowCounter = 0;
 
