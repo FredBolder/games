@@ -199,7 +199,9 @@ main {
   align-items: center;
 }
 
-.loginBox {
+/* REGISTER PAGE */
+
+.registerBox {
   background-color: rgba(0, 0, 0, 0.45);
   min-width: 500px;
   border-radius: 70px;
@@ -214,16 +216,14 @@ main {
     0px -3px 3px black;
 }
 
-.loginBoxInfo {
-  /* border: 3px solid pink; */
+.registerBoxInfo {
   display: flex;
   flex-direction: row;
   color: white;
   height: 100%;
 }
 
-.loginBoxInfos {
-  /* border: 2px solid yellow; */
+.registerBoxInfos {
   width: 50%;
   height: 100%;
   margin: auto;
@@ -251,22 +251,6 @@ main {
 .registerPhoto {
   width: 90%;
 }
-
-.form-label {
-  margin-bottom: 0.5rem;
-  font-size: calc(0.4rem + 1vh);
-}
-
-.footerContainer {
-  color: white;
-  width: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.55);
-  box-shadow: 0px -5px 5px black;
-  margin-bottom: 0.5rem;
-}
-
-/* MICHALS CHANGES, HE WILL MAKE IT IN THE RIGHT PLACES */
 
 input[type="text"],
 input[type="password"],
@@ -302,6 +286,59 @@ form p {
   font-size: 100%;
   margin-left: 0.5rem;
 }
+
+/* REGISTER PAGE - END */
+/* LOGIN PAGE - START */
+
+.loginBox {
+  background-color: rgba(0, 0, 0, 0.45);
+  min-width: 500px;
+  border-radius: 70px;
+  padding: 1.5rem;
+  width: 50%;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
+    0px -3px 3px black;
+}
+
+.loginBoxInfo {
+  /* border: 3px solid pink; */
+  display: flex;
+  flex-direction: row;
+  color: white;
+  height: 100%;
+}
+
+.loginBoxInfos {
+  /* border: 2px solid yellow; */
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-size: calc(0.4rem + 1vh);
+}
+
+.footerContainer {
+  color: white;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.55);
+  box-shadow: 0px -5px 5px black;
+  margin-bottom: 0.5rem;
+}
+
+/* MICHALS CHANGES, HE WILL MAKE IT IN THE RIGHT PLACES */
 
 .moveButtons {
   width: 40%;
