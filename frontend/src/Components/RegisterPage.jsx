@@ -47,32 +47,24 @@ function RegisterPage() {
         <header>
           <Navbar />
         </header>
-        <div className="loginBox">
-          <div className="loginBoxInfo">
-            <div className="loginBoxInfos">
+        <div className="registerBox">
+          <div className="registerBoxInfo">
+            <div className="registerBoxInfos">
               <div className="registerHeader">
                 <h3>Register Here:</h3>
               </div>
               <div className="registerForm">
                 <form onSubmit={submitHandler}>
                   <p className="form-label">First Name:</p>
-                  <input type="text" name="firstName" className="form-input" />
+                  <input type="text" name="firstName" />
                   <p className="form-label">Username:</p>
-                  <input type="text" name="userName" className="form-input" />
+                  <input type="text" name="userName" />
                   <p className="form-label">Email:</p>
-                  <input type="email" name="email" className="form-input" />
+                  <input type="email" name="email" />
                   <p className="form-label">Password:</p>
-                  <input
-                    type="password"
-                    name="password"
-                    className="form-input"
-                  />
+                  <input type="password" name="password" />
                   <p className="form-label">Confirm Password:</p>
-                  <input
-                    type="password"
-                    name="password2"
-                    className="form-input"
-                  />
+                  <input type="password" name="password2" />
                   <br />
                   <div className="registerSubmit">
                     <input type="submit" value="Register" className="button" />
