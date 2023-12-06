@@ -45,8 +45,12 @@ import sndUnlock from "../Sounds/unlock.wav";
 import Footer from "./Footer";
 import imgBlueHappy from "../Images/blue_ball_happy.svg";
 import imgBlueSad from "../Images/blue_ball_sad.svg";
+import imgLightBlue from "../Images/light_blue_ball.svg";
 import imgRed from "../Images/red_ball.svg";
 import imgGreen from "../Images/green_ball.svg";
+import imgPurple from "../Images/purple_ball.svg";
+import imgWhite from "../Images/white_ball.svg";
+import imgYellow from "../Images/yellow_ball.svg";
 
 let canvas;
 let cbGraphics = null;
@@ -56,8 +60,12 @@ let ctx;
 let currentLevel = 200;
 let elementGreen;
 let elementHappy;
+let elementLightBlue;
+let elementPurple;
 let elementRed;
 let elementSad;
+let elementWhite;
+let elementYellow;
 let elevatorCounter = 0;
 let gameData = [];
 let gameInfo = {};
@@ -392,7 +400,13 @@ function BalPage() {
           case 3:
             // green ball
             if (settings.nicerGraphics) {
-              ctx.drawImage(elementGreen, xmin + (w1 * 0.25), ymin, w1 * 0.5, w2 * 0.5);
+              ctx.drawImage(
+                elementGreen,
+                xmin + w1 * 0.25,
+                ymin,
+                w1 * 0.5,
+                w2 * 0.5
+              );
             } else {
               drawFilledCircle(
                 ctx,
@@ -405,23 +419,31 @@ function BalPage() {
             break;
           case 4:
             // white ball
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.5,
-              w1 * 0.5,
-              "white"
-            );
+            if (settings.nicerGraphics) {
+              ctx.drawImage(elementWhite, xmin, ymin, w1, w2);
+            } else {
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "white"
+              );
+            }
             break;
           case 5:
             //light blue ball
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.5,
-              w1 * 0.5,
-              "deepskyblue"
-            );
+            if (settings.nicerGraphics) {
+              ctx.drawImage(elementLightBlue, xmin, ymin, w1, w2);
+            } else {
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "deepskyblue"
+              );
+            }
             break;
           case 6:
           case 106:
@@ -561,13 +583,17 @@ function BalPage() {
             break;
           case 9:
             // yellow ball
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.5,
-              w1 * 0.5,
-              "yellow"
-            );
+            if (settings.nicerGraphics) {
+              ctx.drawImage(elementYellow, xmin, ymin, w1, w2);
+            } else {
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "yellow"
+              );
+            }
             break;
           case 10:
             // one direction to right >
@@ -583,13 +609,17 @@ function BalPage() {
             break;
           case 28:
             // purple ball
-            drawFilledCircle(
-              ctx,
-              xmin + w1 * 0.5,
-              (row + 1) * w1 - w1 * 0.5,
-              w1 * 0.5,
-              "darkmagenta"
-            );
+            if (settings.nicerGraphics) {
+              ctx.drawImage(elementPurple, xmin, ymin, w1, w2);
+            } else {
+              drawFilledCircle(
+                ctx,
+                xmin + w1 * 0.5,
+                (row + 1) * w1 - w1 * 0.5,
+                w1 * 0.5,
+                "darkmagenta"
+              );
+            }
             break;
           case 84:
             drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
@@ -922,6 +952,10 @@ function BalPage() {
     elementSad = document.getElementById("sad");
     elementRed = document.getElementById("red");
     elementGreen = document.getElementById("green");
+    elementLightBlue = document.getElementById("light_blue");
+    elementPurple = document.getElementById("purple");
+    elementWhite = document.getElementById("white");
+    elementYellow = document.getElementById("yellow");
 
     getCompleted();
     initLevel(200, false);
@@ -1134,10 +1168,22 @@ function BalPage() {
           <img id="sad" src={imgBlueSad} />
         </div>
         <div style={{ display: "none" }}>
+          <img id="light_blue" src={imgLightBlue} />
+        </div>
+        <div style={{ display: "none" }}>
           <img id="red" src={imgRed} />
         </div>
         <div style={{ display: "none" }}>
           <img id="green" src={imgGreen} />
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="purple" src={imgPurple} />
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="white" src={imgWhite} />
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="yellow" src={imgYellow} />
         </div>
         <Footer />
       </main>
