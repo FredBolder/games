@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import { fixUserData, validateUserData } from "../utils";
 import imgRedBig from "../Images/red_ball_big.svg";
 
@@ -31,13 +33,31 @@ function RegisterPage() {
         userData
       );
       if (response.status === 200) {
-        alert(response.data);
+        throw new Error(response.data);
       } else {
         navigate("/login");
-        alert("User Registered Succesfully!");
+        confirmAlert({
+          title: "Information",
+          message: "User Registered Succesfully!",
+          buttons: [
+            {
+              label: "OK",
+              onClick: () => {},
+            },
+          ],
+        });
       }
     } catch (err) {
-      alert(err.message);
+      confirmAlert({
+        title: "Error",
+        message: err.message,
+        buttons: [
+          {
+            label: "OK",
+            onClick: () => {},
+          },
+        ],
+      });
     }
   };
 

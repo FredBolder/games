@@ -2,6 +2,10 @@ import React from "react";
 import { useRef, useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+// https://www.npmjs.com/package/react-confirm-alert
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+
 import {
   drawBox,
   drawFilledBox,
@@ -165,11 +169,23 @@ function BalPage() {
       let level = response.data.balLastPlayed;
       if (level !== "") {
         level = Number(level);
-        const loadLevel = window.confirm(`Continue with level ${level}?`);
-        if (loadLevel) {
-          currentLevel = level;
-          initLevel(currentLevel);
-        }
+        confirmAlert({
+          title: "Question",
+          message: `Load level ${level}?`,
+          buttons: [
+            {
+              label: "Yes",
+              onClick: () => {
+                currentLevel = level;
+                initLevel(currentLevel);
+              },
+            },
+            {
+              label: "No",
+              onClick: () => {},
+            },
+          ],
+        });
       }
     } catch (error) {
       alert(error);
@@ -948,40 +964,44 @@ function BalPage() {
     }
   }
 
-  function loadSeries(e) {
-    let n = Number(series.value);
-    const response = window.confirm(`Load the first level of series ${n}?`);
-    if (response) {
-      switch (n) {
-        case 1:
-          currentLevel = 200;
-          break;
-        case 6:
-          currentLevel = 700;
-          break;
-        default:
-          currentLevel = 200;
-          break;
-      }
-      initLevel(currentLevel);
-      series.blur();
-    }
-  }
-
   function clickSeries1(e) {
-    const response = window.confirm(`Load the first level of series 1?`);
-    if (response) {
-      currentLevel = 200;
-      initLevel(currentLevel);
-    }
+    confirmAlert({
+      title: "Question",
+      message: "Load the first level of series 1?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            currentLevel = 200;
+            initLevel(currentLevel);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   }
 
   function clickSeries2(e) {
-    const response = window.confirm(`Load the first level of series 2?`);
-    if (response) {
-      currentLevel = 700;
-      initLevel(currentLevel);
-    }
+    confirmAlert({
+      title: "Question",
+      message: "Load the first level of series 2?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            currentLevel = 700;
+            initLevel(currentLevel);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   }
 
   function handleChangeSettings(e) {
@@ -1122,18 +1142,42 @@ function BalPage() {
   }
 
   function nextLevelClick(e) {
-    const response = window.confirm("Load the next level?");
-    if (response) {
-      currentLevel++;
-      initLevel(currentLevel);
-    }
+    confirmAlert({
+      title: "Question",
+      message: "Load the next level?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            currentLevel++;
+            initLevel(currentLevel);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   }
 
   function tryAgain(e) {
-    const response = window.confirm("Initialize level?");
-    if (response) {
-      initLevel(currentLevel);
-    }
+    confirmAlert({
+      title: "Question",
+      message: "Initialize level?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            initLevel(currentLevel);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   }
 
   const myRef = useRef(document);
@@ -1220,10 +1264,10 @@ function BalPage() {
           <div className="menu">
             <button className="balButton">Load</button>
             <div className="menu-content">
-              <div>
+              <div onClick={clickSeries1}>
                 <label onClick={clickSeries1}>Series 1</label>
               </div>
-              <div>
+              <div onClick={clickSeries2}>
                 <label onClick={clickSeries2}>Series 2</label>
               </div>
             </div>
