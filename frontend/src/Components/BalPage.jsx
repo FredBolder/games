@@ -1265,10 +1265,10 @@ function BalPage() {
             <button className="balButton">Load</button>
             <div className="menu-content">
               <div onClick={clickSeries1}>
-                <label onClick={clickSeries1}>Series 1</label>
+                <label>Series 1</label>
               </div>
               <div onClick={clickSeries2}>
-                <label onClick={clickSeries2}>Series 2</label>
+                <label>Series 2</label>
               </div>
             </div>
           </div>
