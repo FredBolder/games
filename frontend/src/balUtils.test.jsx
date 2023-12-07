@@ -822,6 +822,7 @@ describe("balUtils", () => {
       { x: 1, y: 3 },
     ],
     yellowBalls: [],
+    detonator: { x: -1, y: -1 },
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(input9a))).toBe(
@@ -845,6 +846,7 @@ describe("balUtils", () => {
       { x: 1, y: 3 },
     ],
     yellowBalls: [],
+    detonator: { x: -1, y: -1 },
   };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(input9b))).toBe(
@@ -865,6 +867,7 @@ describe("balUtils", () => {
     horizontalElevators: [],
     redBalls: [],
     yellowBalls: [],
+    detonator: { x: -1, y: -1 },
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(input9c))).toBe(
@@ -874,11 +877,11 @@ describe("balUtils", () => {
 
   let input9d = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 3, 3, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 6, 1],
+    [1, 4, 0, 0, 3, 3, 0, 0, 0, 1],
+    [1, 36, 0, 0, 0, 0, 0, 0, 6, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 9, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 106, 0, 2, 0, 4, 0, 0, 1],
+    [1, 0, 106, 0, 2, 0, 4, 0, 37, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput9d = {
@@ -890,6 +893,7 @@ describe("balUtils", () => {
     horizontalElevators: [],
     redBalls: [],
     yellowBalls: [{ x: 1, y: 4, direction: "none" }],
+    detonator: { x: 8, y: 5 },
   };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(input9d))).toBe(
