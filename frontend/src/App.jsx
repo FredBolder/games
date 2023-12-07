@@ -7,6 +7,7 @@ import Page from "./Components/Page.jsx";
 import RegisterPage from "./Components/RegisterPage.jsx";
 import LoginPage from "./Components/LoginPage.jsx";
 import GlobalState from "./Context/GlobalState";
+import Test from "./Components/Test.jsx"; 
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/bal" element={<BalPage />} />
+            <Route path="/test" element={<Test />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
