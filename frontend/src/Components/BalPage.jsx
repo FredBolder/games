@@ -51,6 +51,12 @@ import imgGreen from "../Images/green_ball.svg";
 import imgPurple from "../Images/purple_ball.svg";
 import imgWhite from "../Images/white_ball.svg";
 import imgYellow from "../Images/yellow_ball.svg";
+import arrowJumpLeft from "../Images/arrow_topLeft.svg";
+import arrowJumpRight from "../Images/arrow_topRight.svg";
+import arrowDown from "../Images/arrow_down.svg";
+import arrowUp from "../Images/arrow_up.svg";
+import arrowLeft from "../Images/arrow_left.svg";
+import arrowRight from "../Images/arrow_right.svg";
 
 let canvas;
 let cbGraphics = null;
@@ -1040,11 +1046,11 @@ function BalPage() {
         <div className="title">Bal - The Game for Smart People</div>
         <div className="balPanel">
           <div className="balPanelText">
-            Level: <span className="balPanelText2">{levelNumber}</span>
+            Level: <span className="balPanelTextSpan">{levelNumber}</span>
           </div>
-          <div class="menu">
-            <button class="button">Load</button>
-            <div class="menu-content">
+          <div className="menu">
+            <button className="balButton">Load</button>
+            <div className="menu-content">
               <div>
                 <label onClick={clickSeries1}>Series 1</label>
               </div>
@@ -1053,25 +1059,25 @@ function BalPage() {
               </div>
             </div>
           </div>
-          <button className="button" onClick={tryAgain}>
+          <button className="balButton" onClick={tryAgain}>
             Try again
           </button>
           {showNext && (
-            <button className="button" onClick={nextLevelClick}>
+            <button className="balButton" onClick={nextLevelClick}>
               Next
             </button>
           )}
           <div className="balPanelText">
-            Green: <span className="balPanelText2">{green}</span>
+            Green: <span className="balPanelTextSpan">{green}</span>
           </div>
 
-          <button className="button" onClick={help}>
+          <button className="balButton" onClick={help}>
             Help
           </button>
 
-          <div class="menu">
-            <button class="button">Settings</button>
-            <div class="menu-content">
+          <div className="menu">
+            <button className="balButton">Settings</button>
+            <div className="menu-content">
               <div>
                 <input
                   type="checkbox"
@@ -1173,12 +1179,24 @@ function BalPage() {
           </canvas>
         )}
         <div className="moveButtons">
-          <button onClick={buttonJumpLeft}>⬁</button>
-          <button onClick={buttonMoveLeft}>⇦</button>
-          <button onClick={buttonJump}>⇧</button>
-          <button onClick={buttonDown}>⇩</button>
-          <button onClick={buttonMoveRight}>⇨</button>
-          <button onClick={buttonJumpRight}>⬀</button>
+          <button onClick={buttonJumpLeft}>
+            <img src={arrowJumpLeft} alt="ArrowJumpLeft" />
+          </button>
+          <button onClick={buttonMoveLeft}>
+            <img src={arrowLeft} alt="ArrowLeft" />
+          </button>
+          <button onClick={buttonJump}>
+            <img src={arrowUp} alt="ArrowUp" />
+          </button>
+          <button onClick={buttonDown}>
+            <img src={arrowDown} alt="ArrowDown" />
+          </button>
+          <button onClick={buttonMoveRight}>
+            <img src={arrowRight} alt="ArrowRight" />
+          </button>
+          <button onClick={buttonJumpRight}>
+            <img src={arrowJumpRight} alt="ArrowJumpRight" />
+          </button>
         </div>
         <div style={{ display: "none" }}>
           <img id="happy" src={imgBlueHappy} />
