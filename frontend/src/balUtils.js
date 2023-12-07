@@ -46,6 +46,15 @@ function charToNumber(c) {
     case "p":
       result = 28;
       break;
+    case "B":
+      result = 36;
+      break;
+    case "b":
+      result = 37;
+      break;
+    case "*":
+      result = 38;
+      break;
     case "C":
       result = 84;
       break;
@@ -116,6 +125,15 @@ function numberToChar(n) {
       break;
     case 28:
       result = "p";
+      break;
+    case 36:
+      result = "B";
+      break;
+    case 37:
+      result = "b";
+      break;
+    case 38:
+      result = "*";
       break;
     case 84:
       result = "C";
@@ -188,6 +206,27 @@ function updateYellow(yellowBalls, x1, y1, x2, y2, direction) {
       yellowBalls[i].direction = direction;
     }
   }
+}
+
+export function checkDetonator(arr, x, y) {
+  let explosion = false;
+
+  if (y > 0) {
+    if ([2, 4, 8, 9].includes(arr[y - 1][x])) {
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] === 36) {
+            explosion = true;
+            console.log("explosion");
+            arr[i][j] = 38;
+          } else if (arr[i][j] === 38) {
+            arr[i][j] = 0;
+          }
+        }
+      }
+    }
+  }
+  return explosion;
 }
 
 export function checkFalling(arr, redBalls) {
@@ -368,7 +407,11 @@ export function jump(arr, x, y, yellowBalls = []) {
       }
     }
     if (y > 1 && arr[y + 1][x] !== 0) {
-      if (!result.player && canMoveAlone(arr[y - 1][x]) && arr[y - 2][x] === 0) {
+      if (
+        !result.player &&
+        canMoveAlone(arr[y - 1][x]) &&
+        arr[y - 2][x] === 0
+      ) {
         if (arr[y - 1][x] === 9) {
           updateYellow(yellowBalls, x, y - 1, x, y - 2, "up");
         }
@@ -462,11 +505,15 @@ export function getGameInfo(arr) {
   result.horizontalElevators = [];
   result.redBalls = [];
   result.yellowBalls = [];
+  result.detonator = {x: -1,y: -1};
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 3) {
         result.greenBalls++;
+      }
+      if (arr[i][j] === 37) {
+        result.detonator = {x: j,y: i};
       }
       if (arr[i][j] === 8) {
         let redBall = {};

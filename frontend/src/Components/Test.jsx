@@ -23,6 +23,7 @@ import {
   moveHorizontalElevators,
   moveYellowBalls,
   pushDown,
+  checkDetonator,
 } from "../balUtils.js";
 import sndCatapult from "../Sounds/catapult.wav";
 import sndEat1 from "../Sounds/eat1.wav";
@@ -67,6 +68,7 @@ let elementSad;
 let elementWhite;
 let elementYellow;
 let elevatorCounter = 0;
+let explosionCounter = 0;
 let gameData = [];
 let gameInfo = {};
 gameInfo.elevators = [];
@@ -74,6 +76,7 @@ gameInfo.horizontalElevators = [];
 gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
 gameInfo.yellowBalls = [];
+gameInfo.detonator = { x: -1, y: -1 };
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -229,6 +232,9 @@ function BalPage() {
               break;
           }
           break;
+        case "explosion":
+          snd = sndExplosion;
+          break;
         case "laser":
           snd = sndLaserGun;
           break;
@@ -290,6 +296,9 @@ function BalPage() {
     let d1 = 0;
     let d2 = 0;
     let d3 = 0;
+    let d4 = 0;
+    let d5 = 0;
+    let d6 = 0;
     let x1 = 0;
     let y1 = 0;
     let x2 = 0;
@@ -621,6 +630,154 @@ function BalPage() {
               );
             }
             break;
+          case 36:
+            // Bomb
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
+            let factor = 0.1;
+            d1 = w1 / 6;
+            d2 = w1 / 2;
+            d3 = d2 + Math.round(w2 * factor);
+            d4 = d3 + Math.round(w2 * factor);
+            d5 = d4 + Math.round(w2 * factor);
+            d6 = w1 / 6;
+            drawFilledBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d2),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 * factor),
+              "red"
+            );
+            drawBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d2),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 * factor),
+              "black"
+            );
+            drawFilledBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d3),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 * factor),
+              "red"
+            );
+            drawBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d3),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 * factor),
+              "black"
+            );
+            drawFilledBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d4),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 * factor),
+              "red"
+            );
+            drawBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d4),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 * factor),
+              "black"
+            );
+            drawLine(
+              ctx,
+              Math.round(xc - d6),
+              Math.round(ymin + d2),
+              Math.round(xc - d6),
+              Math.round(ymin + d5)
+            );
+            drawLine(
+              ctx,
+              Math.round(xc + d6),
+              Math.round(ymin + d2),
+              Math.round(xc + d6),
+              Math.round(ymin + d5)
+            );
+            break;
+          case 37:
+            // Detonator
+            d1 = w1 / 7;
+            d2 = w1 / 2;
+            d3 = w1 / 1;
+            d4 = w1 / 8;
+            d5 = w1 / 6;
+            drawFilledBox(
+              ctx,
+              Math.round(xmin + d1),
+              Math.round(ymin + d2),
+              w1 - Math.round(2 * d1),
+              Math.round(w2 - d2),
+              "red"
+            );
+            drawLine(
+              ctx,
+              xc,
+              Math.round(ymin + d4),
+              xc,
+              Math.round(ymin + d2),
+              "rgb(220,220,220)"
+            );
+            drawLine(
+              ctx,
+              Math.round(xc - d5),
+              Math.round(ymin + d4),
+              Math.round(xc + d5),
+              Math.round(ymin + d4),
+              "rgb(220,220,220)"
+            );
+            drawText(
+              ctx,
+              xc,
+              ymin + w2 * 0.8,
+              "TNT",
+              "middle",
+              "white",
+              Math.round(w2 * 0.45),
+              Math.round(w1 * 0.65),
+              "white",
+              1
+            );
+            break;
+          case 38:
+            // Explosion
+            ctx.fillStyle = "yellow";
+            ctx.beginPath();
+            d1 = w1 / 10;
+            d2 = w2 / 2;
+            ctx.moveTo(Math.round(xc - d1), Math.round(yc - d2));
+            d1 = w1 / 8;
+            d2 = w2 / 7;
+            ctx.lineTo(Math.round(xc + d1), Math.round(yc - d2));
+            d1 = w1 / 2;
+            d2 = 0;
+            ctx.lineTo(Math.round(xc + d1), Math.round(yc - d2));
+            d1 = w1 / 6;
+            d2 = w2 / 7;
+            ctx.lineTo(Math.round(xc + d1), Math.round(yc + d2));
+            d1 = w1 / 8;
+            d2 = w2 / 2;
+            ctx.lineTo(Math.round(xc + d1), Math.round(yc + d2));
+            d1 = w1 / 8;
+            d2 = w2 / 9;
+            ctx.lineTo(Math.round(xc - d1), Math.round(yc + d2));
+            d1 = w1 / 2.5;
+            d2 = 0;
+            ctx.lineTo(Math.round(xc - d1), Math.round(yc - d2));
+            d1 = w1 / 4;
+            d2 = w2 / 12;
+            ctx.lineTo(Math.round(xc - d1), Math.round(yc - d2));
+            ctx.closePath();
+            ctx.fill();
+            break;
           case 84:
             drawFilledBox(ctx, xmin, ymin, w1, w2, "yellow");
             drawLine(ctx, xmin, ymax, xmax, ymin, "black");
@@ -728,6 +885,18 @@ function BalPage() {
       } else {
         yellowCounter = 1;
         moveYellowBalls(gameData, gameInfo.yellowBalls);
+        update = true;
+      }
+
+      if (explosionCounter > 0) {
+        explosionCounter--;
+      } else {
+        explosionCounter = 2;
+        if (
+          checkDetonator(gameData, gameInfo.detonator.x, gameInfo.detonator.y)
+        ) {
+          playSound("explosion");
+        }
         update = true;
       }
 
