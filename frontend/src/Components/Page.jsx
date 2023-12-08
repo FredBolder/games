@@ -20,7 +20,7 @@ function Page() {
         <header>
           <Navbar />
         </header>
-        <div className="pageInfo">
+        <div>
           <h1 className="title">The Journey Begins Here</h1>
           <div className="button-container">
             <button className="button" onClick={login}>

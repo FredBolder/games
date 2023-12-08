@@ -30,7 +30,7 @@ function Navbar() {
   }
 
   return (
-    <div className="loginNavbar">
+    <div className="navbar">
       <div className="logo">
         <h1>Games</h1>
       </div>

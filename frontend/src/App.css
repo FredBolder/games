@@ -1,3 +1,16 @@
+/* TO FIND YOUR STYLING FOLLOW THE ORDER */
+
+/* 1. MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
+/* 2. NAVBAR COMPONENT */
+/* 3. FOOTER COMPONENT */
+/* 4. REGISTER PAGE */
+/* 5. LOGIN PAGE */
+/* 6. BAL PAGE */
+/* 7. MENU (UPPER BUTTONS) IN BAL PAGE */
+/* 8. STYLING FOR HELP BUTTON IN BAL PAGE */
+/* 9. GAME CANVAS */
+/* 10. MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
+
 .page {
   width: 100%;
   height: 100vh;
@@ -7,24 +20,7 @@ p {
   margin-top: 0.5rem;
 }
 
-table {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 0.25rem;
-}
-
-tr:nth-child(odd) td {
-  background-color: #004400;
-}
-
-tr:nth-child(even) td {
-  background-color: #005500;
-}
+/* MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
 
 header {
   width: 100%;
@@ -74,7 +70,208 @@ main {
   gap: 2rem;
 }
 
-/* Bal */
+.registerHeader h3,
+.loginBoxInfo h3 {
+  text-align: center;
+  font-size: calc(0.6rem + 1vw);
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.registerSubmit,
+.loginSubmit {
+  display: flex;
+  justify-content: center;
+}
+
+/* NAVBAR COMPONENT */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.55);
+  color: white;
+  padding: 10px 20px;
+  box-shadow: 0px 5px 5px black;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 900;
+  margin-left: 30px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+/* FOOTER COMPONENT */
+
+.footerContainer {
+  color: white;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.55);
+  box-shadow: 0px -5px 5px black;
+  margin-bottom: 0.5rem;
+}
+
+/* REGISTER PAGE */
+
+.registerBox {
+  background-color: rgba(0, 0, 0, 0.45);
+  min-width: 500px;
+  border-radius: 70px;
+  padding: 1.5rem;
+  width: 50%;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
+    0px -3px 3px black;
+}
+
+.registerBoxInfo {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  height: 100%;
+}
+
+.registerBoxInfos {
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerForm {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  height: 100%;
+}
+
+.registerPhoto {
+  width: 90%;
+}
+
+form p {
+  font-size: 100%;
+  margin-left: 0.5rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding-left: 0.5rem;
+  color: white;
+  height: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.registerSubmit input {
+  padding: 1rem 2rem;
+  margin-top: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.65);
+  color: black;
+  border: none;
+  font-size: 100%;
+  font-weight: 700;
+  border-radius: 30px;
+  box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
+}
+
+/* LOGIN PAGE */
+
+.loginBox {
+  background-color: rgba(0, 0, 0, 0.45);
+  min-width: 500px;
+  border-radius: 70px;
+  padding: 1.5rem;
+  width: 50%;
+  height: fit-content;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
+    0px -3px 3px black;
+}
+
+.loginBoxInfo {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  height: 100%;
+  width: 50%;
+}
+
+.loginBoxOne {
+  width: 40%;
+}
+
+.loginBoxTwo {
+  width: 60%;
+}
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-size: calc(0.4rem + 1vh);
+}
+
+.loginBoxInfos {
+  height: 100%;
+  width: 80%;
+  margin: auto;
+}
+
+.loginBoxInfos p {
+  margin-bottom: 0.5rem;
+  font-size: calc(0.6rem + 1vh);
+  font-weight: 300;
+  text-align: center;
+}
+
+.loginSubmit {
+  padding-top: 1.2rem;
+}
+
+.loginToRegister {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
+.loginLink {
+  box-shadow: 2px 2px 0px inset #808080, -2px -2px 0px inset #1d1d1d;
+  text-decoration: none;
+}
+
+.loginPicture {
+  display: flex;
+  justify-content: center;
+}
+
+.loginPicture img {
+  width: 90%;
+}
+
+/* BAL PAGE */
 
 .balPanel {
   display: flex;
@@ -99,6 +296,10 @@ main {
   margin: 0 0.75rem;
 }
 
+.balPanelTextSpan {
+  font-size: 1.4rem;
+}
+
 .balButton {
   font-size: 1.2rem;
   font-weight: 700;
@@ -112,48 +313,7 @@ main {
   cursor: pointer;
 }
 
-.balPanelTextSpan {
-  font-size: 1.4rem;
-}
-
-.balPanelSelector {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.gameCanvas {
-  height: 60%;
-  width: 60%;
-  margin-bottom: 1rem;
-}
-
-.selector {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
-  padding: 0.5rem 1rem;
-  margin-right: 5px;
-  color: white;
-  font-size: 1rem;
-}
-
-/*whats up with that one?? - MICHAL*/
-.selector option {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-/*cant set up height and width - MICHAL*/
-.help {
-  background: darkgreen;
-  color: whitesmoke;
-  height: 60%;
-  width: 60%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border-radius: 15px;
-}
-
-/* Menu */
+/* MENU (UPPER BUTTONS) IN BAL PAGE */
 
 .menu {
   position: relative;
@@ -208,197 +368,46 @@ main {
   display: block;
 }
 
-.loginNavbar {
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.55);
-  color: white;
-  padding: 10px 20px;
-  box-shadow: 0px 5px 5px black;
-}
+/* STYLING FOR HELP BUTTON IN BAL PAGE */
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 900;
-  margin-left: 30px;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-}
-
-/* REGISTER PAGE */
-
-.registerBox {
-  background-color: rgba(0, 0, 0, 0.45);
-  min-width: 500px;
-  border-radius: 70px;
-  padding: 1.5rem;
-  width: 50%;
-  height: fit-content;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-    0px -3px 3px black;
-}
-
-.registerBoxInfo {
-  display: flex;
-  flex-direction: row;
-  color: white;
-  height: 100%;
-}
-
-.registerBoxInfos {
-  width: 50%;
-  height: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.registerHeader h3,
-.loginBoxInfo h3 {
-  text-align: center;
-  font-size: calc(0.6rem + 1vw);
-  margin-bottom: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.registerForm {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  height: 100%;
-}
-
-.registerPhoto {
-  width: 90%;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  width: 100%;
-  margin-bottom: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
-  padding-left: 0.5rem;
-  color: white;
-  height: 1.5rem;
-  font-size: 1.3rem;
-}
-
-.registerSubmit,
-.loginSubmit {
-  display: flex;
-  justify-content: center;
-}
-
-.registerSubmit input {
-  padding: 1rem 2rem;
-  margin-top: 0.75rem;
-  background-color: rgba(255, 255, 255, 0.65);
-  color: black;
-  border: none;
-  font-size: 100%;
-  font-weight: 700;
-  border-radius: 30px;
-  box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
-}
-
-form p {
-  font-size: 100%;
-  margin-left: 0.5rem;
-}
-
-/* REGISTER PAGE - END */
-/* LOGIN PAGE - START */
-
-.loginBox {
-  background-color: rgba(0, 0, 0, 0.45);
-  min-width: 500px;
-  border-radius: 70px;
-  padding: 1.5rem;
-  width: 50%;
-  height: fit-content;
-  margin: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-    0px -3px 3px black;
-}
-
-.loginBoxInfo {
-  /* border: 3px solid pink; */
-  display: flex;
-  flex-direction: column;
-  color: white;
-  height: 100%;
-  width: 50%;
-}
-
-.loginBoxOne {
-  width: 40%;
-}
-
-.loginBoxTwo {
+.help {
+  background: darkgreen;
+  color: whitesmoke;
+  height: 60%;
   width: 60%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 15px;
 }
 
-.loginBoxInfos {
-  height: 100%;
-  width: 80%;
-  margin: auto;
-}
-
-.loginSubmit {
-  padding-top: 1.2rem;
-}
-
-.loginBoxInfos p {
+table {
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  font-size: calc(0.6rem + 1vh);
-  font-weight: 300;
-  text-align: center;
 }
 
-.loginToRegister {
-  display: flex;
-  justify-content: center;
-  padding: 1.5rem 0;
+th,
+td {
+  text-align: left;
+  padding: 0.25rem;
 }
 
-.loginLink {
-  box-shadow: 2px 2px 0px inset #808080, -2px -2px 0px inset #1d1d1d;
-  text-decoration: none;
+tr:nth-child(odd) td {
+  background-color: #004400;
 }
 
-.form-label {
-  margin-bottom: 0.5rem;
-  font-size: calc(0.4rem + 1vh);
+tr:nth-child(even) td {
+  background-color: #005500;
 }
 
-.loginPicture {
-  display: flex;
-  justify-content: center;
+/* GAME CANVAS */
+
+.gameCanvas {
+  height: 60%;
+  width: 60%;
+  margin-bottom: 1rem;
 }
 
-.loginPicture img {
-  width: 90%;
-}
-
-/* MICHALS CHANGES, HE WILL MAKE IT IN THE RIGHT PLACES */
+/* MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
 
 .moveButtons {
   width: 100%;
@@ -427,13 +436,4 @@ form p {
 .moveButtons button img {
   width: 25px;
   height: 25px;
-}
-
-.footerContainer {
-  color: white;
-  width: 100%;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.55);
-  box-shadow: 0px -5px 5px black;
-  margin-bottom: 0.5rem;
 }
