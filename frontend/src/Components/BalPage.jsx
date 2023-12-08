@@ -95,7 +95,6 @@ let laserY = -1;
 let nextButton = false;
 let posX = -1;
 let posY = -1;
-let series;
 let settings = { sound: true, nicerGraphics: true };
 let skipFalling = 0;
 let yellowCounter = 0;
@@ -284,7 +283,7 @@ function BalPage() {
     }
   }
 
-  function drawLevel(ctx, data) {
+  function drawLevel(canvas, ctx, data) {
     if (!data || data.length < 1 || !canvas) {
       return false;
     }
@@ -897,7 +896,7 @@ function BalPage() {
           posX = info.playerX;
           posY = info.playerY;
         }
-        if (gameInfo.elevators.length > 0) {
+        if (gameInfo.horizontalElevators.length > 0) {
           update = true;
         }
       }
@@ -1218,12 +1217,15 @@ function BalPage() {
     if (!canvas) {
       return false;
     }
-    series = document.getElementById("series");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const displayWidth = canvas.clientWidth;
+    const displayHeight = canvas.clientHeight;
+    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+      canvas.width = displayWidth;
+      canvas.height = displayHeight;
+    }
     ctx = canvas.getContext("2d");
     //console.log("gameData: ", gameData);
-    drawLevel(ctx, gameData);
+    drawLevel(canvas, ctx, gameData);
   }
 
   function buttonJumpLeft(e) {
