@@ -654,7 +654,7 @@ function BalPage() {
             break;
           case 36:
             // Bomb
-            drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
+            drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
             let factor = 0.1;
             d1 = w1 / 6;
             d2 = w1 / 2;
