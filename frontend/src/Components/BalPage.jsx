@@ -691,6 +691,44 @@ function BalPage() {
     handleKeyDown({ key: "2", shiftKey: false });
   }
 
+  function putBallPosition(e) {
+    if (e.altKey && e.shiftKey && e.ctrlKey) {
+      if (!gameData || gameData.length < 1 || !canvas) {
+        return false;
+      }
+      const rows = gameData.length;
+      const columns = gameData[0].length;
+
+      let size1 = canvas.width / columns;
+      let size2 = canvas.height / rows;
+
+      if (size2 < size1) {
+        size1 = size2;
+      }
+      size1 = Math.round(size1);
+      let gameWidth = columns * size1;
+      let gameHeight = rows * size1;
+      let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);
+
+      let rect = canvas.getBoundingClientRect();
+      let x = e.clientX - rect.left - leftMargin;
+      let y = e.clientY - rect.top;
+
+      let squareX = Math.floor(x / size1);
+      let squareY = Math.floor(y / size1);
+
+      if (squareX >= 0 && squareX < columns && squareY >= 0 && squareY < rows) {
+        if (gameData[squareY][squareX] === 0) {
+          gameData[posY][posX] = 0;
+          posX = squareX;
+          posY = squareY;
+          gameData[posY][posX] = 2;
+          updateScreen();
+        }
+      }
+    }
+  }
+
   return (
     <div className="page">
       <main>
@@ -828,9 +866,7 @@ function BalPage() {
             </p>
           </div>
         ) : (
-          <canvas className="gameCanvas">
-            <p>Bal</p>
-          </canvas>
+          <canvas className="gameCanvas" onClick={putBallPosition}></canvas>
         )}
         <div className="moveButtons">
           <button onClick={buttonJumpLeft}>
