@@ -31,6 +31,10 @@ function LoginPage() {
     }
   };
 
+  function register(e) {
+    navigate("/register");
+  }
+
   return (
     <>
       <main>
@@ -65,9 +69,9 @@ function LoginPage() {
                 </p>
                 <p>Ready to get started? Click the button below to register:</p>
                 <div className="loginToRegister">
-                  <Link className="button loginLink" to="/register">
+                  <button className="button" onClick={register}>
                     Register
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
