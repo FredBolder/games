@@ -29,6 +29,14 @@ function Navbar() {
     logout();
   }
 
+  function balClick(e) {
+    navigate("/bal");
+  }
+
+  function tennisClick(e) {
+    navigate("/tennis");
+  }
+
   return (
     <div className="navbar">
       <div className="logo">
@@ -37,8 +45,8 @@ function Navbar() {
 
       {loggedIn ? (
         <div>
-          <button className="button"> Bal</button>
-          <button className="button">Tennis</button>
+          <button className="button" onClick={balClick}> Bal</button>
+          <button className="button" onClick={tennisClick}>Tennis</button>
         </div>
       ) : (
         <div></div>

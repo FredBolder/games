@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef, useEffect, useState, useContext } from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import axios from "axios";
 // https://www.npmjs.com/package/react-confirm-alert
 import { confirmAlert } from "react-confirm-alert";
@@ -41,7 +42,6 @@ import sndSplash2 from "../Sounds/splash2.wav";
 import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
-import Footer from "./Footer";
 import imgBlueHappy from "../Images/blue_ball_happy.svg";
 import imgBlueSad from "../Images/blue_ball_sad.svg";
 import imgLightBlue from "../Images/light_blue_ball.svg";
