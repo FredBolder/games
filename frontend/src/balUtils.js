@@ -500,6 +500,7 @@ export function pushDown(arr, x, y, yellowBalls = []) {
 
 export function getGameInfo(arr) {
   let result = {};
+  result.blueBall = {x: -1,y: -1};
   result.elevators = [];
   result.greenBalls = 0;
   result.horizontalElevators = [];
@@ -509,6 +510,9 @@ export function getGameInfo(arr) {
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
+      if (arr[i][j] === 2) {
+        result.blueBall = {x: j,y: i};
+      }
       if (arr[i][j] === 3) {
         result.greenBalls++;
       }
