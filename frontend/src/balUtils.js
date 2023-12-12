@@ -43,6 +43,18 @@ function charToNumber(c) {
     case "9":
       result = 9;
       break;
+    case "G":
+      result = 15;
+      break;
+    case "H":
+      result = 16;
+      break;
+    case "I":
+      result = 17;
+      break;
+    case "J":
+      result = 18;
+      break;
     case "p":
       result = 28;
       break;
@@ -122,6 +134,18 @@ function numberToChar(n) {
       break;
     case 9:
       result = "9";
+      break;
+    case 15:
+      result = "G";
+      break;
+    case 16:
+      result = "H";
+      break;
+    case 17:
+      result = "I";
+      break;
+    case 18:
+      result = "J";
       break;
     case 28:
       result = "p";
@@ -500,24 +524,24 @@ export function pushDown(arr, x, y, yellowBalls = []) {
 
 export function getGameInfo(arr) {
   let result = {};
-  result.blueBall = {x: -1,y: -1};
+  result.blueBall = { x: -1, y: -1 };
   result.elevators = [];
   result.greenBalls = 0;
   result.horizontalElevators = [];
   result.redBalls = [];
   result.yellowBalls = [];
-  result.detonator = {x: -1,y: -1};
+  result.detonator = { x: -1, y: -1 };
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
       if (arr[i][j] === 2) {
-        result.blueBall = {x: j,y: i};
+        result.blueBall = { x: j, y: i };
       }
       if (arr[i][j] === 3) {
         result.greenBalls++;
       }
       if (arr[i][j] === 37) {
-        result.detonator = {x: j,y: i};
+        result.detonator = { x: j, y: i };
       }
       if (arr[i][j] === 8) {
         let redBall = {};
