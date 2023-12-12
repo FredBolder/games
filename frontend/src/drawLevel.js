@@ -4,7 +4,7 @@ import {
     drawFilledCircle,
     drawLine,
     drawText,
-  } from "./drawUtils";
+} from "./drawUtils";
 
 export default function drawLevel(canvas, ctx, data, nicerGraphics, elements, status) {
     if (!data || data.length < 1 || !canvas) {
@@ -19,7 +19,7 @@ export default function drawLevel(canvas, ctx, data, nicerGraphics, elements, st
     if (size2 < size1) {
         size1 = size2;
     }
-    size1 = Math.round(size1);
+    size1 = Math.trunc(size1);
     let gameWidth = columns * size1;
     let gameHeight = rows * size1;
     let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);
@@ -359,12 +359,12 @@ export default function drawLevel(canvas, ctx, data, nicerGraphics, elements, st
                     // wall |\
                     ctx.fillStyle = "#464646";
                     ctx.beginPath();
-                    ctx.moveTo(xmin - 1, ymax +1);
-                    ctx.lineTo(xmin -1, ymin -1);
+                    ctx.moveTo(xmin - 1, ymax + 1);
+                    ctx.lineTo(xmin - 1, ymin - 1);
                     ctx.lineTo(xmax + 1, ymax + 1);
-                    ctx.lineTo(xmin - 1, ymax +1);
+                    ctx.lineTo(xmin - 1, ymax + 1);
                     ctx.fill();
-                break;
+                    break;
                 case 16:
                     // wall /|
                     ctx.fillStyle = "#464646";
@@ -374,27 +374,27 @@ export default function drawLevel(canvas, ctx, data, nicerGraphics, elements, st
                     ctx.lineTo(xmax + 1, ymax + 1);
                     ctx.lineTo(xmin - 1, ymax + 1);
                     ctx.fill();
-                break;
+                    break;
                 case 17:
                     // wall |/
                     ctx.fillStyle = "#464646";
                     ctx.beginPath();
-                    ctx.moveTo(xmin - 1, ymax +1);
-                    ctx.lineTo(xmin - 1, ymin -1);
+                    ctx.moveTo(xmin - 1, ymax + 1);
+                    ctx.lineTo(xmin - 1, ymin - 1);
                     ctx.lineTo(xmax + 1, ymin - 1);
-                    ctx.lineTo(xmin - 1, ymax +1);
+                    ctx.lineTo(xmin - 1, ymax + 1);
                     ctx.fill();
-                break;
+                    break;
                 case 18:
                     // wall \|
                     ctx.fillStyle = "#464646";
                     ctx.beginPath();
-                    ctx.moveTo(xmin - 1, ymin -1);
-                    ctx.lineTo(xmax +1, ymin -1);
+                    ctx.moveTo(xmin - 1, ymin - 1);
+                    ctx.lineTo(xmax + 1, ymin - 1);
                     ctx.lineTo(xmax + 1, ymax + 1);
-                    ctx.lineTo(xmin - 1, ymin -1);
+                    ctx.lineTo(xmin - 1, ymin - 1);
                     ctx.fill();
-                break;
+                    break;
                 case 28:
                     // purple ball
                     if (nicerGraphics) {
