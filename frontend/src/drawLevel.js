@@ -355,6 +355,46 @@ export default function drawLevel(canvas, ctx, data, nicerGraphics, elements, st
                     drawLine(ctx, xmax, ymin, xmin, ymin + w2 / 2, "white");
                     drawLine(ctx, xmax, ymax, xmin, ymin + w2 / 2, "white");
                     break;
+                case 15:
+                    // wall |\
+                    ctx.fillStyle = "#464646";
+                    ctx.beginPath();
+                    ctx.moveTo(xmin - 1, ymax +1);
+                    ctx.lineTo(xmin -1, ymin -1);
+                    ctx.lineTo(xmax + 1, ymax + 1);
+                    ctx.lineTo(xmin - 1, ymax +1);
+                    ctx.fill();
+                break;
+                case 16:
+                    // wall /|
+                    ctx.fillStyle = "#464646";
+                    ctx.beginPath();
+                    ctx.moveTo(xmin - 1, ymax + 1);
+                    ctx.lineTo(xmax + 1, ymin - 1);
+                    ctx.lineTo(xmax + 1, ymax + 1);
+                    ctx.lineTo(xmin - 1, ymax + 1);
+                    ctx.fill();
+                break;
+                case 17:
+                    // wall |/
+                    ctx.fillStyle = "#464646";
+                    ctx.beginPath();
+                    ctx.moveTo(xmin - 1, ymax +1);
+                    ctx.lineTo(xmin - 1, ymin -1);
+                    ctx.lineTo(xmax + 1, ymin - 1);
+                    ctx.lineTo(xmin - 1, ymax +1);
+                    ctx.fill();
+                break;
+                case 18:
+                    // wall \|
+                    ctx.fillStyle = "#464646";
+                    ctx.beginPath();
+                    ctx.moveTo(xmin - 1, ymin -1);
+                    ctx.lineTo(xmax +1, ymin -1);
+                    ctx.lineTo(xmax + 1, ymax + 1);
+                    ctx.lineTo(xmin - 1, ymin -1);
+                    ctx.fill();
+                break;
                 case 28:
                     // purple ball
                     if (nicerGraphics) {
