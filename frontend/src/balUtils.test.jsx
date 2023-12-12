@@ -814,6 +814,7 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1],
   ];
   let expectedOutput9a = {
+    blueBall: { x: 3, y: 3 },
     elevators: [],
     greenBalls: 2,
     horizontalElevators: [],
@@ -838,6 +839,7 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput9b = {
+    blueBall: { x: 3, y: 3 },
     elevators: [],
     greenBalls: 4,
     horizontalElevators: [],
@@ -862,6 +864,7 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput9c = {
+    blueBall: { x: 3, y: 3 },
     elevators: [],
     greenBalls: 8,
     horizontalElevators: [],
@@ -885,6 +888,7 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput9d = {
+    blueBall: { x: 4, y: 5 },
     elevators: [
       { x: 8, y: 2, up: false },
       { x: 2, y: 5, up: true },
