@@ -11,6 +11,7 @@
 /* 9. GAME CANVAS */
 /* 10. MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
 /* 11. MEDIA QUERIES */
+/* 12. PRIVACY POLICY */
 
 .page {
   width: 100%;
@@ -111,10 +112,23 @@ main {
 .footerContainer {
   color: white;
   width: 100%;
-  text-align: center;
   background-color: rgba(0, 0, 0, 0.55);
   box-shadow: 0px -5px 5px black;
   margin-bottom: 0.5rem;
+}
+
+.footerInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin: auto;
+}
+
+.footerInfo a {
+  color: white;
+  text-decoration: none;
 }
 
 /* REGISTER PAGE */
@@ -477,3 +491,44 @@ tr:nth-child(even) td {
     border-radius: 30px;
   }
 }
+
+/* PRIVACY POLICY */
+
+h4 {
+  text-align: center;
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+h5 {
+  width: 90%;
+  margin: auto;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.policyBox {
+  background-color: rgba(0, 0, 0, 0.45);
+  color: white;
+  min-width: 500px;
+  border-radius: 70px;
+  padding: 1.5rem;
+  width: 50%;
+  height: 60vh;
+  margin: auto;
+  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
+    0px -3px 3px black;
+  overflow-y: scroll;
+}
+
+/*
+.policyBox::-webkit-scrollbar-thumb {
+  background-color: white;
+  box-shadow: 3px 3px 3px inset grey;
+}
+
+.policyBox::-webkit-scrollbar-track {
+  background-color: darkgray;
+}
+*/
