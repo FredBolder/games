@@ -233,19 +233,18 @@ function updateYellow(yellowBalls, x1, y1, x2, y2, direction) {
 }
 
 export function checkDetonator(arr, x, y) {
+  let detonator = false;
   let explosion = false;
 
   if (y > 0) {
-    if ([2, 4, 8, 9].includes(arr[y - 1][x])) {
-      for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arr[i].length; j++) {
-          if (arr[i][j] === 36) {
-            explosion = true;
-            console.log("explosion");
-            arr[i][j] = 38;
-          } else if (arr[i][j] === 38) {
-            arr[i][j] = 0;
-          }
+    detonator = [2, 4, 8, 9].includes(arr[y - 1][x]);
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = 0; j < arr[i].length; j++) {
+        if (arr[i][j] === 36 && detonator) {
+          explosion = true;
+          arr[i][j] = 38;
+        } else if (arr[i][j] === 38) {
+          arr[i][j] = 0;
         }
       }
     }
