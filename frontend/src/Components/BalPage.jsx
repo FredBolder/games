@@ -284,10 +284,11 @@ function BalPage() {
     if (!gameOver && gameData) {
       if (skipFalling <= 0) {
         info = checkFalling(gameData, gameInfo.redBalls);
-        if (info.player) {
-          posY++;
+        if (info.ballX !== -1) {
+          posX = info.ballX;
+          posY = info.ballY;
         }
-        if (info.falling) {
+        if (info.update) {
           update = true;
         }
       } else {
