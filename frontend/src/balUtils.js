@@ -255,20 +255,68 @@ export function checkDetonator(arr, x, y) {
 
 export function checkFalling(arr, redBalls) {
   let result = {};
-  result.falling = false;
-  result.player = false;
+  result.update = false;
+  result.ballX = -1;
+  result.ballY = -1;
 
   for (let i = arr.length - 2; i >= 0; i--) {
     for (let j = 0; j < arr[i].length; j++) {
       let element1 = arr[i][j];
       let element2 = arr[i + 1][j];
+
+      if (j < arr[i].length - 1) {
+        if (
+          element2 === 15 &&
+          (element1 === 2 || element1 === 4 || element1 === 8) &&
+          arr[i][j + 1] === 0
+        ) {
+          result.update = true;
+          if (element1 === 2) {
+            result.ballX = j + 1;
+            result.ballY = i;
+          }
+          if (element1 === 8) {
+            updateRed(redBalls, j, i, j + 1, i);
+          }
+          arr[i][j + 1] = arr[i][j];
+          arr[i][j] = 0;
+        }
+      }
+
+      if (j >= 1) {
+        if (
+          element2 === 16 &&
+          (element1 === 2 || element1 === 4 || element1 === 8) &&
+          arr[i][j - 1] === 0
+        ) {
+          result.update = true;
+          if (element1 === 2) {
+            result.ballX = j - 1;
+            result.ballY = i;
+          }
+          if (element1 === 8) {
+            updateRed(redBalls, j, i, j - 1, i);
+          }
+          arr[i][j - 1] = arr[i][j];
+          arr[i][j] = 0;
+        }
+      }
+    }
+  }
+
+  for (let i = arr.length - 2; i >= 0; i--) {
+    for (let j = 0; j < arr[i].length; j++) {
+      let element1 = arr[i][j];
+      let element2 = arr[i + 1][j];
+
       if (
         element2 === 0 &&
         (element1 === 2 || element1 === 4 || element1 === 8)
       ) {
-        result.falling = true;
+        result.update = true;
         if (element1 === 2) {
-          result.player = true;
+          result.ballX = j;
+          result.ballY = i + 1;
         }
         if (element1 === 8) {
           updateRed(redBalls, j, i, j, i + 1);

@@ -61,7 +61,7 @@ describe("balUtils", () => {
     expect(JSON.stringify(input3a)).toBe(JSON.stringify(expectedOutput3a));
   });
   it("checkFalling A falling", () => {
-    expect(info3a.falling).toBe(true);
+    expect(info3a.update).toBe(true);
   });
   it("checkFalling A player", () => {
     expect(info3a.player).toBe(false);
@@ -86,7 +86,7 @@ describe("balUtils", () => {
     expect(JSON.stringify(input3b)).toBe(JSON.stringify(expectedOutput3b));
   });
   it("checkFalling B falling", () => {
-    expect(info3b.falling).toBe(true);
+    expect(info3b.update).toBe(true);
   });
   it("checkFalling B player", () => {
     expect(info3b.player).toBe(true);
@@ -109,7 +109,7 @@ describe("balUtils", () => {
     expect(JSON.stringify(input3c)).toBe(JSON.stringify(expectedOutput3c));
   });
   it("checkFalling C falling", () => {
-    expect(info3c.falling).toBe(false);
+    expect(info3c.update).toBe(false);
   });
   it("checkFalling C player", () => {
     expect(info3c.player).toBe(false);
@@ -1828,4 +1828,106 @@ describe("balUtils", () => {
       JSON.stringify({ eating: false, player: false, oneDirection: false })
     );
   });
+});
+
+// ***** TRIANGLED WALLS *****
+
+let input16a = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 2, 0, 0, 0, 0, 1],
+  [1, 15, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let expectedOutput16a = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 15, 0, 0, 0, 0, 1],
+  [1, 1, 2, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let info16a = checkFalling(input16a, []);
+it("Triangled Walls A", () => {
+  expect(JSON.stringify(input16a)).toBe(JSON.stringify(expectedOutput16a));
+});
+it("Triangled Walls A falling", () => {
+  expect(info16a.update).toBe(true);
+});
+it("Triangled Walls A player", () => {
+  expect(info16a.player).toBe(true);
+});
+
+let input16b = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 2, 1],
+  [1, 0, 0, 0, 0, 16, 1],
+  [1, 0, 0, 0, 0, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let expectedOutput16b = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 16, 1],
+  [1, 0, 0, 0, 2, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let info16b = checkFalling(input16b, []);
+it("Triangled Walls B", () => {
+  expect(JSON.stringify(input16b)).toBe(JSON.stringify(expectedOutput16b));
+});
+it("Triangled Walls B falling", () => {
+  expect(info16b.update).toBe(true);
+});
+it("Triangled Walls B player", () => {
+  expect(info16b.player).toBe(true);
+});
+
+let input16c = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 4, 0, 0, 0, 0, 1],
+  [1, 16, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 2, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let expectedOutput16c = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 4, 0, 0, 0, 0, 1],
+  [1, 16, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 2, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let info16c = checkFalling(input16c, []);
+it("Triangled Walls C", () => {
+  expect(JSON.stringify(input16c)).toBe(JSON.stringify(expectedOutput16c));
+});
+it("Triangled Walls C falling", () => {
+  expect(info16c.update).toBe(false);
+});
+it("Triangled Walls C player", () => {
+  expect(info16c.player).toBe(false);
+});
+
+let input16d = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 4, 0, 0, 0, 0, 1],
+  [1, 15, 0, 0, 0, 0, 1],
+  [1, 1, 0, 0, 2, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let expectedOutput16d = [
+  [1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1],
+  [1, 15, 0, 0, 0, 0, 1],
+  [1, 1, 4, 0, 2, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1],
+];
+let info16d = checkFalling(input16d, []);
+it("Triangled Walls D", () => {
+  expect(JSON.stringify(input16d)).toBe(JSON.stringify(expectedOutput16d));
+});
+it("Triangled Walls D falling", () => {
+  expect(info16d.update).toBe(true);
+});
+it("Triangled Walls D player", () => {
+  expect(info16d.player).toBe(false);
 });
