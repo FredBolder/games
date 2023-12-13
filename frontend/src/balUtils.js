@@ -268,7 +268,7 @@ export function checkFalling(arr, redBalls) {
         if (
           element2 === 15 &&
           (element1 === 2 || element1 === 4 || element1 === 8) &&
-          arr[i][j + 1] === 0
+          arr[i][j + 1] === 0 && arr[i + 1][j + 1] === 0
         ) {
           result.update = true;
           if (element1 === 2) {
@@ -287,7 +287,7 @@ export function checkFalling(arr, redBalls) {
         if (
           element2 === 16 &&
           (element1 === 2 || element1 === 4 || element1 === 8) &&
-          arr[i][j - 1] === 0
+          arr[i][j - 1] === 0 && arr[i + 1][j - 1] === 0
         ) {
           result.update = true;
           if (element1 === 2) {

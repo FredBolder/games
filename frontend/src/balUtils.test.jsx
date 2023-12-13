@@ -60,11 +60,10 @@ describe("balUtils", () => {
   it("checkFalling A", () => {
     expect(JSON.stringify(input3a)).toBe(JSON.stringify(expectedOutput3a));
   });
-  it("checkFalling A falling", () => {
-    expect(info3a.update).toBe(true);
-  });
-  it("checkFalling A player", () => {
-    expect(info3a.player).toBe(false);
+  it("checkFalling A info", () => {
+    expect(JSON.stringify(info3a)).toBe(
+      JSON.stringify({ update: true, ballX: -1, ballY: -1 })
+    );
   });
 
   let input3b = [
@@ -85,11 +84,10 @@ describe("balUtils", () => {
   it("checkFalling B", () => {
     expect(JSON.stringify(input3b)).toBe(JSON.stringify(expectedOutput3b));
   });
-  it("checkFalling B falling", () => {
-    expect(info3b.update).toBe(true);
-  });
-  it("checkFalling B player", () => {
-    expect(info3b.player).toBe(true);
+  it("checkFalling B info", () => {
+    expect(JSON.stringify(info3b)).toBe(
+      JSON.stringify({ update: true, ballX: 3, ballY: 3 })
+    );
   });
 
   let input3c = [
@@ -108,11 +106,10 @@ describe("balUtils", () => {
   it("checkFalling C", () => {
     expect(JSON.stringify(input3c)).toBe(JSON.stringify(expectedOutput3c));
   });
-  it("checkFalling C falling", () => {
-    expect(info3c.update).toBe(false);
-  });
-  it("checkFalling C player", () => {
-    expect(info3c.player).toBe(false);
+  it("checkFalling C info", () => {
+    expect(JSON.stringify(info3c)).toBe(
+      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+    );
   });
 
   let input4a = [
@@ -1828,106 +1825,161 @@ describe("balUtils", () => {
       JSON.stringify({ eating: false, player: false, oneDirection: false })
     );
   });
-});
 
-// ***** TRIANGLED WALLS *****
+  // ***** TRIANGLED WALLS *****
 
-let input16a = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 2, 0, 0, 0, 0, 1],
-  [1, 15, 0, 0, 0, 0, 1],
-  [1, 1, 0, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let expectedOutput16a = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 1],
-  [1, 15, 0, 0, 0, 0, 1],
-  [1, 1, 2, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let info16a = checkFalling(input16a, []);
-it("Triangled Walls A", () => {
-  expect(JSON.stringify(input16a)).toBe(JSON.stringify(expectedOutput16a));
-});
-it("Triangled Walls A falling", () => {
-  expect(info16a.update).toBe(true);
-});
-it("Triangled Walls A player", () => {
-  expect(info16a.player).toBe(true);
-});
+  let input16a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 0, 0, 0, 1],
+    [1, 15, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput16a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 15, 2, 0, 0, 0, 1],
+    [1, 1, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info16a = checkFalling(input16a, []);
+  it("Triangled Walls A", () => {
+    expect(JSON.stringify(input16a)).toBe(JSON.stringify(expectedOutput16a));
+  });
+  it("Triangled Walls A info", () => {
+    expect(JSON.stringify(info16a)).toBe(
+      JSON.stringify({ update: true, ballX: 2, ballY: 2 })
+    );
+  });
 
-let input16b = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 2, 1],
-  [1, 0, 0, 0, 0, 16, 1],
-  [1, 0, 0, 0, 0, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let expectedOutput16b = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 16, 1],
-  [1, 0, 0, 0, 2, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let info16b = checkFalling(input16b, []);
-it("Triangled Walls B", () => {
-  expect(JSON.stringify(input16b)).toBe(JSON.stringify(expectedOutput16b));
-});
-it("Triangled Walls B falling", () => {
-  expect(info16b.update).toBe(true);
-});
-it("Triangled Walls B player", () => {
-  expect(info16b.player).toBe(true);
-});
+  let input16b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 2, 1],
+    [1, 0, 0, 0, 0, 16, 1],
+    [1, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput16b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 2, 16, 1],
+    [1, 0, 0, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info16b = checkFalling(input16b, []);
+  it("Triangled Walls B", () => {
+    expect(JSON.stringify(input16b)).toBe(JSON.stringify(expectedOutput16b));
+  });
+  it("Triangled Walls B info", () => {
+    expect(JSON.stringify(info16b)).toBe(
+      JSON.stringify({ update: true, ballX: 4, ballY: 2 })
+    );
+  });
 
-let input16c = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 4, 0, 0, 0, 0, 1],
-  [1, 16, 0, 0, 0, 0, 1],
-  [1, 1, 0, 0, 2, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let expectedOutput16c = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 4, 0, 0, 0, 0, 1],
-  [1, 16, 0, 0, 0, 0, 1],
-  [1, 1, 0, 0, 2, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let info16c = checkFalling(input16c, []);
-it("Triangled Walls C", () => {
-  expect(JSON.stringify(input16c)).toBe(JSON.stringify(expectedOutput16c));
-});
-it("Triangled Walls C falling", () => {
-  expect(info16c.update).toBe(false);
-});
-it("Triangled Walls C player", () => {
-  expect(info16c.player).toBe(false);
-});
+  let input16c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 4, 0, 0, 0, 0, 1],
+    [1, 16, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput16c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 4, 0, 0, 0, 0, 1],
+    [1, 16, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info16c = checkFalling(input16c, []);
+  it("Triangled Walls C", () => {
+    expect(JSON.stringify(input16c)).toBe(JSON.stringify(expectedOutput16c));
+  });
+  it("Triangled Walls C info", () => {
+    expect(JSON.stringify(info16c)).toBe(
+      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+    );
+  });
 
-let input16d = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 4, 0, 0, 0, 0, 1],
-  [1, 15, 0, 0, 0, 0, 1],
-  [1, 1, 0, 0, 2, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let expectedOutput16d = [
-  [1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 1],
-  [1, 15, 0, 0, 0, 0, 1],
-  [1, 1, 4, 0, 2, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1],
-];
-let info16d = checkFalling(input16d, []);
-it("Triangled Walls D", () => {
-  expect(JSON.stringify(input16d)).toBe(JSON.stringify(expectedOutput16d));
-});
-it("Triangled Walls D falling", () => {
-  expect(info16d.update).toBe(true);
-});
-it("Triangled Walls D player", () => {
-  expect(info16d.player).toBe(false);
+  let input16d = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 4, 0, 0, 0, 0, 1],
+    [1, 15, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput16d = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 15, 4, 0, 0, 0, 1],
+    [1, 1, 0, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info16d = checkFalling(input16d, []);
+  it("Triangled Walls D", () => {
+    expect(JSON.stringify(input16d)).toBe(JSON.stringify(expectedOutput16d));
+  });
+  it("Triangled Walls D info", () => {
+    expect(JSON.stringify(info16d)).toBe(
+      JSON.stringify({ update: true, ballX: -1, ballY: -1 })
+    );
+  });
+
+  let input16e = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 4, 5, 0, 0, 0, 1],
+    [1, 15, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput16e = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 4, 5, 0, 0, 0, 1],
+    [1, 15, 0, 0, 0, 0, 1],
+    [1, 1, 0, 0, 2, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info16e = checkFalling(input16e, []);
+  it("Triangled Walls E", () => {
+    expect(JSON.stringify(input16e)).toBe(JSON.stringify(expectedOutput16e));
+  });
+  it("Triangled Walls E info", () => {
+    expect(JSON.stringify(info16e)).toBe(
+      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+    );
+  });
+
+  let input16f = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 0, 0, 3, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 15, 0, 0, 0, 0, 1],
+    [1, 1, 15, 0, 0, 0, 1],
+    [1, 1, 1, 15, 0, 0, 1],
+    [1, 1, 1, 1, 15, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput16f = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 3, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 15, 0, 0, 0, 0, 1],
+    [1, 1, 15, 0, 0, 0, 1],
+    [1, 1, 1, 15, 0, 0, 1],
+    [1, 1, 1, 1, 15, 2, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info16f;
+  for (let i = 0; i < 5; i++) {
+    info16f = checkFalling(input16f, []);
+  }
+  it("Triangled Walls F", () => {
+    expect(JSON.stringify(input16f)).toBe(JSON.stringify(expectedOutput16f));
+  });
+  it("Triangled Walls F info", () => {
+    expect(JSON.stringify(info16f)).toBe(
+      JSON.stringify({ update: true, ballX: 5, ballY: 6 })
+    );
+  });
+
+  // Insert new tests here
 });
