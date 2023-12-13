@@ -705,7 +705,7 @@ function BalPage() {
       if (size2 < size1) {
         size1 = size2;
       }
-      size1 = Math.round(size1);
+      size1 = Math.trunc(size1);
       let gameWidth = columns * size1;
       let gameHeight = rows * size1;
       let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);

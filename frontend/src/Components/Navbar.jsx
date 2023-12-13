@@ -44,7 +44,7 @@ function Navbar() {
       </div>
 
       {loggedIn ? (
-        <div>
+        <div className="gameButtons">
           <button className="button" onClick={balClick}> Bal</button>
           <button className="button" onClick={tennisClick}>Tennis</button>
         </div>

@@ -107,6 +107,14 @@ main {
   align-items: center;
 }
 
+.gameButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 1rem;
+}
+
 /* FOOTER COMPONENT */
 
 .footerContainer {
@@ -451,8 +459,8 @@ tr:nth-child(even) td {
     margin: 0 0.2rem;
   }
   .moveButtons button img {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -491,8 +499,8 @@ tr:nth-child(even) td {
     margin: 0 0.75rem;
   }
   .moveButtons button img {
-    width: 25px;
-    height: 25px;
+    width: 23px;
+    height: 23px;
   }
 }
 
