@@ -3,6 +3,20 @@ function canMoveAlone(n) {
   return [9, 28, 84, 85, 86].includes(n);
 }
 
+function isTeleport(x, y, teleports) {
+  let result = false;
+
+  if (teleports.length === 2) {
+    if (
+      (teleports[0].x === x && teleports[0].y === y) ||
+      (teleports[1].x === x && teleports[1].y === y)
+    ) {
+      result = true;
+    }
+  }
+  return result;
+}
+
 function charToNumber(c) {
   let result = 0;
 
@@ -57,6 +71,9 @@ function charToNumber(c) {
       break;
     case "p":
       result = 28;
+      break;
+    case "T":
+      result = 31;
       break;
     case "B":
       result = 36;
@@ -149,6 +166,9 @@ function numberToChar(n) {
       break;
     case 28:
       result = "p";
+      break;
+    case 31:
+      result = "T";
       break;
     case 36:
       result = "B";
@@ -267,7 +287,8 @@ export function checkFalling(arr, redBalls) {
         if (
           element2 === 15 &&
           (element1 === 2 || element1 === 4 || element1 === 8) &&
-          arr[i][j + 1] === 0 && arr[i + 1][j + 1] === 0
+          arr[i][j + 1] === 0 &&
+          arr[i + 1][j + 1] === 0
         ) {
           result.update = true;
           if (element1 === 2) {
@@ -286,7 +307,8 @@ export function checkFalling(arr, redBalls) {
         if (
           element2 === 16 &&
           (element1 === 2 || element1 === 4 || element1 === 8) &&
-          arr[i][j - 1] === 0 && arr[i + 1][j - 1] === 0
+          arr[i][j - 1] === 0 &&
+          arr[i + 1][j - 1] === 0
         ) {
           result.update = true;
           if (element1 === 2) {
@@ -332,19 +354,24 @@ function whiteOrBlue(n) {
   return n === 4 || n === 5;
 }
 
-export function moveLeft(arr, x, y, yellowBalls = []) {
+export function moveLeft(
+  arr,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
   let result = {};
   let row = arr[y];
   result.eating = false;
   result.player = false;
   result.oneDirection = false;
+  result.teleporting = false;
 
   if (arr.length > 0) {
     if (arr[y + 1][x] !== 0) {
       if (x > 0) {
-        // empty space
+        // empty space or green ball
         if (!result.player && (row[x - 1] === 0 || row[x - 1] === 3)) {
-          // green ball
           if (row[x - 1] === 3) {
             result.eating = true;
           }
@@ -361,7 +388,7 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
           row[x - 2] === 0
         ) {
           if (row[x - 1] === 9) {
-            updateYellow(yellowBalls, x - 1, y, x - 2, y, "left");
+            updateYellow(gameInfo.yellowBalls, x - 1, y, x - 2, y, "left");
           }
           row[x - 2] = row[x - 1];
           row[x - 1] = 2;
@@ -390,26 +417,44 @@ export function moveLeft(arr, x, y, yellowBalls = []) {
           result.player = true;
         }
       }
+      if (!result.player && x > 0) {
+        if (row[x - 1] === 31) {
+          row[x - 1] = 2;
+          row[x] = 0;
+          result.player = true;
+          result.teleporting = true;
+        }
+      }
+      if (result.player && gameInfo.teleports.length === 2) {
+        if (isTeleport(x, y, gameInfo.teleports)) {
+          row[x] = 31;
+        }
+      }
     }
   }
   return result;
 }
 
-export function moveRight(arr, x, y, yellowBalls = []) {
+export function moveRight(
+  arr,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
   let result = {};
   let row = arr[y];
   let maxX = 0;
   result.eating = false;
   result.player = false;
   result.oneDirection = false;
+  result.teleporting = false;
 
   if (arr.length > 0) {
     if (arr[y + 1][x] !== 0) {
       maxX = arr[0].length - 1;
       if (x < maxX) {
-        // empty space
+        // empty space or green ball
         if (!result.player && (row[x + 1] === 0 || row[x + 1] === 3)) {
-          // green ball
           if (row[x + 1] === 3) {
             result.eating = true;
           }
@@ -426,7 +471,7 @@ export function moveRight(arr, x, y, yellowBalls = []) {
           row[x + 2] === 0
         ) {
           if (row[x + 1] === 9) {
-            updateYellow(yellowBalls, x + 1, y, x + 2, y, "right");
+            updateYellow(gameInfo.yellowBalls, x + 1, y, x + 2, y, "right");
           }
           row[x + 2] = row[x + 1];
           row[x + 1] = 2;
@@ -455,115 +500,157 @@ export function moveRight(arr, x, y, yellowBalls = []) {
           result.player = true;
         }
       }
+      if (!result.player && x < arr[0].length - 1) {
+        if (row[x + 1] === 31) {
+          row[x + 1] = 2;
+          row[x] = 0;
+          result.player = true;
+          result.teleporting = true;
+        }
+      }
+      if (result.player && gameInfo.teleports.length === 2) {
+        if (isTeleport(x, y, gameInfo.teleports)) {
+          row[x] = 31;
+        }
+      }
     }
   }
   return result;
 }
 
-export function jump(arr, x, y, yellowBalls = []) {
+export function jump(arr, x, y, gameInfo = { yellowBalls: [], teleports: [] }) {
   let result = {};
   result.eating = false;
   result.player = false;
   result.oneDirection = false;
 
-  if (arr.length > 0) {
-    if (y > 0 && arr[y + 1][x] !== 0) {
-      if (!result.player && (arr[y - 1][x] === 0 || arr[y - 1][x] === 3)) {
-        if (arr[y - 1][x] === 3) {
-          result.eating = true;
+  if (!isTeleport(x, y, gameInfo.teleports)) {
+    if (arr.length > 0) {
+      if (y > 0 && arr[y + 1][x] !== 0) {
+        if (!result.player && (arr[y - 1][x] === 0 || arr[y - 1][x] === 3)) {
+          if (arr[y - 1][x] === 3) {
+            result.eating = true;
+          }
+          arr[y - 1][x] = 2;
+          arr[y][x] = 0;
+          result.player = true;
         }
-        arr[y - 1][x] = 2;
-        arr[y][x] = 0;
-        result.player = true;
+      }
+      if (y > 1 && arr[y + 1][x] !== 0) {
+        if (
+          !result.player &&
+          canMoveAlone(arr[y - 1][x]) &&
+          arr[y - 2][x] === 0
+        ) {
+          if (arr[y - 1][x] === 9) {
+            updateYellow(gameInfo.yellowBalls, x, y - 1, x, y - 2, "up");
+          }
+          arr[y - 2][x] = arr[y - 1][x];
+          arr[y - 1][x] = 2;
+          arr[y][x] = 0;
+          result.player = true;
+        }
+        if (!result.player && arr[y - 1][x] === 87 && arr[y - 2][x] === 0) {
+          arr[y - 2][x] = 2;
+          arr[y][x] = 0;
+          result.player = true;
+          result.oneDirection = true;
+        }
       }
     }
-    if (y > 1 && arr[y + 1][x] !== 0) {
+  }
+
+  return result;
+}
+
+export function jumpLeft(
+  arr,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+  if (!isTeleport(x, y, gameInfo.teleports)) {
+    if (arr.length > 0) {
+      if (y > 0 && x > 0 && arr[y + 1][x] !== 0) {
+        if (arr[y - 1][x] === 0) {
+          if (arr[y - 1][x - 1] === 0 || arr[y - 1][x - 1] === 3) {
+            if (arr[y - 1][x - 1] === 3) {
+              result.eating = true;
+            }
+            arr[y - 1][x - 1] = 2;
+            arr[y][x] = 0;
+            result.player = true;
+          }
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+export function jumpRight(
+  arr,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
+  let result = {};
+  result.eating = false;
+  result.player = false;
+  if (!isTeleport(x, y, gameInfo.teleports)) {
+    if (arr.length > 0) {
+      if (y > 0 && x < arr[0].length - 1 && arr[y + 1][x] !== 0) {
+        if (arr[y - 1][x] === 0) {
+          if (arr[y - 1][x + 1] === 0 || arr[y - 1][x + 1] === 3) {
+            if (arr[y - 1][x + 1] === 3) {
+              result.eating = true;
+            }
+            arr[y - 1][x + 1] = 2;
+            arr[y][x] = 0;
+            result.player = true;
+          }
+        }
+      }
+    }
+  }
+  return result;
+}
+
+export function pushDown(
+  arr,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
+  let result = {};
+  result.player = false;
+  result.oneDirection = false;
+
+  if (!isTeleport(x, y, gameInfo.teleports)) {
+    if (arr.length > 0 && y < arr.length - 2) {
       if (
         !result.player &&
-        canMoveAlone(arr[y - 1][x]) &&
-        arr[y - 2][x] === 0
+        canMoveAlone(arr[y + 1][x]) &&
+        arr[y + 2][x] === 0
       ) {
-        if (arr[y - 1][x] === 9) {
-          updateYellow(yellowBalls, x, y - 1, x, y - 2, "up");
-        }
-        arr[y - 2][x] = arr[y - 1][x];
-        arr[y - 1][x] = 2;
+        arr[y + 2][x] = arr[y + 1][x];
+        arr[y + 1][x] = 2;
         arr[y][x] = 0;
+        if (arr[y + 2][x] === 9) {
+          updateYellow(gameInfo.yellowBalls, x, y + 1, x, y + 2, "down");
+        }
         result.player = true;
       }
-      if (!result.player && arr[y - 1][x] === 87 && arr[y - 2][x] === 0) {
-        arr[y - 2][x] = 2;
+      if (!result.player && arr[y + 1][x] === 88 && arr[y + 2][x] === 0) {
+        arr[y + 2][x] = 2;
         arr[y][x] = 0;
         result.player = true;
         result.oneDirection = true;
       }
-    }
-  }
-  return result;
-}
-
-export function jumpLeft(arr, x, y) {
-  let result = {};
-  result.eating = false;
-  result.player = false;
-  if (arr.length > 0) {
-    if (y > 0 && x > 0 && arr[y + 1][x] !== 0) {
-      if (arr[y - 1][x] === 0) {
-        if (arr[y - 1][x - 1] === 0 || arr[y - 1][x - 1] === 3) {
-          if (arr[y - 1][x - 1] === 3) {
-            result.eating = true;
-          }
-          arr[y - 1][x - 1] = 2;
-          arr[y][x] = 0;
-          result.player = true;
-        }
-      }
-    }
-  }
-  return result;
-}
-
-export function jumpRight(arr, x, y) {
-  let result = {};
-  result.eating = false;
-  result.player = false;
-  if (arr.length > 0) {
-    if (y > 0 && x < arr[0].length - 1 && arr[y + 1][x] !== 0) {
-      if (arr[y - 1][x] === 0) {
-        if (arr[y - 1][x + 1] === 0 || arr[y - 1][x + 1] === 3) {
-          if (arr[y - 1][x + 1] === 3) {
-            result.eating = true;
-          }
-          arr[y - 1][x + 1] = 2;
-          arr[y][x] = 0;
-          result.player = true;
-        }
-      }
-    }
-  }
-  return result;
-}
-
-export function pushDown(arr, x, y, yellowBalls = []) {
-  let result = {};
-  result.player = false;
-  result.oneDirection = false;
-
-  if (arr.length > 0 && y < arr.length - 2) {
-    if (!result.player && canMoveAlone(arr[y + 1][x]) && arr[y + 2][x] === 0) {
-      arr[y + 2][x] = arr[y + 1][x];
-      arr[y + 1][x] = 2;
-      arr[y][x] = 0;
-      if (arr[y + 2][x] === 9) {
-        updateYellow(yellowBalls, x, y + 1, x, y + 2, "down");
-      }
-      result.player = true;
-    }
-    if (!result.player && arr[y + 1][x] === 88 && arr[y + 2][x] === 0) {
-      arr[y + 2][x] = 2;
-      arr[y][x] = 0;
-      result.player = true;
-      result.oneDirection = true;
     }
   }
   return result;
@@ -578,6 +665,7 @@ export function getGameInfo(arr) {
   result.redBalls = [];
   result.yellowBalls = [];
   result.detonator = { x: -1, y: -1 };
+  result.teleports = [];
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -616,6 +704,12 @@ export function getGameInfo(arr) {
         yellowBall.y = i;
         yellowBall.direction = "none";
         result.yellowBalls.push(yellowBall);
+      }
+      if (arr[i][j] === 31) {
+        let teleport = {};
+        teleport.x = j;
+        teleport.y = i;
+        result.teleports.push(teleport);
       }
     }
   }

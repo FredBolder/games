@@ -821,6 +821,7 @@ describe("balUtils", () => {
     ],
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
+    teleports: [],
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(input9a))).toBe(
@@ -846,6 +847,7 @@ describe("balUtils", () => {
     ],
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
+    teleports: [],
   };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(input9b))).toBe(
@@ -868,6 +870,7 @@ describe("balUtils", () => {
     redBalls: [],
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
+    teleports: [],
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(input9c))).toBe(
@@ -895,6 +898,7 @@ describe("balUtils", () => {
     redBalls: [],
     yellowBalls: [{ x: 1, y: 4, direction: "none" }],
     detonator: { x: 8, y: 5 },
+    teleports: [],
   };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(input9d))).toBe(
