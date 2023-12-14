@@ -81,6 +81,7 @@ gameInfo.greenBalls = 0;
 gameInfo.redBalls = [];
 gameInfo.yellowBalls = [];
 gameInfo.detonator = { x: -1, y: -1 };
+gameInfo.teleports = [];
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -91,6 +92,7 @@ let posX = -1;
 let posY = -1;
 let settings = { sound: true, nicerGraphics: true };
 let skipFalling = 0;
+let teleporting = 0;
 let yellowCounter = 0;
 
 function BalPage() {
@@ -253,6 +255,9 @@ function BalPage() {
         case "laser":
           snd = sndLaserGun;
           break;
+        case "teleport":
+          snd = sndTeleport;
+          break;
         default:
           break;
       }
@@ -340,6 +345,33 @@ function BalPage() {
           playSound("explosion");
         }
         update = true;
+      }
+
+      if (gameInfo.teleports.length === 2) {
+        switch (teleporting) {
+          case 1:
+            playSound("teleport");
+            teleporting = 2;
+            break;
+          case 2:
+            gameData[posY][posX] = 31;
+            if (
+              posX === gameInfo.teleports[0].x &&
+              posY === gameInfo.teleports[0].y
+            ) {
+              posX = gameInfo.teleports[1].x;
+              posY = gameInfo.teleports[1].y;
+            } else {
+              posX = gameInfo.teleports[0].x;
+              posY = gameInfo.teleports[0].y;
+            }
+            gameData[posY][posX] = 2;
+            update = true;
+            teleporting = 0;
+            break;
+          default:
+            break;
+        }
       }
 
       if (update) {
@@ -437,7 +469,7 @@ function BalPage() {
     info.player = false;
     info.eating = false;
 
-    if (gameOver || !canvas) {
+    if (gameOver || !canvas || teleporting > 0) {
       return false;
     }
     //console.log(posX, posY, gameData.length);
@@ -474,24 +506,30 @@ function BalPage() {
         case "a":
         case "A":
         case "4":
-          info = moveLeft(gameData, posX, posY, gameInfo.yellowBalls);
+          info = moveLeft(gameData, posX, posY, gameInfo);
           if (info.player) {
             posX--;
             if (info.oneDirection) {
               posX--;
             }
           }
+          if (info.teleporting) {
+            teleporting = 1;
+          }
           break;
         case "ArrowRight":
         case "d":
         case "D":
         case "6":
-          info = moveRight(gameData, posX, posY, gameInfo.yellowBalls);
+          info = moveRight(gameData, posX, posY, gameInfo);
           if (info.player) {
             posX++;
             if (info.oneDirection) {
               posX++;
             }
+          }
+          if (info.teleporting) {
+            teleporting = 1;
           }
           break;
         case "ArrowUp":
@@ -665,7 +703,15 @@ function BalPage() {
       laserY: laserY,
     };
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawLevel(canvas, ctx, gameData, settings.nicerGraphics, elements, status);
+    drawLevel(
+      canvas,
+      ctx,
+      gameData,
+      settings.nicerGraphics,
+      elements,
+      status,
+      gameInfo
+    );
   }
 
   function buttonJumpLeft(e) {
