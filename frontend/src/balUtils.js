@@ -559,7 +559,6 @@ export function jump(arr, x, y, gameInfo = { yellowBalls: [], teleports: [] }) {
       }
     }
   }
-
   return result;
 }
 
@@ -572,6 +571,7 @@ export function jumpLeft(
   let result = {};
   result.eating = false;
   result.player = false;
+
   if (!isTeleport(x, y, gameInfo.teleports)) {
     if (arr.length > 0) {
       if (y > 0 && x > 0 && arr[y + 1][x] !== 0) {
@@ -588,7 +588,6 @@ export function jumpLeft(
       }
     }
   }
-
   return result;
 }
 
@@ -601,6 +600,7 @@ export function jumpRight(
   let result = {};
   result.eating = false;
   result.player = false;
+  
   if (!isTeleport(x, y, gameInfo.teleports)) {
     if (arr.length > 0) {
       if (y > 0 && x < arr[0].length - 1 && arr[y + 1][x] !== 0) {

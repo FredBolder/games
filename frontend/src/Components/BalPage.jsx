@@ -484,14 +484,14 @@ function BalPage() {
           initLevel(currentLevel);
           break;
         case "ArrowLeft":
-          info = jumpLeft(gameData, posX, posY);
+          info = jumpLeft(gameData, posX, posY, gameInfo);
           if (info.player) {
             posX--;
             posY--;
           }
           break;
         case "ArrowRight":
-          info = jumpRight(gameData, posX, posY);
+          info = jumpRight(gameData, posX, posY, gameInfo);
           if (info.player) {
             posX++;
             posY--;
@@ -536,7 +536,7 @@ function BalPage() {
         case "w":
         case "W":
         case "8":
-          info = jump(gameData, posX, posY, gameInfo.yellowBalls);
+          info = jump(gameData, posX, posY, gameInfo);
           if (info.player) {
             posY--;
             if (info.oneDirection) {
@@ -548,7 +548,7 @@ function BalPage() {
         case "q":
         case "Q":
         case "7":
-          info = jumpLeft(gameData, posX, posY);
+          info = jumpLeft(gameData, posX, posY, gameInfo);
           if (info.player) {
             posX--;
             posY--;
@@ -557,7 +557,7 @@ function BalPage() {
         case "e":
         case "E":
         case "9":
-          info = jumpRight(gameData, posX, posY);
+          info = jumpRight(gameData, posX, posY, gameInfo);
           if (info.player) {
             posX++;
             posY--;
@@ -567,7 +567,7 @@ function BalPage() {
         case "s":
         case "S":
         case "2":
-          info = pushDown(gameData, posX, posY, gameInfo.yellowBalls);
+          info = pushDown(gameData, posX, posY, gameInfo);
           if (info.player) {
             posY++;
             if (info.oneDirection) {

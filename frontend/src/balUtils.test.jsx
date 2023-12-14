@@ -296,7 +296,12 @@ describe("balUtils", () => {
   });
   it("moveRight B info", () => {
     expect(JSON.stringify(info5b)).toBe(
-      JSON.stringify({ eating: false, player: true, oneDirection: false })
+      JSON.stringify({
+        eating: false,
+        player: true,
+        oneDirection: false,
+        teleporting: false,
+      })
     );
   });
 
@@ -458,7 +463,10 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1],
   ];
   let yellow5j = [{ x: 2, y: 1, direction: "none" }];
-  let info5j = moveRight(input5j, 1, 1, yellow5j);
+  let info5j = moveRight(input5j, 1, 1, {
+    yellowBalls: yellow5j,
+    teleports: [],
+  });
   it("moveRight J", () => {
     expect(JSON.stringify(input5j)).toBe(JSON.stringify(expectedOutput5j));
   });
@@ -1517,7 +1525,10 @@ describe("balUtils", () => {
     [1, 1, 1, 1, 1, 1, 1],
   ];
   let yellow14a = [{ x: 3, y: 3, direction: "none" }];
-  let info14a = pushDown(input14a, 3, 2, yellow14a);
+  let info14a = pushDown(input14a, 3, 2, {
+    yellowBalls: yellow14a,
+    teleports: [],
+  });
   it("pushDown A", () => {
     expect(JSON.stringify(input14a)).toBe(JSON.stringify(expectedOutput14a));
   });
@@ -1552,7 +1563,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info14b = pushDown(input14b, 3, 2, []);
+  let info14b = pushDown(input14b, 3, 2);
   it("pushDown B", () => {
     expect(JSON.stringify(input14b)).toBe(JSON.stringify(expectedOutput14b));
   });
@@ -1581,7 +1592,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info14c = pushDown(input14c, 3, 2, []);
+  let info14c = pushDown(input14c, 3, 2);
   it("pushDown C", () => {
     expect(JSON.stringify(input14c)).toBe(JSON.stringify(expectedOutput14c));
   });
@@ -1606,14 +1617,19 @@ describe("balUtils", () => {
     [1, 0, 0, 10, 2, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15a = moveRight(input15a, 2, 2, []);
+  let info15a = moveRight(input15a, 2, 2);
   it("One direction ports A", () => {
     expect(JSON.stringify(input15a)).toBe(JSON.stringify(expectedOutput15a));
   });
 
   it("One direction ports A info", () => {
     expect(JSON.stringify(info15a)).toBe(
-      JSON.stringify({ eating: false, player: true, oneDirection: true })
+      JSON.stringify({
+        eating: false,
+        player: true,
+        oneDirection: true,
+        teleporting: false,
+      })
     );
   });
 
@@ -1629,7 +1645,7 @@ describe("balUtils", () => {
     [1, 0, 2, 11, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15b = moveLeft(input15b, 4, 2, []);
+  let info15b = moveLeft(input15b, 4, 2);
   it("One direction ports B", () => {
     expect(JSON.stringify(input15b)).toBe(JSON.stringify(expectedOutput15b));
   });
@@ -1694,7 +1710,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15e = jump(input15e, 2, 3, []);
+  let info15e = jump(input15e, 2, 3);
   it("One direction ports E", () => {
     expect(JSON.stringify(input15e)).toBe(JSON.stringify(expectedOutput15e));
   });
@@ -1719,7 +1735,7 @@ describe("balUtils", () => {
     [1, 0, 2, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15f = jump(input15f, 2, 3, []);
+  let info15f = jump(input15f, 2, 3);
   it("One direction ports F", () => {
     expect(JSON.stringify(input15f)).toBe(JSON.stringify(expectedOutput15f));
   });
@@ -1744,7 +1760,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 2, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15g = pushDown(input15g, 4, 1, []);
+  let info15g = pushDown(input15g, 4, 1);
   it("One direction ports G", () => {
     expect(JSON.stringify(input15g)).toBe(JSON.stringify(expectedOutput15g));
   });
@@ -1769,7 +1785,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 4, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15h = pushDown(input15h, 4, 1, []);
+  let info15h = pushDown(input15h, 4, 1);
   it("One direction ports H", () => {
     expect(JSON.stringify(input15h)).toBe(JSON.stringify(expectedOutput15h));
   });
@@ -1794,7 +1810,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15i = pushDown(input15i, 4, 1, []);
+  let info15i = pushDown(input15i, 4, 1);
   it("One direction ports I", () => {
     expect(JSON.stringify(input15i)).toBe(JSON.stringify(expectedOutput15i));
   });
@@ -1819,7 +1835,7 @@ describe("balUtils", () => {
     [1, 0, 2, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info15j = jump(input15j, 2, 3, []);
+  let info15j = jump(input15j, 2, 3);
   it("One direction ports J", () => {
     expect(JSON.stringify(input15j)).toBe(JSON.stringify(expectedOutput15j));
   });
