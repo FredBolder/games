@@ -464,6 +464,9 @@ tr:nth-child(even) td {
     font-size: var(--fontsize-xs);
     border-radius: var(--radius-xs);
   }
+  .help {
+    width: 90%;
+  }
   .balButton {
     font-size: var(--fontsize-xs);
     padding: 0.2rem 0.2rem;
@@ -535,6 +538,9 @@ tr:nth-child(even) td {
     padding: 0.125rem 0.25rem;
     font-size: var(--fontsize-s);
     border-radius: var(--radius-s);
+  }
+  .help {
+    width: 90%;
   }
   .balButton {
     font-size: var(--fontsize-s);
@@ -608,6 +614,9 @@ tr:nth-child(even) td {
     font-size: var(--fontsize-m);
     border-radius: var(--radius-m);
   }
+  .help {
+    width: 60%;
+  }
   .balButton {
     font-size: var(--fontsize-m);
     padding: 0.8rem 1.6rem;
@@ -680,6 +689,9 @@ tr:nth-child(even) td {
     font-size: var(--fontsize-l);
     border-radius: var(--radius-l);
   }
+  .help {
+    width: 60%;
+  }
   .balButton {
     font-size: var(--fontsize-l);
     padding: 0.8rem 1.6rem;
@@ -751,6 +763,9 @@ tr:nth-child(even) td {
     padding: 0.5rem 1rem;
     font-size: var(--fontsize-xl);
     border-radius: var(--radius-xl);
+  }
+  .help {
+    width: 60%;
   }
   .balButton {
     font-size: var(--fontsize-xl);
