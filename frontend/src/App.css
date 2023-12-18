@@ -856,6 +856,10 @@ h5 {
   overflow-y: scroll;
 }
 
+.policyBox a {
+  color: white;
+}
+
 /*
 .policyBox::-webkit-scrollbar-thumb {
   background-color: white;

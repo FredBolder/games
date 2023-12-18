@@ -12,40 +12,33 @@ function PrivacyPolicy() {
           </header>
           <h1 className="title">Privacy Policy</h1>
           <div className="policyBox">
-            <h4>Effective Date: 12.12.2023</h4>
+            <h4>Effective Date: 18.12.2023</h4>
             <h5>
               Thank you for using our website located at
-              https://games-41ql.onrender.com/ (the "Website"). This Privacy
-              Policy outlines the types of personal information we collect, how
-              we use it, and the choices you have regarding your information.
-              Please read this policy carefully.
+              https://games-41ql.onrender.com/ (Games). This Privacy Policy
+              outlines the types of personal information we collect, how we use
+              it, and the choices you have regarding your information. Please
+              read this policy carefully.
             </h5>
             <ol>
               <li>
-                Information We Collect:
+                Information we Collect and Store:
                 <ul>
                   <li>
-                    We collect the following directly from users: Name,
-                    UserName, Email address, and Password.
+                    We collect and store the following information from the
+                    users: first name, user name, email address, password
+                    (encrypted), the completed levels and the last played level
+                    to enhance your user experience.
                   </li>
                 </ul>
               </li>
               <li>
-                Storage of Information::
+                Users under 13:
                 <ul>
                   <li>
-                    We store information about completed levels to enhance your
-                    user experience.
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Users Under 13:
-                <ul>
-                  <li>
-                    Our page is offered to users under 13 years of age, and we
-                    take special care to comply with applicable regulations
-                    concerning the privacy of minors.
+                    Our website is also offered to users under 13 years of age,
+                    and we take special care to comply with applicable
+                    regulations concerning the privacy of minors.
                   </li>
                 </ul>
               </li>
@@ -54,7 +47,10 @@ function PrivacyPolicy() {
                 <ul>
                   <li>
                     If you have any questions or concerns about our privacy
-                    practices, you may contact us at fgh.bolder@gmail.com.
+                    practices, you may contact us at{" "}
+                    <a href="mailto:fgh.bolder@gmail.com">
+                      fgh.bolder@gmail.com
+                    </a>
                   </li>
                 </ul>
               </li>
@@ -118,7 +114,7 @@ function PrivacyPolicy() {
               this Privacy Policy. If you do not agree to the terms of this
               Privacy Policy, please do not use the Website.
             </h5>
-            <h4>Last Updated: 12.12.2023</h4>
+            <h4>Last Updated: 18.12.2023</h4>
             <h4>Thank you for your trust and for using our Website!</h4>
           </div>
           <Footer />
