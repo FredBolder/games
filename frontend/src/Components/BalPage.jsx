@@ -1,5 +1,7 @@
 import React from "react";
 import { useRef, useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import InfoContext from "../Context/InfoContext";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
@@ -100,6 +102,8 @@ function BalPage() {
   const [levelNumber, setLevelNumber] = useState(0);
   const [showNext, setShowNext] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const { loggedIn } = useContext(InfoContext);
+  const navigate = useNavigate();
 
   function credentials() {
     return import.meta.env.VITE_NODE_ENV !== "development";
@@ -476,6 +480,14 @@ function BalPage() {
     if (posX === -1 || posY === -1 || gameData.length === 0) {
       return false;
     }
+    if (
+      e.key === "ArrowLeft" ||
+      e.key === "ArrowRight" ||
+      e.key === "ArrowUp" ||
+      e.key === "ArrowDown"
+    ) {
+      e.preventDefault();
+    }
     if (e.shiftKey) {
       switch (e.key) {
         case "N":
@@ -643,28 +655,31 @@ function BalPage() {
   const myRef = useRef(document);
 
   useEffect(() => {
-    elementHappy = document.getElementById("happy");
-    elementSad = document.getElementById("sad");
-    elementRed = document.getElementById("red");
-    elementGreen = document.getElementById("green");
-    elementLightBlue = document.getElementById("light_blue");
-    elementPurple = document.getElementById("purple");
-    elementWhite = document.getElementById("white");
-    elementYellow = document.getElementById("yellow");
+    if (loggedIn) {
+      elementHappy = document.getElementById("happy");
+      elementSad = document.getElementById("sad");
+      elementRed = document.getElementById("red");
+      elementGreen = document.getElementById("green");
+      elementLightBlue = document.getElementById("light_blue");
+      elementPurple = document.getElementById("purple");
+      elementWhite = document.getElementById("white");
+      elementYellow = document.getElementById("yellow");
 
-    getCompleted();
-    currentLevel = 200;
-    initLevel(currentLevel, false);
-    cbGraphics = document.getElementById("graphics");
-    cbSound = document.getElementById("sound");
-    loadSettings();
-    getLast();
+      getCompleted();
+      currentLevel = 200;
+      initLevel(currentLevel, false);
+      cbGraphics = document.getElementById("graphics");
+      cbSound = document.getElementById("sound");
+      loadSettings();
+      getLast();
 
-    myRef.current.addEventListener("keydown", handleKeyDown);
-    //window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("resize", handleResize);
-    gameInterval = setInterval(gameScheduler, 50);
-
+      myRef.current.addEventListener("keydown", handleKeyDown);
+      //window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("resize", handleResize);
+      gameInterval = setInterval(gameScheduler, 50);
+    } else {
+      navigate("/login");
+    }
     return () => {
       myRef.current.removeEventListener("keydown", handleKeyDown);
       //window.removeEventListener("keydown", handleKeyDown);
