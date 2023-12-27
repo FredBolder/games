@@ -462,6 +462,26 @@ function BalPage() {
     });
   }
 
+  function clickSeriesSmall(e) {
+    confirmAlert({
+      title: "Question",
+      message: "Load the first level of series Small?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            currentLevel = 750;
+            initLevel(currentLevel);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  }
+
   function handleChangeSettings(e) {
     settings.nicerGraphics = cbGraphics.checked;
     settings.sound = cbSound.checked;
@@ -810,6 +830,9 @@ function BalPage() {
               </div>
               <div onClick={clickSeries2}>
                 <label>Series 2</label>
+              </div>
+              <div onClick={clickSeriesSmall}>
+                <label>Series Small</label>
               </div>
             </div>
           </div>
