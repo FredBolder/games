@@ -56,7 +56,7 @@ describe("balUtils", () => {
     [1, 2, 0, 0, 4, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info3a = checkFalling(input3a, [{ x: 3, y: 1 }]);
+  let info3a = checkFalling(input3a, {redBalls: [{ x: 3, y: 1 }], ladders: []});
   it("checkFalling A", () => {
     expect(JSON.stringify(input3a)).toBe(JSON.stringify(expectedOutput3a));
   });
@@ -80,7 +80,7 @@ describe("balUtils", () => {
     [1, 4, 4, 2, 8, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info3b = checkFalling(input3b, [{ x: 4, y: 3 }]);
+  let info3b = checkFalling(input3b, {redBalls: [{ x: 4, y: 3 }], ladders: []});
   it("checkFalling B", () => {
     expect(JSON.stringify(input3b)).toBe(JSON.stringify(expectedOutput3b));
   });
@@ -102,7 +102,7 @@ describe("balUtils", () => {
     [1, 4, 2, 0, 1],
     [1, 1, 1, 1, 1],
   ];
-  let info3c = checkFalling(input3c, []);
+  let info3c = checkFalling(input3c, {redBalls: [], ladders: []});
   it("checkFalling C", () => {
     expect(JSON.stringify(input3c)).toBe(JSON.stringify(expectedOutput3c));
   });
@@ -830,6 +830,7 @@ describe("balUtils", () => {
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
     teleports: [],
+    ladders: [],
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(input9a))).toBe(
@@ -856,6 +857,7 @@ describe("balUtils", () => {
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
     teleports: [],
+    ladders: [],
   };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(input9b))).toBe(
@@ -879,6 +881,7 @@ describe("balUtils", () => {
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
     teleports: [],
+    ladders: [],
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(input9c))).toBe(
@@ -907,6 +910,7 @@ describe("balUtils", () => {
     yellowBalls: [{ x: 1, y: 4, direction: "none" }],
     detonator: { x: 8, y: 5 },
     teleports: [],
+    ladders: [],
   };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(input9d))).toBe(
@@ -1862,7 +1866,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16a = checkFalling(input16a, []);
+  let info16a = checkFalling(input16a, {redBalls: [], ladders: []});
   it("Triangled Walls A", () => {
     expect(JSON.stringify(input16a)).toBe(JSON.stringify(expectedOutput16a));
   });
@@ -1886,7 +1890,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16b = checkFalling(input16b, []);
+  let info16b = checkFalling(input16b, {redBalls: [], ladders: []});
   it("Triangled Walls B", () => {
     expect(JSON.stringify(input16b)).toBe(JSON.stringify(expectedOutput16b));
   });
@@ -1910,7 +1914,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 2, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16c = checkFalling(input16c, []);
+  let info16c = checkFalling(input16c, {redBalls: [], ladders: []});
   it("Triangled Walls C", () => {
     expect(JSON.stringify(input16c)).toBe(JSON.stringify(expectedOutput16c));
   });
@@ -1934,7 +1938,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 2, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16d = checkFalling(input16d, []);
+  let info16d = checkFalling(input16d, {redBalls: [], ladders: []});
   it("Triangled Walls D", () => {
     expect(JSON.stringify(input16d)).toBe(JSON.stringify(expectedOutput16d));
   });
@@ -1958,7 +1962,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 2, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16e = checkFalling(input16e, []);
+  let info16e = checkFalling(input16e, {redBalls: [], ladders: []});
   it("Triangled Walls E", () => {
     expect(JSON.stringify(input16e)).toBe(JSON.stringify(expectedOutput16e));
   });
@@ -1990,7 +1994,7 @@ describe("balUtils", () => {
   ];
   let info16f;
   for (let i = 0; i < 5; i++) {
-    info16f = checkFalling(input16f, []);
+    info16f = checkFalling(input16f, {redBalls: [], ladders: []});
   }
   it("Triangled Walls F", () => {
     expect(JSON.stringify(input16f)).toBe(JSON.stringify(expectedOutput16f));

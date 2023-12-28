@@ -61,6 +61,34 @@ export default function drawLevel(
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 0;
   ctx.imageSmoothingEnabled = false;
+
+  for (let i = 0; i < gameInfo.ladders.length; i++) {
+    drawLine(
+      ctx,
+      gameInfo.ladders[i].x * size1 + leftMargin + 1,
+      gameInfo.ladders[i].y * size1,
+      gameInfo.ladders[i].x * size1 + leftMargin + 1,
+      (gameInfo.ladders[i].y + 1) * size1,
+      "white"
+    );
+    drawLine(
+      ctx,
+      (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+      gameInfo.ladders[i].y * size1,
+      (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+      (gameInfo.ladders[i].y + 1) * size1,
+      "white"
+    );
+    drawLine(
+      ctx,
+      gameInfo.ladders[i].x * size1 + leftMargin + 1,
+      (gameInfo.ladders[i].y + 0.5) * size1,
+      (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+      (gameInfo.ladders[i].y + 0.5) * size1,
+      "white"
+    );
+  }
+
   dymin = 0;
   for (let row = 0; row < rows; row++) {
     dymax = Math.round(dymin + size1) - 1;

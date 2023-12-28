@@ -3,6 +3,17 @@ function canMoveAlone(n) {
   return [9, 28, 84, 85, 86].includes(n);
 }
 
+function isLadder(x, y, ladders) {
+  let result = false;
+
+  for (let i = 0; i < ladders.length; i++) {
+    if (ladders[i].x === x && ladders[i].y === y) {
+      result = true;
+    }
+  }
+  return result;
+}
+
 function isTeleport(x, y, teleports) {
   let result = false;
 
@@ -15,6 +26,14 @@ function isTeleport(x, y, teleports) {
     }
   }
   return result;
+}
+
+function notInAir(x, y, arr, ladders) {
+  return (
+    arr[y + 1][x] !== 0 ||
+    isLadder(x, y, ladders) ||
+    isLadder(x, y + 1, ladders)
+  );
 }
 
 function charToNumber(c) {
@@ -68,6 +87,9 @@ function charToNumber(c) {
       break;
     case "J":
       result = 18;
+      break;
+    case "=":
+      result = 25;
       break;
     case "p":
       result = 28;
@@ -163,6 +185,9 @@ function numberToChar(n) {
       break;
     case 18:
       result = "J";
+      break;
+    case 25:
+      result = "=";
       break;
     case 28:
       result = "p";
@@ -272,7 +297,7 @@ export function checkDetonator(arr, x, y) {
   return explosion;
 }
 
-export function checkFalling(arr, redBalls) {
+export function checkFalling(arr, gameInfo) {
   let result = {};
   result.update = false;
   result.ballX = -1;
@@ -296,7 +321,7 @@ export function checkFalling(arr, redBalls) {
             result.ballY = i;
           }
           if (element1 === 8) {
-            updateRed(redBalls, j, i, j + 1, i);
+            updateRed(gameInfo.redBalls, j, i, j + 1, i);
           }
           arr[i][j + 1] = arr[i][j];
           arr[i][j] = 0;
@@ -316,7 +341,7 @@ export function checkFalling(arr, redBalls) {
             result.ballY = i;
           }
           if (element1 === 8) {
-            updateRed(redBalls, j, i, j - 1, i);
+            updateRed(gameInfo.redBalls, j, i, j - 1, i);
           }
           arr[i][j - 1] = arr[i][j];
           arr[i][j] = 0;
@@ -332,7 +357,11 @@ export function checkFalling(arr, redBalls) {
 
       if (
         element2 === 0 &&
-        (element1 === 2 || element1 === 4 || element1 === 8)
+        ((element1 === 2 &&
+          !isLadder(j, i, gameInfo.ladders) &&
+          !isLadder(j, i + 1, gameInfo.ladders)) ||
+          element1 === 4 ||
+          element1 === 8)
       ) {
         result.update = true;
         if (element1 === 2) {
@@ -340,7 +369,7 @@ export function checkFalling(arr, redBalls) {
           result.ballY = i + 1;
         }
         if (element1 === 8) {
-          updateRed(redBalls, j, i, j, i + 1);
+          updateRed(gameInfo.redBalls, j, i, j, i + 1);
         }
         arr[i + 1][j] = arr[i][j];
         arr[i][j] = 0;
@@ -358,7 +387,7 @@ export function moveLeft(
   arr,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [] }
+  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
 ) {
   let result = {};
   let row = arr[y];
@@ -368,7 +397,7 @@ export function moveLeft(
   result.teleporting = false;
 
   if (arr.length > 0) {
-    if (arr[y + 1][x] !== 0) {
+    if (notInAir(x, y, arr, gameInfo.ladders)) {
       if (x > 0) {
         // empty space or green ball
         if (!result.player && (row[x - 1] === 0 || row[x - 1] === 3)) {
@@ -439,7 +468,7 @@ export function moveRight(
   arr,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [] }
+  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
 ) {
   let result = {};
   let row = arr[y];
@@ -450,7 +479,7 @@ export function moveRight(
   result.teleporting = false;
 
   if (arr.length > 0) {
-    if (arr[y + 1][x] !== 0) {
+    if (notInAir(x, y, arr, gameInfo.ladders)) {
       maxX = arr[0].length - 1;
       if (x < maxX) {
         // empty space or green ball
@@ -518,15 +547,22 @@ export function moveRight(
   return result;
 }
 
-export function jump(arr, x, y, gameInfo = { yellowBalls: [], teleports: [] }) {
+export function jump(
+  arr,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+) {
   let result = {};
   result.eating = false;
   result.player = false;
   result.oneDirection = false;
 
+  console.log(x, y);
+  console.log(arr[y][x], arr[y - 1][x]);
   if (!isTeleport(x, y, gameInfo.teleports)) {
     if (arr.length > 0) {
-      if (y > 0 && arr[y + 1][x] !== 0) {
+      if (y > 0 && notInAir(x, y, arr, gameInfo.ladders)) {
         if (!result.player && (arr[y - 1][x] === 0 || arr[y - 1][x] === 3)) {
           if (arr[y - 1][x] === 3) {
             result.eating = true;
@@ -536,7 +572,7 @@ export function jump(arr, x, y, gameInfo = { yellowBalls: [], teleports: [] }) {
           result.player = true;
         }
       }
-      if (y > 1 && arr[y + 1][x] !== 0) {
+      if (y > 1 && notInAir(x, y, arr, gameInfo.ladders)) {
         if (
           !result.player &&
           canMoveAlone(arr[y - 1][x]) &&
@@ -566,7 +602,7 @@ export function jumpLeft(
   arr,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [] }
+  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
 ) {
   let result = {};
   result.eating = false;
@@ -574,7 +610,7 @@ export function jumpLeft(
 
   if (!isTeleport(x, y, gameInfo.teleports)) {
     if (arr.length > 0) {
-      if (y > 0 && x > 0 && arr[y + 1][x] !== 0) {
+      if (y > 0 && x > 0 && notInAir(x, y, arr, gameInfo.ladders)) {
         if (arr[y - 1][x] === 0) {
           if (arr[y - 1][x - 1] === 0 || arr[y - 1][x - 1] === 3) {
             if (arr[y - 1][x - 1] === 3) {
@@ -595,15 +631,19 @@ export function jumpRight(
   arr,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [] }
+  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
 ) {
   let result = {};
   result.eating = false;
   result.player = false;
-  
+
   if (!isTeleport(x, y, gameInfo.teleports)) {
     if (arr.length > 0) {
-      if (y > 0 && x < arr[0].length - 1 && arr[y + 1][x] !== 0) {
+      if (
+        y > 0 &&
+        x < arr[0].length - 1 &&
+        notInAir(x, y, arr, gameInfo.ladders)
+      ) {
         if (arr[y - 1][x] === 0) {
           if (arr[y - 1][x + 1] === 0 || arr[y - 1][x + 1] === 3) {
             if (arr[y - 1][x + 1] === 3) {
@@ -624,7 +664,7 @@ export function pushDown(
   arr,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [] }
+  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
 ) {
   let result = {};
   result.player = false;
@@ -651,6 +691,16 @@ export function pushDown(
         result.player = true;
         result.oneDirection = true;
       }
+      if (
+        !result.player &&
+        arr[y + 1][x] === 0 &&
+        (isLadder(x, y, gameInfo.ladders) ||
+          isLadder(x, y + 1, gameInfo.ladders))
+      ) {
+        arr[y + 1][x] = 2;
+        arr[y][x] = 0;
+        result.player = true;
+      }
     }
   }
   return result;
@@ -666,6 +716,7 @@ export function getGameInfo(arr) {
   result.yellowBalls = [];
   result.detonator = { x: -1, y: -1 };
   result.teleports = [];
+  result.ladders = [];
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -710,6 +761,13 @@ export function getGameInfo(arr) {
         teleport.x = j;
         teleport.y = i;
         result.teleports.push(teleport);
+      }
+      if (arr[i][j] === 25) {
+        let ladder = {};
+        ladder.x = j;
+        ladder.y = i;
+        result.ladders.push(ladder);
+        arr[i][j] = 0;
       }
     }
   }

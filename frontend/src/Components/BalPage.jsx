@@ -84,6 +84,7 @@ gameInfo.redBalls = [];
 gameInfo.yellowBalls = [];
 gameInfo.detonator = { x: -1, y: -1 };
 gameInfo.teleports = [];
+gameInfo.ladders = [];
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -292,7 +293,7 @@ function BalPage() {
 
     if (!gameOver && gameData) {
       if (skipFalling <= 0) {
-        info = checkFalling(gameData, gameInfo.redBalls);
+        info = checkFalling(gameData, gameInfo);
         if (info.ballX !== -1) {
           posX = info.ballX;
           posY = info.ballY;
