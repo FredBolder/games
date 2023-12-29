@@ -56,7 +56,10 @@ describe("balUtils", () => {
     [1, 2, 0, 0, 4, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info3a = checkFalling(input3a, {redBalls: [{ x: 3, y: 1 }], ladders: []});
+  let info3a = checkFalling(input3a, {
+    redBalls: [{ x: 3, y: 1 }],
+    ladders: [],
+  });
   it("checkFalling A", () => {
     expect(JSON.stringify(input3a)).toBe(JSON.stringify(expectedOutput3a));
   });
@@ -80,7 +83,10 @@ describe("balUtils", () => {
     [1, 4, 4, 2, 8, 1],
     [1, 1, 1, 1, 1, 1],
   ];
-  let info3b = checkFalling(input3b, {redBalls: [{ x: 4, y: 3 }], ladders: []});
+  let info3b = checkFalling(input3b, {
+    redBalls: [{ x: 4, y: 3 }],
+    ladders: [],
+  });
   it("checkFalling B", () => {
     expect(JSON.stringify(input3b)).toBe(JSON.stringify(expectedOutput3b));
   });
@@ -102,7 +108,7 @@ describe("balUtils", () => {
     [1, 4, 2, 0, 1],
     [1, 1, 1, 1, 1],
   ];
-  let info3c = checkFalling(input3c, {redBalls: [], ladders: []});
+  let info3c = checkFalling(input3c, { redBalls: [], ladders: [] });
   it("checkFalling C", () => {
     expect(JSON.stringify(input3c)).toBe(JSON.stringify(expectedOutput3c));
   });
@@ -466,6 +472,7 @@ describe("balUtils", () => {
   let info5j = moveRight(input5j, 1, 1, {
     yellowBalls: yellow5j,
     teleports: [],
+    ladders: [],
   });
   it("moveRight J", () => {
     expect(JSON.stringify(input5j)).toBe(JSON.stringify(expectedOutput5j));
@@ -1532,6 +1539,7 @@ describe("balUtils", () => {
   let info14a = pushDown(input14a, 3, 2, {
     yellowBalls: yellow14a,
     teleports: [],
+    ladders: [],
   });
   it("pushDown A", () => {
     expect(JSON.stringify(input14a)).toBe(JSON.stringify(expectedOutput14a));
@@ -1866,7 +1874,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16a = checkFalling(input16a, {redBalls: [], ladders: []});
+  let info16a = checkFalling(input16a, { redBalls: [], ladders: [] });
   it("Triangled Walls A", () => {
     expect(JSON.stringify(input16a)).toBe(JSON.stringify(expectedOutput16a));
   });
@@ -1890,7 +1898,7 @@ describe("balUtils", () => {
     [1, 0, 0, 0, 0, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16b = checkFalling(input16b, {redBalls: [], ladders: []});
+  let info16b = checkFalling(input16b, { redBalls: [], ladders: [] });
   it("Triangled Walls B", () => {
     expect(JSON.stringify(input16b)).toBe(JSON.stringify(expectedOutput16b));
   });
@@ -1914,7 +1922,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 2, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16c = checkFalling(input16c, {redBalls: [], ladders: []});
+  let info16c = checkFalling(input16c, { redBalls: [], ladders: [] });
   it("Triangled Walls C", () => {
     expect(JSON.stringify(input16c)).toBe(JSON.stringify(expectedOutput16c));
   });
@@ -1938,7 +1946,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 2, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16d = checkFalling(input16d, {redBalls: [], ladders: []});
+  let info16d = checkFalling(input16d, { redBalls: [], ladders: [] });
   it("Triangled Walls D", () => {
     expect(JSON.stringify(input16d)).toBe(JSON.stringify(expectedOutput16d));
   });
@@ -1962,7 +1970,7 @@ describe("balUtils", () => {
     [1, 1, 0, 0, 2, 1, 1],
     [1, 1, 1, 1, 1, 1, 1],
   ];
-  let info16e = checkFalling(input16e, {redBalls: [], ladders: []});
+  let info16e = checkFalling(input16e, { redBalls: [], ladders: [] });
   it("Triangled Walls E", () => {
     expect(JSON.stringify(input16e)).toBe(JSON.stringify(expectedOutput16e));
   });
@@ -1994,7 +2002,7 @@ describe("balUtils", () => {
   ];
   let info16f;
   for (let i = 0; i < 5; i++) {
-    info16f = checkFalling(input16f, {redBalls: [], ladders: []});
+    info16f = checkFalling(input16f, { redBalls: [], ladders: [] });
   }
   it("Triangled Walls F", () => {
     expect(JSON.stringify(input16f)).toBe(JSON.stringify(expectedOutput16f));
@@ -2002,6 +2010,148 @@ describe("balUtils", () => {
   it("Triangled Walls F info", () => {
     expect(JSON.stringify(info16f)).toBe(
       JSON.stringify({ update: true, ballX: 5, ballY: 6 })
+    );
+  });
+
+  // ***** LADDERS *****
+
+  let ladders17abcd = [
+    { x: 2, y: 2 },
+    { x: 2, y: 3 },
+    { x: 2, y: 4 },
+  ];
+
+  let input17a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput17a = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info17a = checkFalling(input17a, {
+    redBalls: [],
+    ladders: ladders17abcd,
+  });
+  it("Ladders A", () => {
+    expect(JSON.stringify(input17a)).toBe(JSON.stringify(expectedOutput17a));
+  });
+  it("Ladders A info", () => {
+    expect(JSON.stringify(info17a)).toBe(
+      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+    );
+  });
+
+  let input17b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput17b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info17b = pushDown(input17b, 2, 4, {
+    yellowBalls: [],
+    teleports: [],
+    ladders: ladders17abcd,
+  });
+  it("Ladders B", () => {
+    expect(JSON.stringify(input17b)).toBe(JSON.stringify(expectedOutput17b));
+  });
+  it("Ladders B info", () => {
+    expect(JSON.stringify(info17b)).toBe(
+      JSON.stringify({ player: true, oneDirection: false })
+    );
+  });
+
+  let input17c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput17c = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info17c = checkFalling(input17c, {
+    redBalls: [],
+    ladders: ladders17abcd,
+  });
+  it("Ladders C", () => {
+    expect(JSON.stringify(input17c)).toBe(JSON.stringify(expectedOutput17c));
+  });
+  it("Ladders C info", () => {
+    expect(JSON.stringify(info17c)).toBe(
+      JSON.stringify({ update: true, ballX: 2, ballY: 6 })
+    );
+  });
+
+  let input17d = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput17d = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 2, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let info17d = jump(input17d, 2, 4, {
+    yellowBalls: [],
+    teleports: [],
+    ladders: ladders17abcd,
+  });
+  it("Ladders D", () => {
+    expect(JSON.stringify(input17d)).toBe(JSON.stringify(expectedOutput17d));
+  });
+  it("Ladders D info", () => {
+    expect(JSON.stringify(info17d)).toBe(
+      JSON.stringify({ eating: false, player: true, oneDirection: false })
     );
   });
 
