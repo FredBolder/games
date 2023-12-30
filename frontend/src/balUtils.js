@@ -127,6 +127,9 @@ function charToNumber(c) {
     case "v":
       result = 88;
       break;
+    case "t":
+      result = 89;
+      break;
     default:
       result = 0;
       break;
@@ -224,6 +227,9 @@ function numberToChar(n) {
       break;
     case 88:
       result = "v";
+      break;
+    case 89:
+      result = "t";
       break;
     default:
       result = " ";

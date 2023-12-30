@@ -12,6 +12,13 @@ export function fixUserData(user) {
   user.password2 = user.password2.trim();
 }
 
+export function polar(x, y, angle, dist) {
+  let result = { x: x, y: y };
+  result.x = dist * Math.cos((angle / 180) * Math.PI) + x;
+  result.y = dist * Math.sin((angle / 180) * Math.PI) + y;
+  return result;
+}
+
 export function validateUserData(user) {
   let msg = "";
 

@@ -6,6 +6,8 @@ import {
   drawText,
 } from "./drawUtils";
 
+import { polar } from "./utils";
+
 export default function drawLevel(
   canvas,
   ctx,
@@ -51,6 +53,9 @@ export default function drawLevel(
   let d4 = 0;
   let d5 = 0;
   let d6 = 0;
+  let pt1 = { x: 0, y: 0 };
+  let pt2 = { x: 0, y: 0 };
+  let pt3 = { x: 0, y: 0 };
   let x1 = 0;
   let y1 = 0;
   let x2 = 0;
@@ -154,9 +159,9 @@ export default function drawLevel(
             d1 = w1 / 3.5;
             d2 = w1 / 3;
             d3 = w1 / 2;
+            ctx.strokeStyle = "white";
+            ctx.beginPath();
             if (status.gameOver) {
-              ctx.strokeStyle = "white";
-              ctx.beginPath();
               ctx.arc(
                 Math.round(xc),
                 Math.round(yc + d3),
@@ -165,10 +170,7 @@ export default function drawLevel(
                 1.75 * Math.PI,
                 false
               );
-              ctx.stroke();
             } else {
-              ctx.strokeStyle = "white";
-              ctx.beginPath();
               ctx.arc(
                 Math.round(xc),
                 Math.round(ymin + d2),
@@ -177,8 +179,8 @@ export default function drawLevel(
                 0.75 * Math.PI,
                 false
               );
-              ctx.stroke();
             }
+            ctx.stroke();
           }
           break;
         case 3:
@@ -618,6 +620,42 @@ export default function drawLevel(
           drawBox(ctx, xmin, ymin, w1, w2, "white");
           drawLine(ctx, xmin, ymin, xc, ymax, "white");
           drawLine(ctx, xmax, ymin, xc, ymax, "white");
+          break;
+        case 89:
+          // rotate game t
+          drawBox(ctx, xmin + 1, ymin + 1, w1 - 2, w2 - 2, "white");
+          d1 = w1 * 0.3;
+          d2 = w1 * 0.15;
+          ctx.strokeStyle = "white";
+          ctx.beginPath();
+          ctx.arc(
+            Math.round(xc),
+            Math.round(yc),
+            Math.round(d1),
+            0.75 * Math.PI,
+            0.25 * Math.PI,
+            false
+          );
+          ctx.stroke();
+          pt1 = polar(xc - 1, yc, 45, d1);
+          pt2 = polar(pt1.x, pt1.y, 0, d2);
+          pt3 = polar(pt1.x, pt1.y, -90, d2);
+          drawLine(
+            ctx,
+            Math.round(pt1.x),
+            Math.round(pt1.y),
+            Math.round(pt2.x),
+            Math.round(pt2.y),
+            "white"
+          );
+          drawLine(
+            ctx,
+            Math.round(pt1.x),
+            Math.round(pt1.y),
+            Math.round(pt3.x),
+            Math.round(pt3.y),
+            "white"
+          );
           break;
         default:
           // empty

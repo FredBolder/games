@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { fixUserData, validateUserData } from "./utils";
+import { fixUserData, polar, validateUserData } from "./utils";
 
 describe("utils", () => {
 
@@ -22,6 +22,13 @@ const expectedOutput1 = {
 fixUserData(input1);
 it("fixUserData", () => {
   expect(JSON.stringify(input1)).toBe(JSON.stringify(expectedOutput1));
+});
+
+const input2 = {x: 100, y: 50};
+const expectedOutput2 = {x: 150, y: 50};
+const output2 = polar(input2.x, input2.y, 0, 50);
+it("polar", () => {
+  expect(JSON.stringify(output2)).toBe(JSON.stringify(expectedOutput2));
 });
 
 });
