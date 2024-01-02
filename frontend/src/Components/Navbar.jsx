@@ -25,6 +25,10 @@ function Navbar() {
     }
   }
 
+  function aboutClick(e) {
+    navigate("/about");
+  }
+
   function logoutClick(e) {
     logout();
   }
@@ -45,15 +49,23 @@ function Navbar() {
 
       {loggedIn ? (
         <div className="gameButtons">
-          <button className="button" onClick={balClick}> Bal</button>
-          <button className="button" onClick={tennisClick}>Tennis</button>
+          <button className="button" onClick={balClick}>
+            {" "}
+            Bal
+          </button>
+          <button className="button" onClick={tennisClick}>
+            Tennis
+          </button>
         </div>
       ) : (
         <div></div>
       )}
       {loggedIn ? (
         <div className="nav-links">
-          <Link onClick={logoutClick} to="/Login">
+          <Link onClick={aboutClick} to="/about">
+            About
+          </Link>
+          <Link onClick={logoutClick} to="/login">
             Logout
           </Link>
         </div>
