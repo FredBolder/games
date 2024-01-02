@@ -14,6 +14,7 @@ import {
   moveHorizontalElevators,
   moveYellowBalls,
   pushDown,
+  rotateGame,
 } from "./balUtils.js";
 
 describe("balUtils", () => {
@@ -2153,6 +2154,41 @@ describe("balUtils", () => {
     expect(JSON.stringify(info17d)).toBe(
       JSON.stringify({ eating: false, player: true, oneDirection: false })
     );
+  });
+
+  let input18a = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 3, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1],
+    [1, 0, 0, 4, 0, 1],
+    [1, 0, 2, 4, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput18a = [
+    [1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 3, 1],
+    [1, 2, 0, 0, 0, 1],
+    [1, 4, 4, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1],
+  ];
+  let gameInfo18a = {
+    blueBall: { x: 2, y: 4 },
+    elevators: [],
+    greenBalls: 1,
+    horizontalElevators: [],
+    redBalls: [],
+    yellowBalls: [],
+    detonator: { x: -1, y: -1 },
+    teleports: [],
+    ladders: [],
+  };
+  let info18a = rotateGame(input18a, gameInfo18a);
+  it("rotateGame A rotated", () => {
+    expect(info18a).toBe(true);
+  });
+  it("rotateGame A game array", () => {
+    expect(JSON.stringify(input18a)).toBe(JSON.stringify(expectedOutput18a));
   });
 
   // Insert new tests here

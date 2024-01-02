@@ -1094,3 +1094,15 @@ export function moveYellowBalls(arr, yellowBalls) {
     }
   }
 }
+
+export function rotateGame(arr, gameInfo) {
+  let rotated = false;
+
+  if (arr.length > 0) {
+    if (arr.length === arr[0].length) {
+      rotated = true;
+      
+    }
+  }
+  return rotated;
+}
