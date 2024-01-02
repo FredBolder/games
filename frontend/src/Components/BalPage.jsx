@@ -512,9 +512,16 @@ function BalPage() {
     if (e.shiftKey) {
       switch (e.key) {
         case "N":
-          // TODO: only for test, remove later
-          currentLevel++;
-          initLevel(currentLevel);
+          if (e.altKey) {
+            currentLevel++;
+            initLevel(currentLevel);
+          }
+          break;
+        case "P":
+          if (e.altKey) {
+            currentLevel--;
+            initLevel(currentLevel);
+          }
           break;
         case "ArrowLeft":
           info = jumpLeft(gameData, posX, posY, gameInfo);
