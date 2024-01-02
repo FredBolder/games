@@ -2158,6 +2158,8 @@ describe("balUtils", () => {
     );
   });
 
+  // ***** ROTATE GAME *****
+
   let input18a = [
     [1, 1, 1, 1, 1, 1],
     [1, 3, 0, 8, 0, 1],
@@ -2211,6 +2213,51 @@ describe("balUtils", () => {
   it("rotateGame A yellow balls", () => {
     expect(JSON.stringify(gameInfo18a.yellowBalls)).toBe(
       JSON.stringify([{ x: 2, y: 1, direction: "left" }])
+    );
+  });
+
+  let input18b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 5, 3, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 106, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 2, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let expectedOutput18b = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 107, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 5, 1],
+    [1, 2, 0, 0, 0, 3, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  let gameInfo18b = {
+    blueBall: { x: 5, y: 5 },
+    elevators: [{ x: 1, y: 4, up: true }],
+    greenBalls: 1,
+    horizontalElevators: [],
+    redBalls: [],
+    yellowBalls: [],
+    detonator: { x: -1, y: -1 },
+    teleports: [],
+    ladders: [],
+  };
+  let info18b = rotateGame(input18b, gameInfo18b);
+  it("rotateGame B rotated", () => {
+    expect(info18b).toBe(true);
+  });
+  it("rotateGame B game array", () => {
+    expect(JSON.stringify(input18b)).toBe(JSON.stringify(expectedOutput18b));
+  });
+  it("rotateGame B elevators", () => {
+    expect(JSON.stringify(gameInfo18b.elevators)).toBe(JSON.stringify([]));
+  });
+  it("rotateGame B horizontal elevators", () => {
+    expect(JSON.stringify(gameInfo18b.horizontalElevators)).toBe(
+      JSON.stringify([{ x: 2, y: 1, right: true }])
     );
   });
 
