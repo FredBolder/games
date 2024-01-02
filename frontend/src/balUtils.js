@@ -401,6 +401,7 @@ export function moveLeft(
   result.player = false;
   result.oneDirection = false;
   result.teleporting = false;
+  result.rotate = false;
 
   if (arr.length > 0) {
     if (notInAir(x, y, arr, gameInfo.ladders)) {
@@ -435,6 +436,12 @@ export function moveLeft(
           row[x] = 0;
           result.player = true;
           result.oneDirection = true;
+        }
+        if (!result.player && row[x - 1] === 89 && row[x - 2] === 0) {
+          row[x - 2] = 2;
+          row[x] = 0;
+          result.player = true;
+          result.rotate = true;
         }
       }
       if (x > 2) {
@@ -483,6 +490,7 @@ export function moveRight(
   result.player = false;
   result.oneDirection = false;
   result.teleporting = false;
+  result.rotate = false;
 
   if (arr.length > 0) {
     if (notInAir(x, y, arr, gameInfo.ladders)) {
@@ -518,6 +526,12 @@ export function moveRight(
           row[x] = 0;
           result.player = true;
           result.oneDirection = true;
+        }
+        if (!result.player && row[x + 1] === 89 && row[x + 2] === 0) {
+          row[x + 2] = 2;
+          row[x] = 0;
+          result.player = true;
+          result.rotate = true;
         }
       }
       if (x < maxX - 2) {
@@ -1101,7 +1115,7 @@ export function rotateGame(arr, gameInfo) {
   if (arr.length > 0) {
     if (arr.length === arr[0].length) {
       rotated = true;
-      
+      // Code Michal
     }
   }
   return rotated;

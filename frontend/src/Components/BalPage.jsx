@@ -24,6 +24,7 @@ import {
   moveYellowBalls,
   pushDown,
   checkDetonator,
+  rotateGame,
 } from "../balUtils.js";
 import drawLevel from "../drawLevel.js";
 import sndCatapult from "../Sounds/catapult.wav";
@@ -493,6 +494,7 @@ function BalPage() {
     let info = {};
     info.player = false;
     info.eating = false;
+    let rotate = false;
 
     if (gameOver || !canvas || teleporting > 0) {
       return false;
@@ -552,6 +554,14 @@ function BalPage() {
             if (info.oneDirection) {
               posX--;
             }
+            if (info.rotate) {
+              posX--;
+              gameInfo.blueBall.x = posX;
+              gameInfo.blueBall.y = posY;
+              rotate = rotateGame(gameData, gameInfo);
+              posX = gameInfo.blueBall.x;
+              posY = gameInfo.blueBall.y;
+            }
           }
           if (info.teleporting) {
             teleporting = 1;
@@ -566,6 +576,14 @@ function BalPage() {
             posX++;
             if (info.oneDirection) {
               posX++;
+            }
+            if (info.rotate) {
+              posX++;
+              gameInfo.blueBall.x = posX;
+              gameInfo.blueBall.y = posY;
+              rotate = rotateGame(gameData, gameInfo);
+              posX = gameInfo.blueBall.x;
+              posY = gameInfo.blueBall.y;
             }
           }
           if (info.teleporting) {

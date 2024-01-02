@@ -308,6 +308,7 @@ describe("balUtils", () => {
         player: true,
         oneDirection: false,
         teleporting: false,
+        rotate: false,
       })
     );
   });
@@ -1642,6 +1643,7 @@ describe("balUtils", () => {
         player: true,
         oneDirection: true,
         teleporting: false,
+        rotate: false,
       })
     );
   });
@@ -2158,17 +2160,17 @@ describe("balUtils", () => {
 
   let input18a = [
     [1, 1, 1, 1, 1, 1],
-    [1, 3, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 1],
-    [1, 0, 0, 4, 0, 1],
+    [1, 3, 0, 8, 0, 1],
+    [1, 0, 0, 8, 0, 1],
+    [1, 9, 0, 4, 0, 1],
     [1, 0, 2, 4, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
   let expectedOutput18a = [
     [1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 3, 1],
+    [1, 0, 9, 0, 3, 1],
     [1, 2, 0, 0, 0, 1],
-    [1, 4, 4, 0, 0, 1],
+    [1, 4, 4, 8, 8, 1],
     [1, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1],
   ];
@@ -2177,8 +2179,11 @@ describe("balUtils", () => {
     elevators: [],
     greenBalls: 1,
     horizontalElevators: [],
-    redBalls: [],
-    yellowBalls: [],
+    redBalls: [
+      { x: 3, y: 1 },
+      { x: 3, y: 2 },
+    ],
+    yellowBalls: [{ x: 1, y: 3, direction: "down" }],
     detonator: { x: -1, y: -1 },
     teleports: [],
     ladders: [],
@@ -2189,6 +2194,24 @@ describe("balUtils", () => {
   });
   it("rotateGame A game array", () => {
     expect(JSON.stringify(input18a)).toBe(JSON.stringify(expectedOutput18a));
+  });
+  it("rotateGame A blue ball", () => {
+    expect(JSON.stringify(gameInfo18a.blueBall)).toBe(
+      JSON.stringify({ x: 1, y: 2 })
+    );
+  });
+  it("rotateGame A red balls", () => {
+    expect(JSON.stringify(gameInfo18a.redBalls)).toBe(
+      JSON.stringify([
+        { x: 4, y: 3 },
+        { x: 3, y: 3 },
+      ])
+    );
+  });
+  it("rotateGame A yellow balls", () => {
+    expect(JSON.stringify(gameInfo18a.yellowBalls)).toBe(
+      JSON.stringify([{ x: 2, y: 1, direction: "left" }])
+    );
   });
 
   // Insert new tests here
