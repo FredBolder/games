@@ -1,0 +1,107 @@
+.tennis-title {
+	color: whitesmoke;
+  font-size: calc(1.5rem + 2vw);
+  font-weight: bold;
+  text-align: center;
+  padding: 2rem 0;
+  text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
+    -3px -3px 3px black;
+}
+
+.board-size {
+	background-color: darkgreen;
+}
+
+#tennis-canvas {
+	border: 3px solid rgb(255, 255, 255);
+}
+
+.tennis-intro {
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 5px;
+	text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
+    -3px -3px 3px black;
+}
+/* button edits */
+.game-btn {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 800px; /* Set a width for the button container */
+	
+}
+
+.game-btn button {
+  background-color: green; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+	margin-bottom: 10px;
+  cursor: pointer; 
+	border-radius: 10px;
+  transition: background-color 0.3s ease; 
+}
+
+.game-btn button:hover {
+  background-color: darkgreen; 
+}
+
+.speed-btn {
+	background-color: green; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+	margin-bottom: 10px;
+  cursor: pointer; 
+	border-radius: 10px;
+  transition: background-color 0.3s ease; 
+
+}
+
+.speed-btn button:hover {
+  background-color: darkgreen; 
+}
+
+/* pause menu edits */
+#tennis-pause-menu {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	position: absolute;
+	top: 29%;
+	left: 26.5%;
+	width: 47vw;
+	height: 69vh;
+	background-color: rgba(0, 0, 0, 0.571);
+	z-index: 10;
+}
+/* Pause menu edits */
+#tennis-pause-menu.hidden {
+	color: white;
+	display: none;
+}
+.tennis-pause-menu-title {
+	color: white;
+}
+.tennis-pause-menu-title:hover {
+	color: green;
+}
+
+/* Pause Menu Buttons edits */
+.tennis-pause-menu-btn {
+	width: 100px;
+	height: 50px;
+	font-size: 1rem;
+	border-radius: 10px;
+	background-color: white;
+	border: 2px solid black;
+	cursor: pointer;
+}
+.tennis-pause-menu-btn:hover {
+	background-color: green;
+	color: white;
+}
