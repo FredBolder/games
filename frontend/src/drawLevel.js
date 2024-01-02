@@ -637,7 +637,8 @@ export default function drawLevel(
             false
           );
           ctx.stroke();
-          pt1 = polar(xc - 1, yc, 45, d1);
+          pt1 = polar(xc, yc, 45, d1);
+          pt1.x -= 1;
           pt2 = polar(pt1.x, pt1.y, 0, d2);
           pt3 = polar(pt1.x, pt1.y, -90, d2);
           drawLine(
