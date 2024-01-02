@@ -6,6 +6,7 @@ import BalPage from "./Components/BalPage.jsx";
 import TennisPage from "./Components/TennisPage.jsx";
 import Page from "./Components/Page.jsx";
 import RegisterPage from "./Components/RegisterPage.jsx";
+import AboutPage from "./Components/AboutPage.jsx";
 import LoginPage from "./Components/LoginPage.jsx";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import GlobalState from "./Context/GlobalState";
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Page />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/bal" element={<BalPage />} />
             <Route path="/tennis" element={<TennisPage />} />
             <Route path="/policy" element={<PrivacyPolicy />} />
