@@ -7,13 +7,18 @@ function TennisPage() {
 	let canvas;
 	let ctx;
 	let gameRunning = false;
+	let user;
+	let ball;
+	let com;
+	let net;
 
 	const [currentLevel, setCurrentLevel] = useState(1);
 
 	// Add the startGame function
 	function startGame() {
 		gameRunning = true;
-		document.getElementById("tutorial").classList.add("hidden");
+		gameLoop();
+		// document.getElementById("tutorial").classList.add("hidden");
 	}
 
 	useEffect(() => {
@@ -23,7 +28,7 @@ function TennisPage() {
 		ctx = canvas.getContext("2d");
 
 		// Create the ball
-		const ball = {
+		ball = {
 			x: canvas.width / 2,
 			y: canvas.height / 2,
 			radius: 10,
@@ -34,7 +39,7 @@ function TennisPage() {
 		};
 
 		// Create the user and computer paddles
-		const user = {
+		user = {
 			x: 0,
 			y: (canvas.height - 100) / 2,
 			width: 10,
@@ -43,7 +48,7 @@ function TennisPage() {
 			color: "YELLOW",
 		};
 
-		const com = {
+		com = {
 			x: canvas.width - 10,
 			y: (canvas.height - 100) / 2,
 			width: 10,
@@ -52,73 +57,67 @@ function TennisPage() {
 			color: "YELLOW",
 		};
 
-		// ****
-		const net = {
+		net = {
 			x: canvas.width / 2 - 1,
 			y: 0,
 			width: 3,
 			height: 5,
 			color: "WHITE",
 		};
-
-		function drawNet() {
-			for (let i = 0; i <= canvas.height; i += 14) {
-				drawRect(net.x, net.y + i, net.width, net.height, net.color);
-			}
-		}
-
-		// ****
-
-		// Other functions
-		function drawRect(x, y, w, h, color) {
-			ctx.fillStyle = color;
-			ctx.fillRect(x, y, w, h);
-		}
-
-		// Score Text
-		function drawText(text, x, y) {
-			ctx.fillStyle = "White";
-			ctx.font = "75px fantasy";
-			ctx.fillText(text, x, y);
-		}
-
-		// Draw the ball
-		function drawBall(x, y, radius, color) {
-			ctx.fillStyle = color;
-			ctx.beginPath();
-			ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-			ctx.closePath();
-			ctx.fill();
-		}
-
-		// Draw the game elements
-		function render() {
-			drawRect(0, 0, canvas.width, canvas.height, "darkgreen");
-			drawText(user.score, canvas.width / 4, canvas.height / 5);
-			drawText(com.score, (3 * canvas.width) / 4, canvas.height / 5);
-			drawNet();
-			drawRect(user.x, user.y, user.width, user.height, user.color);
-			drawRect(com.x, com.y, com.width, com.height, com.color);
-			drawBall(ball.x, ball.y, ball.radius, ball.color);
-		}
-
-		// Game loop
-		function gameLoop() {
-			if (gameRunning) {
-				render();
-				update();
-				requestAnimationFrame(gameLoop);
-			}
-		}
-
-		// Start the game loop
-		gameLoop();
 	}, []);
+
+	function drawNet() {
+		for (let i = 0; i <= canvas.height; i += 14) {
+			drawRect(net.x, net.y + i, net.width, net.height, net.color);
+		}
+	}
+
+	// Other functions
+	function drawRect(x, y, w, h, color) {
+		ctx.fillStyle = color;
+		ctx.fillRect(x, y, w, h);
+	}
+
+	// Score Text
+	function drawText(text, x, y) {
+		ctx.fillStyle = "White";
+		ctx.font = "75px fantasy";
+		ctx.fillText(text, x, y);
+	}
+
+	// Draw the ball
+	function drawBall(x, y, radius, color) {
+		ctx.fillStyle = color;
+		ctx.beginPath();
+		ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
+		ctx.closePath();
+		ctx.fill();
+	}
+
+	// Draw the game elements
+	function render() {
+		drawRect(0, 0, canvas.width, canvas.height, "darkgreen");
+		drawText(user.score, canvas.width / 4, canvas.height / 5);
+		drawText(com.score, (3 * canvas.width) / 4, canvas.height / 5);
+		drawNet();
+		drawRect(user.x, user.y, user.width, user.height, user.color);
+		drawRect(com.x, com.y, com.width, com.height, com.color);
+		drawBall(ball.x, ball.y, ball.radius, ball.color);
+	}
+
+	// Game loop
+	function gameLoop() {
+		if (gameRunning) {
+			render();
+			update();
+			requestAnimationFrame(gameLoop);
+		}
+	}
 
 	// Mouse control
 	useEffect(function () {
 		function handleMouseMove(event) {
-			var rect = canvas.getBoundingClientRect();
+			let rect = canvas.getBoundingClientRect();
 			user.y = event.clientY - rect.top - user.height / 2;
 		}
 
@@ -173,26 +172,28 @@ function TennisPage() {
 	// Pause the game
 	function pauseGame() {
 		gameRunning = false;
-		document.getElementById("tennis-pause-menu").classList.remove("hidden");
+		// document.getElementById("tennis-pause-menu").classList.remove("hidden");
 	}
 
 	// Resume the game
 	function resumeGame() {
 		gameRunning = true;
-		document.getElementById("tennis-pause-menu").classList.add("hidden");
+		gameLoop();
+		// document.getElementById("tennis-pause-menu").classList.add("hidden");
 	}
 
 	// Restart the game
 	function restartGame() {
-		
-		resumeGame();
 		resetBall();
+		gameRunning = true;
+		gameLoop();
+
 	}
 
 	// Quit the game
 	function quitGame() {
 		gameRunning = false;
-		document.getElementById("tennis-pause-menu").classList.add("hidden");
+		// document.getElementById("tennis-pause-menu").classList.add("hidden");
 		resetBall();
 	}
 
@@ -269,7 +270,10 @@ function TennisPage() {
 					<div className="tennis-title">Tennis</div>
 					<div id="tutorial" className="tennis-intro">
 						<h1>How to Play</h1>
-						<p>Use your mouse to move the left paddle and hit the ball back and forth.</p>
+						<p>
+							Use your mouse to move the left paddle and hit the ball back and
+							forth.
+						</p>
 						<p>Be the first to score 5 points to win the game.</p>
 						<p>Click Start Game to begin playing.</p>
 					</div>
@@ -291,7 +295,11 @@ function TennisPage() {
 								</button>
 							</div>
 
-							<select id="speedSelect" className="speed-btn" onChange={changeSpeed}>
+							<select
+								id="speedSelect"
+								className="speed-btn"
+								onChange={changeSpeed}
+							>
 								<option value="7">Normal</option>
 								<option value="14">Fast</option>
 								<option value="5">Slow</option>
