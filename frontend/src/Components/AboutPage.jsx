@@ -17,7 +17,7 @@ function AboutPage() {
             coming together to colaborate on a final project as a testament to
             what we have learned not only from DCI, but from each other and with
             that embarking on the journey of self-discovery, continuous
-            learning and improvement that is programing.
+            learning and improvement that is programming.
           </h5>
         </div>
         <Footer />
