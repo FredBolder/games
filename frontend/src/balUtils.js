@@ -1111,11 +1111,27 @@ export function moveYellowBalls(arr, yellowBalls) {
 
 export function rotateGame(arr, gameInfo) {
   let rotated = false;
+  let newArray = [];
+  let columns = 0;
+  let rows = 0;
 
   if (arr.length > 0) {
-    if (arr.length === arr[0].length) {
+    rows = arr.length;
+    columns = arr[0].length;
+    if (rows === columns) {
       rotated = true;
-      // Code Michal
+      for (let i = 0; i < columns; i++) {
+        let newRow = [];
+        for (let j = rows - 1; j >= 0; j--) {
+          newRow.push(arr[j][i]);
+        }
+        newArray.push(newRow);
+      }
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+          arr[i][j] = newArray[i][j];
+        }
+      }
     }
   }
   return rotated;
