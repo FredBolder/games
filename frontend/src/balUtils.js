@@ -1114,6 +1114,8 @@ export function rotateGame(arr, gameInfo) {
   let newArray = [];
   let columns = 0;
   let rows = 0;
+  let x = 0;
+  let y = 0;
 
   if (arr.length > 0) {
     rows = arr.length;
@@ -1123,7 +1125,54 @@ export function rotateGame(arr, gameInfo) {
       for (let i = 0; i < columns; i++) {
         let newRow = [];
         for (let j = rows - 1; j >= 0; j--) {
-          newRow.push(arr[j][i]);
+          let data = arr[j][i];
+          switch (data) {
+            case 15:
+              data = 17;
+              break;
+            case 16:
+              data = 15;
+              break;
+            case 17:
+              data = 18;
+              break;
+            case 18:
+              data = 16;
+              break;
+            case 6:
+              data = 7;
+              break;
+            case 7:
+              data = 106;
+              break;
+            case 106:
+              data = 107;
+              break;
+            case 107:
+              data = 6;
+              break;
+            case 10:
+              data = 88;
+              break;
+            case 88:
+              data = 11;
+              break;
+            case 11:
+              data = 87;
+              break;
+            case 87:
+              data = 10;
+              break;
+            case 84:
+              data = 85;
+              break;
+            case 85:
+              data = 84;
+              break;
+            default:
+              break;
+          }
+          newRow.push(data);
         }
         newArray.push(newRow);
       }
@@ -1131,6 +1180,76 @@ export function rotateGame(arr, gameInfo) {
         for (let j = 0; j < columns; j++) {
           arr[i][j] = newArray[i][j];
         }
+      }
+      x = gameInfo.blueBall.x;
+      y = gameInfo.blueBall.y;
+      gameInfo.blueBall.y = x;
+      gameInfo.blueBall.x = rows - (y + 1);
+      for (let i = 0; i < gameInfo.redBalls.length; i++) {
+        x = gameInfo.redBalls[i].x;
+        y = gameInfo.redBalls[i].y;
+        gameInfo.redBalls[i].y = x;
+        gameInfo.redBalls[i].x = rows - (y + 1);
+      }
+      for (let i = 0; i < gameInfo.yellowBalls.length; i++) {
+        x = gameInfo.yellowBalls[i].x;
+        y = gameInfo.yellowBalls[i].y;
+        gameInfo.yellowBalls[i].y = x;
+        gameInfo.yellowBalls[i].x = rows - (y + 1);
+        let data = gameInfo.yellowBalls[i].direction;
+        switch (data) {
+          case "down":
+            data = "left";
+            break;
+          case "left":
+            data = "up";
+            break;
+          case "up":
+            data = "right";
+            break;
+          case "right":
+            data = "down";
+            break;
+          default:
+            break;
+        }
+        gameInfo.yellowBalls[i].direction = data;
+      }
+      let newHorElevators = [];
+
+      for (let i = 0; i < gameInfo.elevators.length; i++) {
+        x = gameInfo.elevators[i].x;
+        y = gameInfo.elevators[i].y;
+        let newHor = {};
+        newHor.x = rows - (y + 1);
+        newHor.y = x;
+        newHor.right = gameInfo.elevators[i].up;
+        newHorElevators.push(newHor);
+      }
+
+      let newVerElevators = [];
+
+      for (let i = 0; i < gameInfo.horizontalElevators.length; i++) {
+        x = gameInfo.horizontalElevators[i].x;
+        y = gameInfo.horizontalElevators[i].y;
+        let newVer = {};
+        newVer.x = rows - (y + 1);
+        newVer.y = x;
+        newVer.up = gameInfo.horizontalElevators[i].right;
+        newVerElevators.push(newVer);
+      }
+
+      while (gameInfo.horizontalElevators.length > 0) {
+        gameInfo.horizontalElevators.pop();
+      }
+      for (let i = 0; i < newHorElevators.length; i++) {
+        gameInfo.horizontalElevators.push(newHorElevators[i]);
+      }
+      while (gameInfo.elevators.length > 0) {
+        gameInfo.elevators.pop();
+      }
+      for (let i = 0; i < newVerElevators.length; i++) {
+        gameInfo.elevators.push(newVerElevators[i]);
       }
     }
   }
