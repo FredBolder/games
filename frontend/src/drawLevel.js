@@ -66,32 +66,57 @@ export default function drawLevel(
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 0;
   ctx.imageSmoothingEnabled = false;
-
   for (let i = 0; i < gameInfo.ladders.length; i++) {
-    drawLine(
-      ctx,
-      gameInfo.ladders[i].x * size1 + leftMargin + 1,
-      gameInfo.ladders[i].y * size1,
-      gameInfo.ladders[i].x * size1 + leftMargin + 1,
-      (gameInfo.ladders[i].y + 1) * size1,
-      "white"
-    );
-    drawLine(
-      ctx,
-      (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
-      gameInfo.ladders[i].y * size1,
-      (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
-      (gameInfo.ladders[i].y + 1) * size1,
-      "white"
-    );
-    drawLine(
-      ctx,
-      gameInfo.ladders[i].x * size1 + leftMargin + 1,
-      (gameInfo.ladders[i].y + 0.5) * size1,
-      (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
-      (gameInfo.ladders[i].y + 0.5) * size1,
-      "white"
-    );
+    if (gameInfo.ladders[i].rotate) {
+        drawLine(
+          ctx,
+          gameInfo.ladders[i].x * size1 + leftMargin + 1,
+          gameInfo.ladders[i].y * size1 + 1,
+          (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+          gameInfo.ladders[i].y * size1 + 1,
+          "white"
+        );
+        drawLine(
+          ctx,
+          (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+          (gameInfo.ladders[i].y + 1) * size1 - 1,
+          gameInfo.ladders[i].x * size1 + leftMargin + 1,
+          (gameInfo.ladders[i].y + 1) * size1 - 1
+        );
+        drawLine(
+          ctx,
+          (gameInfo.ladders[i].x + 0.5) * size1 + leftMargin,
+          (gameInfo.ladders[i].y + 1) * size1 - 1,
+          (gameInfo.ladders[i].x + 0.5) * size1 + leftMargin,
+          gameInfo.ladders[i].y * size1 + 1,
+          "white"
+        );
+    } else {
+      drawLine(
+        ctx,
+        gameInfo.ladders[i].x * size1 + leftMargin + 1,
+        gameInfo.ladders[i].y * size1,
+        gameInfo.ladders[i].x * size1 + leftMargin + 1,
+        (gameInfo.ladders[i].y + 1) * size1,
+        "white"
+      );
+      drawLine(
+        ctx,
+        (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+        gameInfo.ladders[i].y * size1,
+        (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+        (gameInfo.ladders[i].y + 1) * size1,
+        "white"
+      );
+      drawLine(
+        ctx,
+        gameInfo.ladders[i].x * size1 + leftMargin + 1,
+        (gameInfo.ladders[i].y + 0.5) * size1,
+        (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+        (gameInfo.ladders[i].y + 0.5) * size1,
+        "white"
+      );
+    }
   }
 
   dymin = 0;

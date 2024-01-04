@@ -2019,9 +2019,9 @@ describe("balUtils", () => {
   // ***** LADDERS *****
 
   let ladders17abcd = [
-    { x: 2, y: 2 },
-    { x: 2, y: 3 },
-    { x: 2, y: 4 },
+    { x: 2, y: 2, ladders: false },
+    { x: 2, y: 3, ladders: false },
+    { x: 2, y: 4, ladders: false },
   ];
 
   let input17a = [
