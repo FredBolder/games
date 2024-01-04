@@ -578,8 +578,6 @@ export function jump(
   result.player = false;
   result.oneDirection = false;
 
-  console.log(x, y);
-  console.log(arr[y][x], arr[y - 1][x]);
   if (!isTeleport(x, y, gameInfo.teleports)) {
     if (arr.length > 0) {
       if (y > 0 && notInAir(x, y, arr, gameInfo.ladders)) {
@@ -786,6 +784,7 @@ export function getGameInfo(arr) {
         let ladder = {};
         ladder.x = j;
         ladder.y = i;
+        ladder.rotate = false;
         result.ladders.push(ladder);
         arr[i][j] = 0;
       }
@@ -1202,6 +1201,7 @@ export function rotateGame(arr, gameInfo) {
         y = gameInfo.ladders[i].y;
         gameInfo.ladders[i].y = x;
         gameInfo.ladders[i].x = rows - (y + 1);
+        gameInfo.ladders[i].rotate = !gameInfo.ladders[i].rotate;
       }
       for (let i = 0; i < gameInfo.yellowBalls.length; i++) {
         x = gameInfo.yellowBalls[i].x;
