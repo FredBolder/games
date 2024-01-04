@@ -80,6 +80,12 @@
 	z-index: 10;
 }
 /* Pause menu edits */
+
+.pause-menu-title {
+	color: white;
+	background-color: darkgreen;
+}
+
 #tennis-pause-menu.hidden {
 	color: white;
 	display: none;
