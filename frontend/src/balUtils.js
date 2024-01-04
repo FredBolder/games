@@ -1191,6 +1191,18 @@ export function rotateGame(arr, gameInfo) {
         gameInfo.redBalls[i].y = x;
         gameInfo.redBalls[i].x = rows - (y + 1);
       }
+      for (let i = 0; i < gameInfo.teleports.length; i++) {
+        x = gameInfo.teleports[i].x;
+        y = gameInfo.teleports[i].y;
+        gameInfo.teleports[i].y = x;
+        gameInfo.teleports[i].x = rows - (y + 1);
+      }
+      for (let i = 0; i < gameInfo.ladders.length; i++) {
+        x = gameInfo.ladders[i].x;
+        y = gameInfo.ladders[i].y;
+        gameInfo.ladders[i].y = x;
+        gameInfo.ladders[i].x = rows - (y + 1);
+      }
       for (let i = 0; i < gameInfo.yellowBalls.length; i++) {
         x = gameInfo.yellowBalls[i].x;
         y = gameInfo.yellowBalls[i].y;
