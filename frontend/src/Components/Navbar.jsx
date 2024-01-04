@@ -60,21 +60,21 @@ function Navbar() {
       ) : (
         <div></div>
       )}
-      {loggedIn ? (
-        <div className="nav-links">
-          <Link onClick={aboutClick} to="/about">
-            About
-          </Link>
-          <Link onClick={logoutClick} to="/login">
-            Logout
-          </Link>
-        </div>
-      ) : (
-        <div className="nav-links">
-          <Link to="/register">Register</Link>
-          <Link to="/Login">Login</Link>
-        </div>
-      )}
+      <div className="nav-links">
+        <Link onClick={aboutClick} to="/about">
+          About
+        </Link>
+        {loggedIn ? (
+            <Link onClick={logoutClick} to="/login">
+              Logout
+            </Link>
+        ) : (
+          <div>
+            <Link to="/register">Register</Link>
+            <Link to="/Login">Login</Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
