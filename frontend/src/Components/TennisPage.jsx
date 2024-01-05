@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./TennisPage.css";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 function TennisPage() {
 	let canvas;
@@ -11,6 +13,7 @@ function TennisPage() {
 	let ball;
 	let com;
 	let net;
+	let winningScore = 5;
 
 	useEffect(() => {
 		canvas = document.getElementById("tennis-canvas");
@@ -109,6 +112,7 @@ function TennisPage() {
 	// Game loop
 	function gameLoop() {
 		if (runGame) {
+			checkWinner();
 			render();
 			update();
 		}
@@ -118,10 +122,9 @@ function TennisPage() {
 		ball.velocityY = ball.speed * Math.sin(angleRad);
 	}
 
-	// Mouse control
+	// Mouse movement & paddle movement
 	function paddleMovement(event) {
 		let rect = canvas.getBoundingClientRect();
-		
 
 		let mouseY = event.clientY - rect.top;
 
@@ -133,7 +136,6 @@ function TennisPage() {
 		user.y = areaY;
 	}
 
-	
 	// Collision detection (b= ball and p= paddle)
 	function collision(b, p) {
 		p.top = p.y;
@@ -160,18 +162,12 @@ function TennisPage() {
 		ball.y = canvas.height / 2;
 		ball.velocityX = -ball.velocityX;
 		ball.speed = 6;
+	}
 
-		if (com.score == 5) {
-			// Computer wins
-			gameOver(false);
-			return;
-		}
-
-		if (user.score == 2) {
-			// User wins, increase level and reset scores
-			user.score = 0;
-			com.score = 0;
-			gameOver(true);
+	function checkWinner() {
+		if (com.score >= winningScore || user.score >= winningScore) {
+			runGame = false;
+			gameOver(user.score >= winningScore);
 		}
 	}
 
@@ -251,28 +247,36 @@ function TennisPage() {
 
 			ball.speed += 0.4; // Increases the speed of the ball after each hit
 		}
-		// setGameDifficulty(currentLevel);
 	}
 
 	// Game over
-	function gameOver(winner) {
-		let message = winner
-			? "Congratulations! You WIN!"
-			: "Game Over! Computer Wins!";
-		let confirmRestart = window.confirm(
-			message + " Would you like to play again?"
-		);
+	function gameOver(userWins) {
+		let msg = userWins
+			? "Congratulations! You win!"
+			: "Game Over! Computer wins.";
+		msg += "\n\nWould you like to play again?";
 
-		if (confirmRestart) {
-			// Reset game state
-			user.score = 0;
-			com.score = 0;
-
-			resetBall();
-		} else {
-			runGame = false;
-			document.getElementById("tennis-pause-menu").classList.remove("hidden");
-		}
+		confirmAlert({
+			title: "Information",
+			message: msg,
+			buttons: [
+				{
+					label: "Yes",
+					onClick: () => {
+						user.score = 0;
+						com.score = 0;
+						resetBall();
+					},
+				},
+				{
+					label: "No",
+					onClick: () => {
+						// Quit the game
+						runGame = false;
+					},
+				},
+			],
+		});
 	}
 
 	return (
