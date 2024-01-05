@@ -21,8 +21,16 @@ export function polar(x, y, angle, dist) {
 
 export function randomiseArray(arr) {
   let result = [];
+  let used = [];
 
-  // Code Diana
+  while (result.length < arr.length) {
+    let n = Math.trunc(Math.random() * arr.length);
+    if (!used.includes(n)) {
+      used.push(n);
+      let item = arr[n];
+      result.push(item);
+    }
+  }
   return result;
 }
 
@@ -52,3 +60,5 @@ export function validateUserData(user) {
   }
   return msg;
 }
+
+

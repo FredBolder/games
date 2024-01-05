@@ -120,6 +120,7 @@ function test() {
     JSON.stringify(redInput12c)
   );
 
+  /*
   array1 = ["Hello", "Good", "Morning"];
   arrayList1 = [];
   for (let i = 0; i < 5; i++) {
@@ -132,6 +133,7 @@ function test() {
     resultRandomiseArray,
     true
   );
+  */
 }
 
 test();
