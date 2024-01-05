@@ -19,6 +19,13 @@ export function polar(x, y, angle, dist) {
   return result;
 }
 
+export function randomiseArray(arr) {
+  let result = [];
+
+  // Code Diana
+  return result;
+}
+
 export function validateUserData(user) {
   let msg = "";
 
