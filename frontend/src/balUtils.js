@@ -130,6 +130,9 @@ function charToNumber(c) {
     case "t":
       result = 89;
       break;
+    case "h":
+      result = 90;
+      break;
     default:
       result = 0;
       break;
@@ -230,6 +233,9 @@ function numberToChar(n) {
       break;
     case 89:
       result = "t";
+      break;
+    case 90:
+      result = "h";
       break;
     default:
       result = " ";
@@ -780,11 +786,11 @@ export function getGameInfo(arr) {
         teleport.y = i;
         result.teleports.push(teleport);
       }
-      if (arr[i][j] === 25) {
+      if ((arr[i][j] === 25) || (arr[i][j] === 90)) {
         let ladder = {};
         ladder.x = j;
         ladder.y = i;
-        ladder.rotate = false;
+        ladder.rotate = (arr[i][j] === 90);
         result.ladders.push(ladder);
         arr[i][j] = 0;
       }
