@@ -70,17 +70,17 @@ export default function drawLevel(
     if (gameInfo.ladders[i].rotate) {
         drawLine(
           ctx,
-          gameInfo.ladders[i].x * size1 + leftMargin + 1,
+          gameInfo.ladders[i].x * size1 + leftMargin,
           gameInfo.ladders[i].y * size1 + 1,
-          (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+          (gameInfo.ladders[i].x + 1) * size1 + leftMargin,
           gameInfo.ladders[i].y * size1 + 1,
           "white"
         );
         drawLine(
           ctx,
-          (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
+          (gameInfo.ladders[i].x + 1) * size1 + leftMargin,
           (gameInfo.ladders[i].y + 1) * size1 - 1,
-          gameInfo.ladders[i].x * size1 + leftMargin + 1,
+          gameInfo.ladders[i].x * size1 + leftMargin,
           (gameInfo.ladders[i].y + 1) * size1 - 1
         );
         drawLine(

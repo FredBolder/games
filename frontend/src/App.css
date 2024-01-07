@@ -1,17 +1,18 @@
 /* TO FIND YOUR STYLING FOLLOW THE ORDER */
 
-/* 1. MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
-/* 2. NAVBAR COMPONENT */
-/* 3. FOOTER COMPONENT */
-/* 4. REGISTER PAGE */
-/* 5. LOGIN PAGE */
-/* 6. BAL PAGE */
-/* 7. MENU (UPPER BUTTONS) IN BAL PAGE */
-/* 8. STYLING FOR HELP BUTTON IN BAL PAGE */
-/* 9. GAME CANVAS */
+/* 01. MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
+/* 02. NAVBAR COMPONENT */
+/* 03. FOOTER COMPONENT */
+/* 04. REGISTER PAGE */
+/* 05. LOGIN PAGE */
+/* 06. BAL PAGE */
+/* 07. MENU (UPPER BUTTONS) IN BAL PAGE */
+/* 08. STYLING FOR HELP BUTTON IN BAL PAGE */
+/* 09. GAME CANVAS */
 /* 10. MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
 /* 11. MEDIA QUERIES */
 /* 12. PRIVACY POLICY */
+/* 13. ABOUT PAGE */
 
 :root {
   --fontsize-xs: 0.8rem;
@@ -36,7 +37,7 @@ p {
   margin-top: 0.5rem;
 }
 
-/* MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
+/* 01. MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
 
 header {
   width: 100%;
@@ -97,7 +98,12 @@ main {
   justify-content: center;
 }
 
-/* NAVBAR COMPONENT */
+.link {
+  color: white;
+  text-decoration: underline;
+}
+
+/* 02. NAVBAR COMPONENT */
 
 .navbar {
   display: flex;
@@ -129,7 +135,7 @@ main {
   column-gap: 1rem;
 }
 
-/* FOOTER COMPONENT */
+/* 03. FOOTER COMPONENT */
 
 .footerContainer {
   color: white;
@@ -153,7 +159,7 @@ main {
   text-decoration: none;
 }
 
-/* REGISTER PAGE */
+/* 04. REGISTER PAGE */
 
 .registerBox {
   background-color: rgba(0, 0, 0, 0.45);
@@ -229,7 +235,7 @@ input[type="email"] {
   box-shadow: 2px 2px 8px inset #ebe9ed, -2px -2px 8px inset #ebe9ed;
 }
 
-/* LOGIN PAGE */
+/* 05. LOGIN PAGE */
 
 .loginBox {
   background-color: rgba(0, 0, 0, 0.45);
@@ -299,7 +305,7 @@ input[type="email"] {
   width: 90%;
 }
 
-/* BAL PAGE */
+/* 06. BAL PAGE */
 
 .balPanel {
   display: flex;
@@ -337,7 +343,7 @@ input[type="email"] {
   cursor: pointer;
 }
 
-/* MENU (UPPER BUTTONS) IN BAL PAGE */
+/* 07. MENU (UPPER BUTTONS) IN BAL PAGE */
 
 .menu {
   position: relative;
@@ -392,7 +398,7 @@ input[type="email"] {
   display: block;
 }
 
-/* STYLING FOR HELP BUTTON IN BAL PAGE */
+/* 08. STYLING FOR HELP BUTTON IN BAL PAGE */
 
 .help {
   background: darkgreen;
@@ -423,13 +429,13 @@ tr:nth-child(even) td {
   background-color: #005500;
 }
 
-/* GAME CANVAS */
+/* 09. GAME CANVAS */
 
 .gameCanvas {
   margin-bottom: 1rem;
 }
 
-/* MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
+/* 10. MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
 
 .moveButtons {
   width: 100%;
@@ -449,7 +455,7 @@ tr:nth-child(even) td {
   cursor: pointer;
 }
 
-/* MEDIA QUERIES */
+/* 11. MEDIA QUERIES */
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -826,7 +832,7 @@ tr:nth-child(even) td {
   }
 }
 
-/* PRIVACY POLICY */
+/* 12. PRIVACY POLICY */
 
 h4 {
   text-align: center;
@@ -870,6 +876,8 @@ h5 {
   background-color: darkgray;
 }
 */
+
+/* 13. ABOUT PAGE */
 
 .aboutBox {
   background-color: rgba(0, 0, 0, 0.45);

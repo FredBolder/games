@@ -919,9 +919,20 @@ function BalPage() {
               directions left, right, up and down. A purple ball is almost the
               same as a yellow ball, but when you push a purple ball, it will go
               only one position further. You cannot push a ball through a one
-              direction or a door with a lock. You can control the blue ball
-              with the letter keys, the arrow keys, the number keys or the arrow
-              buttons.
+              direction, a game rotator or a door with a lock. You can control
+              the blue ball with the letter keys, the arrow keys, the number
+              keys or the arrow buttons. If you see for example a level number
+              750, it doesn't mean that there are 750 or even more levels. The
+              number depends also on the series and on the&nbsp;
+              <a
+                className="link"
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://fredbolder.github.io/bal/"
+              >
+                original Bal game
+              </a>
+              .
             </p>
             <table>
               <thead>
