@@ -8,7 +8,7 @@ function Footer() {
       <div className="footerContainer">
         <div className="footerInfo">
           <div></div>
-          <p>Site made as a project for educational purposes | DCI 2023</p>
+          <p>Site made as a project for educational purposes | DCI 2023/2024</p>
           <div>
             <Link to="/policy">Privacy Policy</Link>
           </div>
