@@ -14,6 +14,7 @@ function TennisPage() {
 	let com;
 	let net;
 	let winningScore = 5;
+	let selectedSpeed = 6;
 
 	useEffect(() => {
 		canvas = document.getElementById("tennis-canvas");
@@ -30,7 +31,7 @@ function TennisPage() {
 			radius: 10,
 			velocityX: 5,
 			velocityY: 5,
-			speed: 6, //change speed
+			speed: selectedSpeed,
 			color: "Yellow",
 		};
 
@@ -161,7 +162,7 @@ function TennisPage() {
 		ball.x = canvas.width / 2;
 		ball.y = canvas.height / 2;
 		ball.velocityX = -ball.velocityX;
-		ball.speed = 6;
+		ball.speed = selectedSpeed;
 	}
 
 	function checkWinner() {
@@ -174,6 +175,8 @@ function TennisPage() {
 	// Add the startGame function
 	function startGame() {
 		runGame = true;
+		ball.speed = selectedSpeed;
+		// changeSpeed();
 		gameLoop();
 		document.getElementById("tutorial").classList.add("hidden");
 	}
@@ -188,13 +191,20 @@ function TennisPage() {
 	function resumeGame() {
 		runGame = true;
 		document.getElementById("tennis-pause-menu").classList.add("hidden");
+		// changeSpeed();
+		ball.speed = selectedSpeed;
 		gameLoop();
 	}
 
 	// Restart the game
 	function restartGame() {
-		runGame = true;
+		runGame = false;
 		document.getElementById("tennis-pause-menu").classList.add("hidden");
+		ball.speed = selectedSpeed;
+		// Reset the score
+		user.score = 0;
+		com.score = 0;
+
 		resetBall();
 		gameLoop();
 	}
@@ -209,7 +219,8 @@ function TennisPage() {
 	// Change of Speed
 	function changeSpeed() {
 		let speedSelect = document.getElementById("speedSelect");
-		ball.speed = parseInt(speedSelect.value);
+		selectedSpeed = parseInt(speedSelect.value);
+		ball.speed = selectedSpeed;
 		gameLoop();
 	}
 
@@ -232,6 +243,8 @@ function TennisPage() {
 
 		let computerLevel = 0.04; //change computer level
 		com.y += (ball.y - (com.y + com.height / 2)) * computerLevel;
+
+		ball.speed = selectedSpeed;
 
 		let player = ball.x + ball.radius < canvas.width / 2 ? user : com;
 
@@ -289,9 +302,12 @@ function TennisPage() {
 					<div className="tennis-title">Tennis</div>
 					<div id="tutorial" className="tennis-intro">
 						<h1>Instructions</h1>
-						<p>Use your mouse to move the left paddle to hit the ball.</p>
-						<p>The first to score 5 points, Wins the game.</p>
-						<p>Click Start Game to play.</p>
+						<div className="tennis-directions">
+							<p>
+								Move the left paddle with your mouse to hit the ball. To win the
+								game, get 5 points. To play, click Start Game.
+							</p>
+						</div>
 					</div>
 					<div>
 						<div id="tennis-button-container" className="game-btn">
@@ -300,24 +316,33 @@ function TennisPage() {
 
 							<div id="tennis-pause-menu" className="hidden">
 								<h1 className="pause-menu-title">Game Paused</h1>
-								<button className="tennis-pause-menu-btn" onClick={resumeGame}>
-									Resume Game
-								</button>
-								<button className="tennis-pause-menu-btn" onClick={restartGame}>
-									Restart Game
-								</button>
-								<button className="tennis-pause-menu-btn" onClick={quitGame}>
-									Quit Game
-								</button>
+								<div className="pauseMenu-BtnContainer">
+									<button
+										className="tennis-pause-menu-btn"
+										onClick={resumeGame}
+									>
+										Resume Game
+									</button>
+									<button
+										className="tennis-pause-menu-btn"
+										onClick={restartGame}
+									>
+										Restart Game
+									</button>
+
+									<button className="tennis-pause-menu-btn" onClick={quitGame}>
+										Quit Game
+									</button>
+								</div>
 							</div>
 							<select
 								id="speedSelect"
 								className="speed-btn"
 								onChange={changeSpeed}
 							>
-								<option value="7">Normal</option>
-								<option value="14">Fast</option>
-								<option value="5">Slow</option>
+								<option value="6">Normal</option>
+								<option value="10">Fast</option>
+								<option value="3">Slow</option>
 							</select>
 						</div>
 
