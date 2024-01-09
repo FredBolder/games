@@ -4,13 +4,20 @@ import Footer from "../Components/Footer";
 import { randomiseArray } from "../utils";
 
 function AboutPage() {
+  let indexes = [0, 1, 2, 3];
   let names = [
     "Michał Kotkowicz",
     "Donnie Avant",
     "Fred Bolder",
     "Diana Sahlean",
   ];
-  let randomNames = randomiseArray(names);
+  let sites = [
+    "https://github.com/michalkotkowicz",
+    "https://github.com/Dnnavant",
+    "https://fredbolder.github.io/portfolio/",
+    "https://github.com/LazuliPhoenix",
+  ];
+  let randomIndexes = randomiseArray(indexes);
   return (
     <div className="about">
       <main>
@@ -21,20 +28,55 @@ function AboutPage() {
         <div className="aboutBox">
           <h4>The developers</h4>
           <p>
-            We (in random order: {randomNames[0]}, {randomNames[1]},{" "}
-            {randomNames[2]} and {randomNames[3]}) are a team of motivated
-            people from different career backgrounds, that came together to
-            colaborate on this final project as a testament to what we have
-            learned not only from DCI (Digital Career Institute GmbH), but also
-            from each other and with that embarking on the journey of
-            self-discovery, continuous learning and improvement that is
-            programming.
+            We (in random order:{" "}
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={sites[randomIndexes[0]]}
+            >
+              {names[randomIndexes[0]]}
+            </a>
+            ,{" "}
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={sites[randomIndexes[1]]}
+            >
+              {names[randomIndexes[1]]}
+            </a>
+            ,{" "}
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={sites[randomIndexes[2]]}
+            >
+              {names[randomIndexes[2]]}
+            </a>{" "}
+            and{" "}
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={sites[randomIndexes[3]]}
+            >
+              {names[randomIndexes[3]]}
+            </a>{" "}
+            are a team of motivated people from different career backgrounds,
+            that came together to colaborate on this final project as a
+            testament to what we have learned not only from DCI (Digital Career
+            Institute GmbH), but also from each other and with that embarking on
+            the journey of self-discovery, continuous learning and improvement
+            that is programming.
           </p>
           <h4 className="topmargin">The games</h4>
           <p>
-            Tennis (mainly programmed by Donnie) is inspired by the arcade video game Pong.
+            Tennis (mainly programmed by Donnie) is inspired by the arcade video
+            game Pong.
           </p>
-          <p>  
+          <p>
             <br />
             Bal (dutch translation of ball) is the online version of the{" "}
             <a
@@ -45,8 +87,15 @@ function AboutPage() {
             >
               pc game Bal
             </a>{" "}
-            by Fred Bolder, first programmed in Turbo Pascal for DOS and
-            later in C# for Windows.
+            by Fred Bolder, first programmed in Turbo Pascal for DOS and later
+            in C# for Windows.
+          </p>
+          <h4 className="topmargin">Contact</h4>
+          <p>
+            You can contact us by email{" "}
+            <a className="link" href="mailto:fgh.bolder@gmail.com">
+              fgh.bolder@gmail.com
+            </a>
           </p>
         </div>
         <Footer />
