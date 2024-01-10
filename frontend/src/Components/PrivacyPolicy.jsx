@@ -11,7 +11,7 @@ function PrivacyPolicy() {
             <Navbar />
           </header>
           <h1 className="title">Privacy Policy</h1>
-          <div className="policyBox">
+          <div className="boxWithScroll">
             <h4>Effective Date: 18.12.2023</h4>
             <h5>
               Thank you for using our website located at
@@ -48,7 +48,7 @@ function PrivacyPolicy() {
                   <li>
                     If you have any questions or concerns about our privacy
                     practices, you may contact us at{" "}
-                    <a href="mailto:fgh.bolder@gmail.com">
+                    <a className="link" href="mailto:fgh.bolder@gmail.com">
                       fgh.bolder@gmail.com
                     </a>
                   </li>
