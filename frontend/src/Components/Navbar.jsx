@@ -44,7 +44,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="logo">
-        <h1>Games</h1>
+        <h1>Games From Scratch</h1>
       </div>
 
       {loggedIn ? (
