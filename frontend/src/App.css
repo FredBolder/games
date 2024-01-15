@@ -146,13 +146,30 @@ main {
 
 /* 02. NAVBAR COMPONENT */
 
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  flex-direction: column;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.55);
   color: white;
-  padding: 10px 20px;
+  padding: 5px 15px;
   box-shadow: 0px 5px 5px black;
+}
+
+.navbar p {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  color: #3F812E;
+}
+
+.navbar h1 {
+  text-shadow: 2px 2px 0px #2F711E;
 }
 
 .nav-links a {
