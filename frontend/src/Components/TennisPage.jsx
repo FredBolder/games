@@ -117,10 +117,6 @@ function TennisPage() {
 			render();
 			update();
 		}
-
-		// To Update the ball's velocity based on its current speed
-		ball.velocityX = ball.speed * Math.cos(angleRad);
-		ball.velocityY = ball.speed * Math.sin(angleRad);
 	}
 
 	// Mouse movement & paddle movement
