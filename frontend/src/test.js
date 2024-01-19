@@ -10,9 +10,8 @@ import {
   checkRed,
   moveElevators,
   moveHorizontalElevators,
+  zeroArray,
 } from "./balUtils.js";
-
-import { randomiseArray } from "./utils.js";
 
 function checkResult(testName, expected, result) {
   if (result !== expected) {
@@ -20,13 +19,6 @@ function checkResult(testName, expected, result) {
     console.log(`Expected : ${expected}`);
     console.log(`Result   : ${result}`);
   }
-}
-
-function testRandomiseArray(arr, arrList) {
-  let ok = false;
-
-  // Code Michal
-  return ok;
 }
 
 function test() {
@@ -120,20 +112,15 @@ function test() {
     JSON.stringify(redInput12c)
   );
 
-  /*
-  array1 = ["Hello", "Good", "Morning"];
-  arrayList1 = [];
-  for (let i = 0; i < 5; i++) {
-    let arr = randomiseArray(array1);
-    arrayList1.push(arr);
-  }
-  let resultRandomiseArray = testRandomiseArray(array1, arrayList1);
   checkResult(
-    "testRandomiseArray",
-    resultRandomiseArray,
-    true
+    "zeroArray",
+    JSON.stringify([
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ]),
+    JSON.stringify(zeroArray(3, 4))
   );
-  */
 }
 
 test();

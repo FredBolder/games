@@ -149,7 +149,7 @@ main {
 .logo {
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   flex-direction: column;
 }
 
@@ -165,11 +165,11 @@ main {
 .navbar p {
   margin-top: 0rem;
   margin-bottom: 0rem;
-  color: #3F812E;
+  color: #3f812e;
 }
 
 .navbar h1 {
-  text-shadow: 2px 2px 0px #2F711E;
+  text-shadow: 2px 2px 0px #2f711e;
 }
 
 .nav-links a {
@@ -889,6 +889,3 @@ tr:nth-child(even) td {
     height: 25px;
   }
 }
-
-
-

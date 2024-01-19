@@ -76,6 +76,7 @@ let elementWhite;
 let elementYellow;
 let elevatorCounter = 0;
 let explosionCounter = 0;
+let backData = [];
 let gameData = [];
 let gameInfo = {};
 gameInfo.elevators = [];
@@ -85,7 +86,6 @@ gameInfo.redBalls = [];
 gameInfo.yellowBalls = [];
 gameInfo.detonator = { x: -1, y: -1 };
 gameInfo.teleports = [];
-gameInfo.ladders = [];
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -292,9 +292,9 @@ function BalPage() {
     let info = {};
     let update = false;
 
-    if (!gameOver && gameData) {
+    if (!gameOver && gameData && backData) {
       if (skipFalling <= 0) {
-        info = checkFalling(gameData, gameInfo);
+        info = checkFalling(backData, gameData, gameInfo);
         if (info.ballX !== -1) {
           posX = info.ballX;
           posY = info.ballY;
@@ -394,6 +394,7 @@ function BalPage() {
   async function initLevel(n, setLastPlayed = true) {
     let level = n.toString();
     let data = [];
+    let gd;
 
     try {
       setLevelNumber(n);
@@ -409,7 +410,9 @@ function BalPage() {
       posX = -1;
       posY = -1;
       data = response.data.gameData;
-      gameData = stringArrayToNumberArray(data);
+      gd = stringArrayToNumberArray(data);
+      backData = gd.backData;
+      gameData = gd.gameData;
       laserX1 = -1;
       laserX2 = -1;
       laserY = -1;
@@ -526,14 +529,14 @@ function BalPage() {
           }
           break;
         case "ArrowLeft":
-          info = jumpLeft(gameData, posX, posY, gameInfo);
+          info = jumpLeft(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posX--;
             posY--;
           }
           break;
         case "ArrowRight":
-          info = jumpRight(gameData, posX, posY, gameInfo);
+          info = jumpRight(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posX++;
             posY--;
@@ -548,7 +551,7 @@ function BalPage() {
         case "a":
         case "A":
         case "4":
-          info = moveLeft(gameData, posX, posY, gameInfo);
+          info = moveLeft(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posX--;
             if (info.oneDirection) {
@@ -558,7 +561,7 @@ function BalPage() {
               posX--;
               gameInfo.blueBall.x = posX;
               gameInfo.blueBall.y = posY;
-              rotate = rotateGame(gameData, gameInfo);
+              rotate = rotateGame(backData, gameData, gameInfo);
               posX = gameInfo.blueBall.x;
               posY = gameInfo.blueBall.y;
             }
@@ -571,7 +574,7 @@ function BalPage() {
         case "d":
         case "D":
         case "6":
-          info = moveRight(gameData, posX, posY, gameInfo);
+          info = moveRight(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posX++;
             if (info.oneDirection) {
@@ -581,7 +584,7 @@ function BalPage() {
               posX++;
               gameInfo.blueBall.x = posX;
               gameInfo.blueBall.y = posY;
-              rotate = rotateGame(gameData, gameInfo);
+              rotate = rotateGame(backData, gameData, gameInfo);
               posX = gameInfo.blueBall.x;
               posY = gameInfo.blueBall.y;
             }
@@ -594,7 +597,7 @@ function BalPage() {
         case "w":
         case "W":
         case "8":
-          info = jump(gameData, posX, posY, gameInfo);
+          info = jump(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posY--;
             if (info.oneDirection) {
@@ -606,7 +609,7 @@ function BalPage() {
         case "q":
         case "Q":
         case "7":
-          info = jumpLeft(gameData, posX, posY, gameInfo);
+          info = jumpLeft(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posX--;
             posY--;
@@ -615,7 +618,7 @@ function BalPage() {
         case "e":
         case "E":
         case "9":
-          info = jumpRight(gameData, posX, posY, gameInfo);
+          info = jumpRight(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posX++;
             posY--;
@@ -625,7 +628,7 @@ function BalPage() {
         case "s":
         case "S":
         case "2":
-          info = pushDown(gameData, posX, posY, gameInfo);
+          info = pushDown(backData, gameData, posX, posY, gameInfo);
           if (info.player) {
             posY++;
             if (info.oneDirection) {
@@ -767,6 +770,7 @@ function BalPage() {
     drawLevel(
       canvas,
       ctx,
+      backData,
       gameData,
       settings.nicerGraphics,
       elements,

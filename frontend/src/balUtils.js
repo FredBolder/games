@@ -3,12 +3,11 @@ function canMoveAlone(n) {
   return [9, 28, 84, 85, 86].includes(n);
 }
 
-function isLadder(x, y, ladders) {
+function isLadder(x, y, backData) {
   let result = false;
-
-  for (let i = 0; i < ladders.length; i++) {
-    if (ladders[i].x === x && ladders[i].y === y) {
-      result = true;
+  if (y < backData.length) {
+    if (x < backData[0].length) {
+      result = [25, 90].includes(backData[y][x]);
     }
   }
   return result;
@@ -28,11 +27,11 @@ function isTeleport(x, y, teleports) {
   return result;
 }
 
-function notInAir(x, y, arr, ladders) {
+function notInAir(x, y, backData, gameData) {
   return (
-    arr[y + 1][x] !== 0 ||
-    isLadder(x, y, ladders) ||
-    isLadder(x, y + 1, ladders)
+    gameData[y + 1][x] !== 0 ||
+    isLadder(x, y, backData) ||
+    isLadder(x, y + 1, backData)
   );
 }
 
@@ -132,6 +131,12 @@ function charToNumber(c) {
       break;
     case "h":
       result = 90;
+      break;
+    case "W":
+      result = 20;
+      break;
+    case "w":
+      result = 23;
       break;
     default:
       result = 0;
@@ -237,6 +242,12 @@ function numberToChar(n) {
     case 90:
       result = "h";
       break;
+    case 20:
+      result = "W";
+      break;
+    case 23:
+      result = "w";
+      break;
     default:
       result = " ";
       break;
@@ -245,14 +256,24 @@ function numberToChar(n) {
 }
 
 export function stringArrayToNumberArray(arr) {
-  let result = [];
+  let result = { backData: [], gameData: [] };
+  let data = 0;
 
   for (let i = 0; i < arr.length; i++) {
-    const row = [];
+    const rowBackData = [];
+    const rowGameData = [];
     for (let j = 0; j < arr[i].length; j++) {
-      row.push(charToNumber(arr[i][j]));
+      data = charToNumber(arr[i][j]);
+      if ([20, 23, 25, 90].includes(data)) {
+        rowBackData.push(data);
+        rowGameData.push(0);
+      } else {
+        rowBackData.push(0);
+        rowGameData.push(data);
+      }
     }
-    result.push(row);
+    result.backData.push(rowBackData);
+    result.gameData.push(rowGameData);
   }
   return result;
 }
@@ -309,23 +330,23 @@ export function checkDetonator(arr, x, y) {
   return explosion;
 }
 
-export function checkFalling(arr, gameInfo) {
+export function checkFalling(backData, gameData, gameInfo) {
   let result = {};
   result.update = false;
   result.ballX = -1;
   result.ballY = -1;
 
-  for (let i = arr.length - 2; i >= 0; i--) {
-    for (let j = 0; j < arr[i].length; j++) {
-      let element1 = arr[i][j];
-      let element2 = arr[i + 1][j];
+  for (let i = gameData.length - 2; i >= 0; i--) {
+    for (let j = 0; j < gameData[i].length; j++) {
+      let element1 = gameData[i][j];
+      let element2 = gameData[i + 1][j];
 
-      if (j < arr[i].length - 1) {
+      if (j < gameData[i].length - 1) {
         if (
           element2 === 15 &&
           (element1 === 2 || element1 === 4 || element1 === 8) &&
-          arr[i][j + 1] === 0 &&
-          arr[i + 1][j + 1] === 0
+          gameData[i][j + 1] === 0 &&
+          gameData[i + 1][j + 1] === 0
         ) {
           result.update = true;
           if (element1 === 2) {
@@ -335,8 +356,8 @@ export function checkFalling(arr, gameInfo) {
           if (element1 === 8) {
             updateRed(gameInfo.redBalls, j, i, j + 1, i);
           }
-          arr[i][j + 1] = arr[i][j];
-          arr[i][j] = 0;
+          gameData[i][j + 1] = gameData[i][j];
+          gameData[i][j] = 0;
         }
       }
 
@@ -344,8 +365,8 @@ export function checkFalling(arr, gameInfo) {
         if (
           element2 === 16 &&
           (element1 === 2 || element1 === 4 || element1 === 8) &&
-          arr[i][j - 1] === 0 &&
-          arr[i + 1][j - 1] === 0
+          gameData[i][j - 1] === 0 &&
+          gameData[i + 1][j - 1] === 0
         ) {
           result.update = true;
           if (element1 === 2) {
@@ -355,23 +376,23 @@ export function checkFalling(arr, gameInfo) {
           if (element1 === 8) {
             updateRed(gameInfo.redBalls, j, i, j - 1, i);
           }
-          arr[i][j - 1] = arr[i][j];
-          arr[i][j] = 0;
+          gameData[i][j - 1] = gameData[i][j];
+          gameData[i][j] = 0;
         }
       }
     }
   }
 
-  for (let i = arr.length - 2; i >= 0; i--) {
-    for (let j = 0; j < arr[i].length; j++) {
-      let element1 = arr[i][j];
-      let element2 = arr[i + 1][j];
+  for (let i = gameData.length - 2; i >= 0; i--) {
+    for (let j = 0; j < gameData[i].length; j++) {
+      let element1 = gameData[i][j];
+      let element2 = gameData[i + 1][j];
 
       if (
         element2 === 0 &&
         ((element1 === 2 &&
-          !isLadder(j, i, gameInfo.ladders) &&
-          !isLadder(j, i + 1, gameInfo.ladders)) ||
+          !isLadder(j, i, backData) &&
+          !isLadder(j, i + 1, backData)) ||
           element1 === 4 ||
           element1 === 8)
       ) {
@@ -383,8 +404,8 @@ export function checkFalling(arr, gameInfo) {
         if (element1 === 8) {
           updateRed(gameInfo.redBalls, j, i, j, i + 1);
         }
-        arr[i + 1][j] = arr[i][j];
-        arr[i][j] = 0;
+        gameData[i + 1][j] = gameData[i][j];
+        gameData[i][j] = 0;
       }
     }
   }
@@ -396,21 +417,22 @@ function whiteOrBlue(n) {
 }
 
 export function moveLeft(
-  arr,
+  backData,
+  gameData,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+  gameInfo = { yellowBalls: [], teleports: [] }
 ) {
   let result = {};
-  let row = arr[y];
+  let row = gameData[y];
   result.eating = false;
   result.player = false;
   result.oneDirection = false;
   result.teleporting = false;
   result.rotate = false;
 
-  if (arr.length > 0) {
-    if (notInAir(x, y, arr, gameInfo.ladders)) {
+  if (gameData.length > 0) {
+    if (notInAir(x, y, backData, gameData)) {
       if (x > 0) {
         // empty space or green ball
         if (!result.player && (row[x - 1] === 0 || row[x - 1] === 3)) {
@@ -484,13 +506,14 @@ export function moveLeft(
 }
 
 export function moveRight(
-  arr,
+  backData,
+  gameData,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+  gameInfo = { yellowBalls: [], teleports: [] }
 ) {
   let result = {};
-  let row = arr[y];
+  let row = gameData[y];
   let maxX = 0;
   result.eating = false;
   result.player = false;
@@ -498,9 +521,9 @@ export function moveRight(
   result.teleporting = false;
   result.rotate = false;
 
-  if (arr.length > 0) {
-    if (notInAir(x, y, arr, gameInfo.ladders)) {
-      maxX = arr[0].length - 1;
+  if (gameData.length > 0) {
+    if (notInAir(x, y, backData, gameData)) {
+      maxX = gameData[0].length - 1;
       if (x < maxX) {
         // empty space or green ball
         if (!result.player && (row[x + 1] === 0 || row[x + 1] === 3)) {
@@ -555,7 +578,7 @@ export function moveRight(
           result.player = true;
         }
       }
-      if (!result.player && x < arr[0].length - 1) {
+      if (!result.player && x < gameData[0].length - 1) {
         if (row[x + 1] === 31) {
           row[x + 1] = 2;
           row[x] = 0;
@@ -574,10 +597,11 @@ export function moveRight(
 }
 
 export function jump(
-  arr,
+  backData,
+  gameData,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+  gameInfo = { yellowBalls: [], teleports: [] }
 ) {
   let result = {};
   result.eating = false;
@@ -585,34 +609,41 @@ export function jump(
   result.oneDirection = false;
 
   if (!isTeleport(x, y, gameInfo.teleports)) {
-    if (arr.length > 0) {
-      if (y > 0 && notInAir(x, y, arr, gameInfo.ladders)) {
-        if (!result.player && (arr[y - 1][x] === 0 || arr[y - 1][x] === 3)) {
-          if (arr[y - 1][x] === 3) {
+    if (gameData.length > 0) {
+      if (y > 0 && notInAir(x, y, backData, gameData)) {
+        if (
+          !result.player &&
+          (gameData[y - 1][x] === 0 || gameData[y - 1][x] === 3)
+        ) {
+          if (gameData[y - 1][x] === 3) {
             result.eating = true;
           }
-          arr[y - 1][x] = 2;
-          arr[y][x] = 0;
+          gameData[y - 1][x] = 2;
+          gameData[y][x] = 0;
           result.player = true;
         }
       }
-      if (y > 1 && notInAir(x, y, arr, gameInfo.ladders)) {
+      if (y > 1 && notInAir(x, y, backData, gameData)) {
         if (
           !result.player &&
-          canMoveAlone(arr[y - 1][x]) &&
-          arr[y - 2][x] === 0
+          canMoveAlone(gameData[y - 1][x]) &&
+          gameData[y - 2][x] === 0
         ) {
-          if (arr[y - 1][x] === 9) {
+          if (gameData[y - 1][x] === 9) {
             updateYellow(gameInfo.yellowBalls, x, y - 1, x, y - 2, "up");
           }
-          arr[y - 2][x] = arr[y - 1][x];
-          arr[y - 1][x] = 2;
-          arr[y][x] = 0;
+          gameData[y - 2][x] = gameData[y - 1][x];
+          gameData[y - 1][x] = 2;
+          gameData[y][x] = 0;
           result.player = true;
         }
-        if (!result.player && arr[y - 1][x] === 87 && arr[y - 2][x] === 0) {
-          arr[y - 2][x] = 2;
-          arr[y][x] = 0;
+        if (
+          !result.player &&
+          gameData[y - 1][x] === 87 &&
+          gameData[y - 2][x] === 0
+        ) {
+          gameData[y - 2][x] = 2;
+          gameData[y][x] = 0;
           result.player = true;
           result.oneDirection = true;
         }
@@ -623,25 +654,26 @@ export function jump(
 }
 
 export function jumpLeft(
-  arr,
+  backData,
+  gameData,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+  gameInfo = { yellowBalls: [], teleports: [] }
 ) {
   let result = {};
   result.eating = false;
   result.player = false;
 
   if (!isTeleport(x, y, gameInfo.teleports)) {
-    if (arr.length > 0) {
-      if (y > 0 && x > 0 && notInAir(x, y, arr, gameInfo.ladders)) {
-        if (arr[y - 1][x] === 0) {
-          if (arr[y - 1][x - 1] === 0 || arr[y - 1][x - 1] === 3) {
-            if (arr[y - 1][x - 1] === 3) {
+    if (gameData.length > 0) {
+      if (y > 0 && x > 0 && notInAir(x, y, backData, gameData)) {
+        if (gameData[y - 1][x] === 0) {
+          if (gameData[y - 1][x - 1] === 0 || gameData[y - 1][x - 1] === 3) {
+            if (gameData[y - 1][x - 1] === 3) {
               result.eating = true;
             }
-            arr[y - 1][x - 1] = 2;
-            arr[y][x] = 0;
+            gameData[y - 1][x - 1] = 2;
+            gameData[y][x] = 0;
             result.player = true;
           }
         }
@@ -652,29 +684,30 @@ export function jumpLeft(
 }
 
 export function jumpRight(
-  arr,
+  backData,
+  gameData,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+  gameInfo = { yellowBalls: [], teleports: [] }
 ) {
   let result = {};
   result.eating = false;
   result.player = false;
 
   if (!isTeleport(x, y, gameInfo.teleports)) {
-    if (arr.length > 0) {
+    if (gameData.length > 0) {
       if (
         y > 0 &&
-        x < arr[0].length - 1 &&
-        notInAir(x, y, arr, gameInfo.ladders)
+        x < gameData[0].length - 1 &&
+        notInAir(x, y, backData, gameData)
       ) {
-        if (arr[y - 1][x] === 0) {
-          if (arr[y - 1][x + 1] === 0 || arr[y - 1][x + 1] === 3) {
-            if (arr[y - 1][x + 1] === 3) {
+        if (gameData[y - 1][x] === 0) {
+          if (gameData[y - 1][x + 1] === 0 || gameData[y - 1][x + 1] === 3) {
+            if (gameData[y - 1][x + 1] === 3) {
               result.eating = true;
             }
-            arr[y - 1][x + 1] = 2;
-            arr[y][x] = 0;
+            gameData[y - 1][x + 1] = 2;
+            gameData[y][x] = 0;
             result.player = true;
           }
         }
@@ -685,44 +718,48 @@ export function jumpRight(
 }
 
 export function pushDown(
-  arr,
+  backData,
+  gameData,
   x,
   y,
-  gameInfo = { yellowBalls: [], teleports: [], ladders: [] }
+  gameInfo = { yellowBalls: [], teleports: [] }
 ) {
   let result = {};
   result.player = false;
   result.oneDirection = false;
 
   if (!isTeleport(x, y, gameInfo.teleports)) {
-    if (arr.length > 0 && y < arr.length - 2) {
+    if (gameData.length > 0 && y < gameData.length - 2) {
       if (
         !result.player &&
-        canMoveAlone(arr[y + 1][x]) &&
-        arr[y + 2][x] === 0
+        canMoveAlone(gameData[y + 1][x]) &&
+        gameData[y + 2][x] === 0
       ) {
-        arr[y + 2][x] = arr[y + 1][x];
-        arr[y + 1][x] = 2;
-        arr[y][x] = 0;
-        if (arr[y + 2][x] === 9) {
+        gameData[y + 2][x] = gameData[y + 1][x];
+        gameData[y + 1][x] = 2;
+        gameData[y][x] = 0;
+        if (gameData[y + 2][x] === 9) {
           updateYellow(gameInfo.yellowBalls, x, y + 1, x, y + 2, "down");
         }
         result.player = true;
       }
-      if (!result.player && arr[y + 1][x] === 88 && arr[y + 2][x] === 0) {
-        arr[y + 2][x] = 2;
-        arr[y][x] = 0;
+      if (
+        !result.player &&
+        gameData[y + 1][x] === 88 &&
+        gameData[y + 2][x] === 0
+      ) {
+        gameData[y + 2][x] = 2;
+        gameData[y][x] = 0;
         result.player = true;
         result.oneDirection = true;
       }
       if (
         !result.player &&
-        arr[y + 1][x] === 0 &&
-        (isLadder(x, y, gameInfo.ladders) ||
-          isLadder(x, y + 1, gameInfo.ladders))
+        gameData[y + 1][x] === 0 &&
+        (isLadder(x, y, backData) || isLadder(x, y + 1, backData))
       ) {
-        arr[y + 1][x] = 2;
-        arr[y][x] = 0;
+        gameData[y + 1][x] = 2;
+        gameData[y][x] = 0;
         result.player = true;
       }
     }
@@ -740,7 +777,6 @@ export function getGameInfo(arr) {
   result.yellowBalls = [];
   result.detonator = { x: -1, y: -1 };
   result.teleports = [];
-  result.ladders = [];
 
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr[i].length; j++) {
@@ -785,14 +821,6 @@ export function getGameInfo(arr) {
         teleport.x = j;
         teleport.y = i;
         result.teleports.push(teleport);
-      }
-      if ((arr[i][j] === 25) || (arr[i][j] === 90)) {
-        let ladder = {};
-        ladder.x = j;
-        ladder.y = i;
-        ladder.rotate = (arr[i][j] === 90);
-        result.ladders.push(ladder);
-        arr[i][j] = 0;
       }
     }
   }
@@ -1114,78 +1142,99 @@ export function moveYellowBalls(arr, yellowBalls) {
   }
 }
 
-export function rotateGame(arr, gameInfo) {
+export function rotateGame(backData, gameData, gameInfo) {
   let rotated = false;
-  let newArray = [];
+  let newBackData = [];
+  let newGameData = [];
   let columns = 0;
   let rows = 0;
   let x = 0;
   let y = 0;
 
-  if (arr.length > 0) {
-    rows = arr.length;
-    columns = arr[0].length;
+  if (gameData.length > 0) {
+    rows = gameData.length;
+    columns = gameData[0].length;
     if (rows === columns) {
       rotated = true;
       for (let i = 0; i < columns; i++) {
-        let newRow = [];
+        let newGameRow = [];
+        let newBackRow = [];
         for (let j = rows - 1; j >= 0; j--) {
-          let data = arr[j][i];
-          switch (data) {
+          let gd = gameData[j][i];
+          switch (gd) {
             case 15:
-              data = 17;
+              gd = 17;
               break;
             case 16:
-              data = 15;
+              gd = 15;
               break;
             case 17:
-              data = 18;
+              gd = 18;
               break;
             case 18:
-              data = 16;
+              gd = 16;
               break;
             case 6:
-              data = 7;
+              gd = 7;
               break;
             case 7:
-              data = 106;
+              gd = 106;
               break;
             case 106:
-              data = 107;
+              gd = 107;
               break;
             case 107:
-              data = 6;
+              gd = 6;
               break;
             case 10:
-              data = 88;
+              gd = 88;
               break;
             case 88:
-              data = 11;
+              gd = 11;
               break;
             case 11:
-              data = 87;
+              gd = 87;
               break;
             case 87:
-              data = 10;
+              gd = 10;
               break;
             case 84:
-              data = 85;
+              gd = 85;
               break;
             case 85:
-              data = 84;
+              gd = 84;
               break;
             default:
               break;
           }
-          newRow.push(data);
+          let bd = backData[j][i];
+          switch (bd) {
+            case 25:
+              bd = 90;
+              break;
+            case 90:
+              bd = 25;
+              break;
+            default:
+              break;
+          }
+          newGameRow.push(gd);
+          newBackRow.push(bd);
         }
-        newArray.push(newRow);
+        newGameData.push(newGameRow);
+        newBackData.push(newBackRow);
       }
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < columns; j++) {
-          arr[i][j] = newArray[i][j];
+          backData[i][j] = newBackData[i][j];
         }
       }
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+          gameData[i][j] = newGameData[i][j];
+        }
+      }
+
       x = gameInfo.blueBall.x;
       y = gameInfo.blueBall.y;
       gameInfo.blueBall.y = x;
@@ -1201,13 +1250,6 @@ export function rotateGame(arr, gameInfo) {
         y = gameInfo.teleports[i].y;
         gameInfo.teleports[i].y = x;
         gameInfo.teleports[i].x = rows - (y + 1);
-      }
-      for (let i = 0; i < gameInfo.ladders.length; i++) {
-        x = gameInfo.ladders[i].x;
-        y = gameInfo.ladders[i].y;
-        gameInfo.ladders[i].y = x;
-        gameInfo.ladders[i].x = rows - (y + 1);
-        gameInfo.ladders[i].rotate = !gameInfo.ladders[i].rotate;
       }
       for (let i = 0; i < gameInfo.yellowBalls.length; i++) {
         x = gameInfo.yellowBalls[i].x;
@@ -1272,4 +1314,17 @@ export function rotateGame(arr, gameInfo) {
     }
   }
   return rotated;
+}
+
+export function zeroArray(rows, columns) {
+  let result = [];
+
+  for (let i = 0; i < rows; i++) {
+    let row = [];
+    for (let j = 0; j < columns; j++) {
+      row.push(0);
+    }
+    result.push(row);
+  }
+  return result;
 }

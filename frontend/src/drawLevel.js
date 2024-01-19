@@ -11,17 +11,24 @@ import { polar } from "./utils";
 export default function drawLevel(
   canvas,
   ctx,
-  data,
+  backData,
+  gameData,
   nicerGraphics,
   elements,
   status,
   gameInfo
 ) {
-  if (!data || data.length < 1 || !canvas) {
+  if (
+    !gameData ||
+    gameData.length < 1 ||
+    !backData ||
+    backData.length < 1 ||
+    !canvas
+  ) {
     return false;
   }
-  const rows = data.length;
-  const columns = data[0].length;
+  const rows = gameData.length;
+  const columns = gameData[0].length;
 
   let size1 = canvas.width / columns;
   let size2 = canvas.height / rows;
@@ -66,58 +73,6 @@ export default function drawLevel(
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 0;
   ctx.imageSmoothingEnabled = false;
-  for (let i = 0; i < gameInfo.ladders.length; i++) {
-    if (gameInfo.ladders[i].rotate) {
-        drawLine(
-          ctx,
-          gameInfo.ladders[i].x * size1 + leftMargin,
-          gameInfo.ladders[i].y * size1 + 1,
-          (gameInfo.ladders[i].x + 1) * size1 + leftMargin,
-          gameInfo.ladders[i].y * size1 + 1,
-          "white"
-        );
-        drawLine(
-          ctx,
-          (gameInfo.ladders[i].x + 1) * size1 + leftMargin,
-          (gameInfo.ladders[i].y + 1) * size1 - 1,
-          gameInfo.ladders[i].x * size1 + leftMargin,
-          (gameInfo.ladders[i].y + 1) * size1 - 1
-        );
-        drawLine(
-          ctx,
-          (gameInfo.ladders[i].x + 0.5) * size1 + leftMargin,
-          (gameInfo.ladders[i].y + 1) * size1 - 1,
-          (gameInfo.ladders[i].x + 0.5) * size1 + leftMargin,
-          gameInfo.ladders[i].y * size1 + 1,
-          "white"
-        );
-    } else {
-      drawLine(
-        ctx,
-        gameInfo.ladders[i].x * size1 + leftMargin + 1,
-        gameInfo.ladders[i].y * size1,
-        gameInfo.ladders[i].x * size1 + leftMargin + 1,
-        (gameInfo.ladders[i].y + 1) * size1,
-        "white"
-      );
-      drawLine(
-        ctx,
-        (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
-        gameInfo.ladders[i].y * size1,
-        (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
-        (gameInfo.ladders[i].y + 1) * size1,
-        "white"
-      );
-      drawLine(
-        ctx,
-        gameInfo.ladders[i].x * size1 + leftMargin + 1,
-        (gameInfo.ladders[i].y + 0.5) * size1,
-        (gameInfo.ladders[i].x + 1) * size1 + leftMargin - 1,
-        (gameInfo.ladders[i].y + 0.5) * size1,
-        "white"
-      );
-    }
-  }
 
   dymin = 0;
   for (let row = 0; row < rows; row++) {
@@ -134,8 +89,24 @@ export default function drawLevel(
       xc = Math.round((xmax + xmin) / 2);
       yc = Math.round((ymax + ymin) / 2);
 
-      const colData = data[row][col];
-      switch (colData) {
+      const bd = backData[row][col];
+      const gd = gameData[row][col];
+      switch (bd) {
+        case 25:
+          drawLine(ctx, xmin, ymin, xmin, ymax, "white");
+          drawLine(ctx, xmax, ymin, xmax, ymax, "white");
+          drawLine(ctx, xmin, yc, xmax, yc, "white");
+          break;
+        case 90:
+          drawLine(ctx, xmin, ymin, xmax, ymin, "white");
+          drawLine(ctx, xmin, ymax, xmax, ymax, "white");
+          drawLine(ctx, xc, ymin, xc, ymax, "white");
+          break;
+        default:
+          // empty
+          break;
+      }
+      switch (gd) {
         case 0:
           // empty
           //drawFilledBox(ctx, xmin, ymin, w1, w2, "black");
