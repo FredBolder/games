@@ -16,7 +16,8 @@ export default function drawLevel(
   nicerGraphics,
   elements,
   status,
-  gameInfo
+  gameInfo,
+  wave
 ) {
   if (
     !gameData ||
@@ -63,6 +64,8 @@ export default function drawLevel(
   let pt1 = { x: 0, y: 0 };
   let pt2 = { x: 0, y: 0 };
   let pt3 = { x: 0, y: 0 };
+  let pt4 = { x: 0, y: 0 };
+  let pt5 = { x: 0, y: 0 };
   let x1 = 0;
   let y1 = 0;
   let x2 = 0;
@@ -92,6 +95,50 @@ export default function drawLevel(
       const bd = backData[row][col];
       const gd = gameData[row][col];
       switch (bd) {
+        case 20:
+          let waterLevel1 = ymin;
+          let waterLevel2 = Math.round(ymin + (ymax - ymin) * 0.2);
+          pt1.x = xmin - 1;
+          pt1.y = ymax + 1;
+          pt2.x = xmin - 1;
+          pt2.y = waterLevel2;
+          switch (wave) {
+            case 1:
+              pt3.x = (xmin + xc) / 2;
+              break;
+            case 2:
+              pt3.x = xc;
+              break;
+            case 3:
+              pt3.x = (xc + xmax) / 2;
+              break;
+            case 4:
+              pt3.x = xmax;
+              break;
+            default:
+              pt3.x = xc;
+              break;
+          }
+          pt3.y = waterLevel1;
+          pt4.x = xmax + 1;
+          pt4.y = waterLevel2;
+          pt5.x = xmax + 1;
+          pt5.y = ymax + 1;
+          ctx.fillStyle = "rgb(0, 0, 90)";
+          ctx.strokeStyle = "rgb(0, 0, 90)";
+          ctx.beginPath();
+          ctx.moveTo(pt1.x, pt1.y);
+          ctx.lineTo(pt2.x, pt2.y);
+          ctx.lineTo(pt3.x, pt3.y);
+          ctx.lineTo(pt4.x, pt4.y);
+          ctx.lineTo(pt5.x, pt5.y);
+          ctx.lineTo(pt1.x, pt1.y);
+          ctx.fill();
+          //ctx.stroke();
+          break;
+        case 23:
+          drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(0, 0, 90)");
+          break;
         case 25:
           drawLine(ctx, xmin, ymin, xmin, ymax, "white");
           drawLine(ctx, xmax, ymin, xmax, ymax, "white");

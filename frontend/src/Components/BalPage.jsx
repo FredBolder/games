@@ -86,6 +86,7 @@ gameInfo.redBalls = [];
 gameInfo.yellowBalls = [];
 gameInfo.detonator = { x: -1, y: -1 };
 gameInfo.teleports = [];
+gameInfo.hasWater = false;
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -97,6 +98,8 @@ let posY = -1;
 let settings = { sound: true, nicerGraphics: true };
 let skipFalling = 0;
 let teleporting = 0;
+let wave1 = 0;
+let wave2 = 0;
 let yellowCounter = 0;
 
 function BalPage() {
@@ -306,6 +309,18 @@ function BalPage() {
         skipFalling--;
       }
 
+      if (gameInfo.hasWater) {
+        wave1++;
+        if (wave1 > 5) {
+          wave1 = 1;
+          wave2++;
+          if (wave2 > 3) {
+            wave2 = 1;
+          }
+          update = true;
+        }
+      }
+
       if (elevatorCounter > 0) {
         elevatorCounter--;
       } else {
@@ -418,7 +433,7 @@ function BalPage() {
       laserY = -1;
       gameOver = false;
       updateScreen();
-      gameInfo = getGameInfo(gameData);
+      gameInfo = getGameInfo(backData, gameData);
       posX = gameInfo.blueBall.x;
       posY = gameInfo.blueBall.y;
       setGreen(gameInfo.greenBalls);
@@ -775,7 +790,8 @@ function BalPage() {
       settings.nicerGraphics,
       elements,
       status,
-      gameInfo
+      gameInfo,
+      wave2
     );
   }
 

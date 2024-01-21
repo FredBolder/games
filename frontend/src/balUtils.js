@@ -767,7 +767,7 @@ export function pushDown(
   return result;
 }
 
-export function getGameInfo(arr) {
+export function getGameInfo(backData, gameData) {
   let result = {};
   result.blueBall = { x: -1, y: -1 };
   result.elevators = [];
@@ -777,50 +777,54 @@ export function getGameInfo(arr) {
   result.yellowBalls = [];
   result.detonator = { x: -1, y: -1 };
   result.teleports = [];
+  result.hasWater = false;
 
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 0; j < arr[i].length; j++) {
-      if (arr[i][j] === 2) {
+  for (let i = 0; i < gameData.length; i++) {
+    for (let j = 0; j < gameData[i].length; j++) {
+      if (gameData[i][j] === 2) {
         result.blueBall = { x: j, y: i };
       }
-      if (arr[i][j] === 3) {
+      if (gameData[i][j] === 3) {
         result.greenBalls++;
       }
-      if (arr[i][j] === 37) {
+      if (gameData[i][j] === 37) {
         result.detonator = { x: j, y: i };
       }
-      if (arr[i][j] === 8) {
+      if (gameData[i][j] === 8) {
         let redBall = {};
         redBall.x = j;
         redBall.y = i;
         result.redBalls.push(redBall);
       }
-      if (arr[i][j] === 106 || arr[i][j] === 6) {
+      if (gameData[i][j] === 106 || gameData[i][j] === 6) {
         let elevator = {};
         elevator.x = j;
         elevator.y = i;
-        elevator.up = arr[i][j] === 106;
+        elevator.up = gameData[i][j] === 106;
         result.elevators.push(elevator);
       }
-      if (arr[i][j] === 107 || arr[i][j] === 7) {
+      if (gameData[i][j] === 107 || gameData[i][j] === 7) {
         let elevator = {};
         elevator.x = j;
         elevator.y = i;
-        elevator.right = arr[i][j] === 107;
+        elevator.right = gameData[i][j] === 107;
         result.horizontalElevators.push(elevator);
       }
-      if (arr[i][j] === 9) {
+      if (gameData[i][j] === 9) {
         let yellowBall = {};
         yellowBall.x = j;
         yellowBall.y = i;
         yellowBall.direction = "none";
         result.yellowBalls.push(yellowBall);
       }
-      if (arr[i][j] === 31) {
+      if (gameData[i][j] === 31) {
         let teleport = {};
         teleport.x = j;
         teleport.y = i;
         result.teleports.push(teleport);
+      }
+      if (backData[i][j] === 20 || backData[i][j] === 23) {
+        result.hasWater = true;
       }
     }
   }

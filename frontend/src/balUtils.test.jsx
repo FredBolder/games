@@ -535,7 +535,7 @@ describe("balUtils", () => {
 
   // ***** JUMP *****
 
-  let inputBack6abc = zeroArray(5,5);
+  let inputBack6abc = zeroArray(5, 5);
   let input6a = [
     [1, 1, 1, 1, 1],
     [1, 0, 3, 0, 1],
@@ -575,7 +575,7 @@ describe("balUtils", () => {
     [1, 0, 0, 4, 1],
     [1, 1, 1, 1, 1],
   ];
-  let info6b = jump(inputBack6abc,input6b, 2, 3);
+  let info6b = jump(inputBack6abc, input6b, 2, 3);
   it("jump B", () => {
     expect(JSON.stringify(input6b)).toBe(JSON.stringify(expectedOutput6b));
   });
@@ -600,7 +600,7 @@ describe("balUtils", () => {
     [1, 2, 0, 0, 1],
     [1, 1, 1, 1, 1],
   ];
-  let info6c = jump(inputBack6abc,input6c, 1, 3);
+  let info6c = jump(inputBack6abc, input6c, 1, 3);
   it("jump C", () => {
     expect(JSON.stringify(input6c)).toBe(JSON.stringify(expectedOutput6c));
   });
@@ -611,7 +611,7 @@ describe("balUtils", () => {
     expect(info6c.player).toBe(false);
   });
 
-  let inputBack7abcde = zeroArray(5,5);
+  let inputBack7abcde = zeroArray(5, 5);
   let input7a = [
     [1, 1, 1, 1, 1],
     [1, 3, 0, 0, 1],
@@ -737,7 +737,7 @@ describe("balUtils", () => {
     expect(info7e.player).toBe(false);
   });
 
-  let inputBack8abcde = zeroArray(5,5);
+  let inputBack8abcde = zeroArray(5, 5);
   let input8a = [
     [1, 1, 1, 1, 1],
     [1, 0, 0, 3, 1],
@@ -865,6 +865,7 @@ describe("balUtils", () => {
 
   // ***** GAME INFO *****
 
+  let inputBack9a = zeroArray(5, 5);
   let input9a = [
     [1, 1, 1, 1, 1],
     [1, 0, 0, 3, 1],
@@ -884,13 +885,15 @@ describe("balUtils", () => {
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
     teleports: [],
+    hasWater: false,
   };
   it("getGameInfo A", () => {
-    expect(JSON.stringify(getGameInfo(input9a))).toBe(
+    expect(JSON.stringify(getGameInfo(inputBack9a, input9a))).toBe(
       JSON.stringify(expectedOutput9a)
     );
   });
 
+  let inputBack9b = zeroArray(5, 10);
   let input9b = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 3, 1, 0, 0, 3, 3, 1],
@@ -910,13 +913,15 @@ describe("balUtils", () => {
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
     teleports: [],
+    hasWater: false,
   };
   it("getGameInfo B", () => {
-    expect(JSON.stringify(getGameInfo(input9b))).toBe(
+    expect(JSON.stringify(getGameInfo(inputBack9b, input9b))).toBe(
       JSON.stringify(expectedOutput9b)
     );
   });
 
+  let inputBack9c = zeroArray(5, 10);
   let input9c = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 1, 3, 1, 3, 0, 0, 3, 1],
@@ -933,13 +938,15 @@ describe("balUtils", () => {
     yellowBalls: [],
     detonator: { x: -1, y: -1 },
     teleports: [],
+    hasWater: false,
   };
   it("getGameInfo C", () => {
-    expect(JSON.stringify(getGameInfo(input9c))).toBe(
+    expect(JSON.stringify(getGameInfo(inputBack9c, input9c))).toBe(
       JSON.stringify(expectedOutput9c)
     );
   });
 
+  let inputBack9d = zeroArray(7, 10);
   let input9d = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 4, 0, 0, 3, 3, 0, 0, 0, 1],
@@ -961,9 +968,10 @@ describe("balUtils", () => {
     yellowBalls: [{ x: 1, y: 4, direction: "none" }],
     detonator: { x: 8, y: 5 },
     teleports: [],
+    hasWater: false,
   };
   it("getGameInfo D", () => {
-    expect(JSON.stringify(getGameInfo(input9d))).toBe(
+    expect(JSON.stringify(getGameInfo(inputBack9d, input9d))).toBe(
       JSON.stringify(expectedOutput9d)
     );
   });
