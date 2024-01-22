@@ -42,10 +42,6 @@ export default function drawLevel(
   let gameHeight = rows * size1;
   let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);
   drawFilledBox(ctx, leftMargin, 0, gameWidth, gameHeight, "black");
-  let dxmin = 0;
-  let dxmax = 0;
-  let dymin = 0;
-  let dymax = 0;
   let xmin = 0;
   let xmax = 0;
   let ymin = 0;
@@ -77,16 +73,12 @@ export default function drawLevel(
   ctx.shadowOffsetY = 0;
   ctx.imageSmoothingEnabled = false;
 
-  dymin = 0;
+  ymin = 0;
   for (let row = 0; row < rows; row++) {
-    dymax = Math.round(dymin + size1) - 1;
-    dxmin = leftMargin;
+    ymax = ymin + size1 - 1;
+    xmin = leftMargin;
     for (let col = 0; col < columns; col++) {
-      dxmax = Math.round(dxmin + size1) - 1;
-      xmin = Math.round(dxmin);
-      xmax = Math.round(dxmax);
-      ymin = Math.round(dymin);
-      ymax = Math.round(dymax);
+      xmax = xmin + size1 - 1;
       w1 = xmax - xmin + 1;
       w2 = ymax - ymin + 1;
       xc = Math.round((xmax + xmin) / 2);
@@ -98,9 +90,9 @@ export default function drawLevel(
         case 20:
           let waterLevel1 = ymin;
           let waterLevel2 = Math.round(ymin + (ymax - ymin) * 0.2);
-          pt1.x = xmin - 1;
-          pt1.y = ymax + 1;
-          pt2.x = xmin - 1;
+          pt1.x = xmin - 0.5;
+          pt1.y = ymax + 0.5;
+          pt2.x = xmin - 0.5;
           pt2.y = waterLevel2;
           switch (wave) {
             case 1:
@@ -113,17 +105,17 @@ export default function drawLevel(
               pt3.x = (xc + xmax) / 2;
               break;
             case 4:
-              pt3.x = xmax;
+              pt3.x = xmax + 0.5;
               break;
             default:
               pt3.x = xc;
               break;
           }
           pt3.y = waterLevel1;
-          pt4.x = xmax + 1;
+          pt4.x = xmax + 0.5;
           pt4.y = waterLevel2;
-          pt5.x = xmax + 1;
-          pt5.y = ymax + 1;
+          pt5.x = xmax + 0.5;
+          pt5.y = ymax + 0.5;
           ctx.fillStyle = "rgb(0, 0, 90)";
           ctx.strokeStyle = "rgb(0, 0, 90)";
           ctx.beginPath();
@@ -134,19 +126,19 @@ export default function drawLevel(
           ctx.lineTo(pt5.x, pt5.y);
           ctx.lineTo(pt1.x, pt1.y);
           ctx.fill();
-          //ctx.stroke();
+          ctx.stroke();
           break;
         case 23:
           drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(0, 0, 90)");
           break;
         case 25:
-          drawLine(ctx, xmin, ymin, xmin, ymax, "white");
-          drawLine(ctx, xmax, ymin, xmax, ymax, "white");
+          drawLine(ctx, xmin, ymin - 0.5, xmin, ymax + 0.5, "white");
+          drawLine(ctx, xmax, ymin - 0.5, xmax, ymax + 0.5, "white");
           drawLine(ctx, xmin, yc, xmax, yc, "white");
           break;
         case 90:
-          drawLine(ctx, xmin, ymin, xmax, ymin, "white");
-          drawLine(ctx, xmin, ymax, xmax, ymax, "white");
+          drawLine(ctx, xmin - 0.5, ymin, xmax + 0.5, ymin, "white");
+          drawLine(ctx, xmin - 0.5, ymax, xmax + 0.5, ymax, "white");
           drawLine(ctx, xc, ymin, xc, ymax, "white");
           break;
         default:
@@ -186,14 +178,14 @@ export default function drawLevel(
             d2 = Math.round(w1 / 12);
             drawFilledCircle(
               ctx,
-              Math.round(dxmin + d1),
+              Math.round(xmin + d1),
               Math.round(yc - d2),
               eye,
               "white"
             );
             drawFilledCircle(
               ctx,
-              Math.round(dxmax - d1),
+              Math.round(xmax - d1),
               Math.round(yc - d2),
               eye,
               "white"
@@ -392,14 +384,14 @@ export default function drawLevel(
             d2 = Math.round(w1 / 12);
             drawFilledCircle(
               ctx,
-              Math.round(dxmin + d1),
+              Math.round(xmin + d1),
               Math.round(yc - d2),
               eye,
               "white"
             );
             drawFilledCircle(
               ctx,
-              Math.round(dxmax - d1),
+              Math.round(xmax - d1),
               Math.round(yc - d2),
               eye,
               "white"
@@ -706,9 +698,9 @@ export default function drawLevel(
           drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
           break;
       }
-      dxmin += size1;
+      xmin += size1;
     }
-    dymin += size1;
+    ymin += size1;
   }
   ctx.lineWidth = 3;
   for (let i = 0; i < gameInfo.teleports.length; i++) {
