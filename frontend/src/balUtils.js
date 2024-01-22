@@ -138,6 +138,9 @@ function charToNumber(c) {
     case "w":
       result = 23;
       break;
+    case "d":
+      result = 26;
+      break;
     default:
       result = 0;
       break;
@@ -247,6 +250,9 @@ function numberToChar(n) {
       break;
     case 23:
       result = "w";
+      break;
+    case 26:
+      result = "d";
       break;
     default:
       result = " ";
@@ -778,6 +784,7 @@ export function getGameInfo(backData, gameData) {
   result.detonator = { x: -1, y: -1 };
   result.teleports = [];
   result.hasWater = false;
+  result.hasDivingGlasses = false;
 
   for (let i = 0; i < gameData.length; i++) {
     for (let j = 0; j < gameData[i].length; j++) {

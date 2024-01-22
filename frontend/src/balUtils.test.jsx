@@ -886,6 +886,7 @@ describe("balUtils", () => {
     detonator: { x: -1, y: -1 },
     teleports: [],
     hasWater: false,
+    hasDivingGlasses: false,
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(inputBack9a, input9a))).toBe(
@@ -914,6 +915,7 @@ describe("balUtils", () => {
     detonator: { x: -1, y: -1 },
     teleports: [],
     hasWater: false,
+    hasDivingGlasses: false,
   };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(inputBack9b, input9b))).toBe(
@@ -939,6 +941,7 @@ describe("balUtils", () => {
     detonator: { x: -1, y: -1 },
     teleports: [],
     hasWater: false,
+    hasDivingGlasses: false,
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(inputBack9c, input9c))).toBe(
@@ -969,6 +972,7 @@ describe("balUtils", () => {
     detonator: { x: 8, y: 5 },
     teleports: [],
     hasWater: false,
+    hasDivingGlasses: false,
   };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(inputBack9d, input9d))).toBe(

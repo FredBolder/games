@@ -1,3 +1,4 @@
+import { getGameInfo } from "./balUtils";
 import {
   drawBox,
   drawFilledBox,
@@ -19,6 +20,88 @@ export default function drawLevel(
   gameInfo,
   wave
 ) {
+  function drawDivingGlasses(color) {
+    d1 = w1 / 5;
+    d2 = w1 / 4.5;
+    d3 = w1 / 2.5;
+    d4 = w1 / 10;
+    d5 = w1 / 1.8;
+    d6 = w1 / 10;
+    d7 = w1 / 2.5;
+    drawLine(
+      ctx,
+      Math.round(xmin + d1),
+      Math.round(ymin + d2),
+      Math.round(xmax - d1),
+      Math.round(ymin + d2),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xmin + d1),
+      Math.round(ymin + d2),
+      Math.round(xmin + d4),
+      Math.round(ymin + d3),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xmax - d1),
+      Math.round(ymin + d2),
+      Math.round(xmax - d4),
+      Math.round(ymin + d3),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xmin + d4),
+      Math.round(ymin + d3),
+      Math.round(xmin + d1),
+      Math.round(ymin + d5),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xmax - d4),
+      Math.round(ymin + d3),
+      Math.round(xmax - d1),
+      Math.round(ymin + d5),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xmin + d1),
+      Math.round(ymin + d5),
+      Math.round(xc - d6),
+      Math.round(ymin + d5),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xmax - d1),
+      Math.round(ymin + d5),
+      Math.round(xc + d6),
+      Math.round(ymin + d5),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xc - d6),
+      Math.round(ymin + d5),
+      Math.round(xc),
+      Math.round(ymin + d7),
+      color
+    );
+    drawLine(
+      ctx,
+      Math.round(xc + d6),
+      Math.round(ymin + d5),
+      Math.round(xc),
+      Math.round(ymin + d7),
+      color
+    );
+  }
+
   if (
     !gameData ||
     gameData.length < 1 ||
@@ -57,6 +140,7 @@ export default function drawLevel(
   let d4 = 0;
   let d5 = 0;
   let d6 = 0;
+  let d7 = 0;
   let pt1 = { x: 0, y: 0 };
   let pt2 = { x: 0, y: 0 };
   let pt3 = { x: 0, y: 0 };
@@ -216,6 +300,9 @@ export default function drawLevel(
               );
             }
             ctx.stroke();
+          }
+          if (getGameInfo.hasDivingGlasses) {
+            drawDivingGlasses("gray");
           }
           break;
         case 3:
@@ -467,6 +554,9 @@ export default function drawLevel(
           ctx.lineTo(xmax + 1, ymax + 1);
           ctx.lineTo(xmin - 1, ymin - 1);
           ctx.fill();
+          break;
+        case 26:
+          drawDivingGlasses("gray");
           break;
         case 28:
           // purple ball

@@ -87,6 +87,7 @@ gameInfo.yellowBalls = [];
 gameInfo.detonator = { x: -1, y: -1 };
 gameInfo.teleports = [];
 gameInfo.hasWater = false;
+gameInfo.hasDivingGlasses = false;
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
