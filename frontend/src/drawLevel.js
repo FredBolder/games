@@ -240,10 +240,14 @@ export default function drawLevel(
         case 2:
           // blue ball
           if (nicerGraphics) {
-            if (status.gameOver) {
-              ctx.drawImage(elements.elementSad, xmin, ymin, w1, w2);
+            if (gameInfo.hasDivingGlasses) {
+              ctx.drawImage(elements.elementDiving, xmin, ymin, w1, w2);
             } else {
-              ctx.drawImage(elements.elementHappy, xmin, ymin, w1, w2);
+              if (status.gameOver) {
+                ctx.drawImage(elements.elementSad, xmin, ymin, w1, w2);
+              } else {
+                ctx.drawImage(elements.elementHappy, xmin, ymin, w1, w2);
+              }
             }
           } else {
             drawFilledCircle(
@@ -300,9 +304,9 @@ export default function drawLevel(
               );
             }
             ctx.stroke();
-          }
-          if (getGameInfo.hasDivingGlasses) {
-            drawDivingGlasses("gray");
+            if (gameInfo.hasDivingGlasses) {
+              drawDivingGlasses("gray");
+            }
           }
           break;
         case 3:

@@ -351,6 +351,7 @@ describe("balUtils", () => {
         oneDirection: false,
         teleporting: false,
         rotate: false,
+        divingGlasses: false,
       })
     );
   });
@@ -1700,6 +1701,7 @@ describe("balUtils", () => {
         oneDirection: true,
         teleporting: false,
         rotate: false,
+        divingGlasses: false,
       })
     );
   });
@@ -1789,7 +1791,7 @@ describe("balUtils", () => {
 
   it("One direction ports E info", () => {
     expect(JSON.stringify(info15e)).toBe(
-      JSON.stringify({ eating: false, player: true, oneDirection: true })
+      JSON.stringify({ eating: false, player: true, oneDirection: true, divingGlasses: false })
     );
   });
 
@@ -1814,7 +1816,7 @@ describe("balUtils", () => {
 
   it("One direction ports F info", () => {
     expect(JSON.stringify(info15f)).toBe(
-      JSON.stringify({ eating: false, player: false, oneDirection: false })
+      JSON.stringify({ eating: false, player: false, oneDirection: false, divingGlasses: false })
     );
   });
 
@@ -1914,7 +1916,7 @@ describe("balUtils", () => {
 
   it("One direction ports J info", () => {
     expect(JSON.stringify(info15j)).toBe(
-      JSON.stringify({ eating: false, player: false, oneDirection: false })
+      JSON.stringify({ eating: false, player: false, oneDirection: false, divingGlasses: false })
     );
   });
 
@@ -2225,7 +2227,7 @@ describe("balUtils", () => {
   });
   it("Ladders D info", () => {
     expect(JSON.stringify(info17d)).toBe(
-      JSON.stringify({ eating: false, player: true, oneDirection: false })
+      JSON.stringify({ eating: false, player: true, oneDirection: false, divingGlasses: false })
     );
   });
 

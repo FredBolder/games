@@ -47,6 +47,7 @@ import sndTeleport from "../Sounds/teleport.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 import imgBlueHappy from "../Images/blue_ball_happy.svg";
 import imgBlueSad from "../Images/blue_ball_sad.svg";
+import imgBlueDiving from "../Images/blue_ball_with_diving_glasses.svg";
 import imgLightBlue from "../Images/light_blue_ball.svg";
 import imgRed from "../Images/red_ball.svg";
 import imgGreen from "../Images/green_ball.svg";
@@ -66,6 +67,7 @@ let cbSound = null;
 let completed = [];
 let ctx;
 let currentLevel = 200;
+let elementDiving;
 let elementGreen;
 let elementHappy;
 let elementLightBlue;
@@ -661,6 +663,12 @@ function BalPage() {
       updateScreen();
       checkGameOver();
     }
+    if (!info.hasOwnProperty("eating")) {
+      info.eating = false;
+    }
+    if (!info.hasOwnProperty("divingGlasses")) {
+      info.divingGlasses = false;
+    }
     if (info.eating) {
       gameInfo.greenBalls--;
       setGreen(gameInfo.greenBalls);
@@ -671,6 +679,9 @@ function BalPage() {
         currentLevel++;
         initLevel(currentLevel);
       }
+    }
+    if (info.divingGlasses) {
+      gameInfo.hasDivingGlasses = true;
     }
   }
 
@@ -721,6 +732,7 @@ function BalPage() {
 
   useEffect(() => {
     if (loggedIn) {
+      elementDiving = document.getElementById("diving");
       elementHappy = document.getElementById("happy");
       elementSad = document.getElementById("sad");
       elementRed = document.getElementById("red");
@@ -767,6 +779,7 @@ function BalPage() {
     ctx = canvas.getContext("2d");
     //console.log("gameData: ", gameData);
     const elements = {
+      elementDiving: elementDiving,
       elementGreen: elementGreen,
       elementHappy: elementHappy,
       elementLightBlue: elementLightBlue,
@@ -1030,6 +1043,9 @@ function BalPage() {
           <button onClick={buttonJumpRight}>
             <img src={arrowJumpRight} alt="ArrowJumpRight" />
           </button>
+        </div>
+        <div style={{ display: "none" }}>
+          <img id="diving" src={imgBlueDiving} />
         </div>
         <div style={{ display: "none" }}>
           <img id="happy" src={imgBlueHappy} />
