@@ -269,6 +269,15 @@ function BalPage() {
         case "laser":
           snd = sndLaserGun;
           break;
+        case "splash1":
+          snd = sndSplash1;
+          break;
+        case "splash2":
+          snd = sndSplash2;
+          break;
+        case "take":
+          snd = sndTake;
+          break;
         case "teleport":
           snd = sndTeleport;
           break;
@@ -315,6 +324,9 @@ function BalPage() {
         }
         if (info.update) {
           update = true;
+        }
+        if (info.sound === 1) {
+          playSound("splash1");
         }
       } else {
         skipFalling--;
@@ -708,6 +720,7 @@ function BalPage() {
     }
     if (info.divingGlasses) {
       gameInfo.hasDivingGlasses = true;
+      playSound("take");
     }
   }
 

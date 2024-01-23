@@ -103,7 +103,7 @@ describe("balUtils", () => {
   });
   it("checkFalling A info", () => {
     expect(JSON.stringify(info3a)).toBe(
-      JSON.stringify({ update: true, ballX: -1, ballY: -1 })
+      JSON.stringify({ update: true, ballX: -1, ballY: -1, sound: 0 })
     );
   });
 
@@ -130,7 +130,7 @@ describe("balUtils", () => {
   });
   it("checkFalling B info", () => {
     expect(JSON.stringify(info3b)).toBe(
-      JSON.stringify({ update: true, ballX: 3, ballY: 3 })
+      JSON.stringify({ update: true, ballX: 3, ballY: 3, sound: 0 })
     );
   });
 
@@ -155,7 +155,7 @@ describe("balUtils", () => {
   });
   it("checkFalling C info", () => {
     expect(JSON.stringify(info3c)).toBe(
-      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+      JSON.stringify({ update: false, ballX: -1, ballY: -1, sound: 0 })
     );
   });
 
@@ -1945,7 +1945,7 @@ describe("balUtils", () => {
   });
   it("Triangled Walls A info", () => {
     expect(JSON.stringify(info16a)).toBe(
-      JSON.stringify({ update: true, ballX: 2, ballY: 2 })
+      JSON.stringify({ update: true, ballX: 2, ballY: 2, sound: 0 })
     );
   });
 
@@ -1971,7 +1971,7 @@ describe("balUtils", () => {
   });
   it("Triangled Walls B info", () => {
     expect(JSON.stringify(info16b)).toBe(
-      JSON.stringify({ update: true, ballX: 4, ballY: 2 })
+      JSON.stringify({ update: true, ballX: 4, ballY: 2, sound: 0 })
     );
   });
 
@@ -1997,7 +1997,7 @@ describe("balUtils", () => {
   });
   it("Triangled Walls C info", () => {
     expect(JSON.stringify(info16c)).toBe(
-      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+      JSON.stringify({ update: false, ballX: -1, ballY: -1, sound: 0 })
     );
   });
 
@@ -2023,7 +2023,7 @@ describe("balUtils", () => {
   });
   it("Triangled Walls D info", () => {
     expect(JSON.stringify(info16d)).toBe(
-      JSON.stringify({ update: true, ballX: -1, ballY: -1 })
+      JSON.stringify({ update: true, ballX: -1, ballY: -1, sound: 0 })
     );
   });
 
@@ -2049,7 +2049,7 @@ describe("balUtils", () => {
   });
   it("Triangled Walls E info", () => {
     expect(JSON.stringify(info16e)).toBe(
-      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+      JSON.stringify({ update: false, ballX: -1, ballY: -1, sound: 0 })
     );
   });
 
@@ -2085,7 +2085,7 @@ describe("balUtils", () => {
   });
   it("Triangled Walls F info", () => {
     expect(JSON.stringify(info16f)).toBe(
-      JSON.stringify({ update: true, ballX: 5, ballY: 6 })
+      JSON.stringify({ update: true, ballX: 5, ballY: 6, sound: 0 })
     );
   });
 
@@ -2129,7 +2129,7 @@ describe("balUtils", () => {
   });
   it("Ladders A info", () => {
     expect(JSON.stringify(info17a)).toBe(
-      JSON.stringify({ update: false, ballX: -1, ballY: -1 })
+      JSON.stringify({ update: false, ballX: -1, ballY: -1, sound: 0 })
     );
   });
 
@@ -2194,7 +2194,7 @@ describe("balUtils", () => {
   });
   it("Ladders C info", () => {
     expect(JSON.stringify(info17c)).toBe(
-      JSON.stringify({ update: true, ballX: 2, ballY: 6 })
+      JSON.stringify({ update: true, ballX: 2, ballY: 6, sound: 0 })
     );
   });
 

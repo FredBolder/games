@@ -347,6 +347,7 @@ export function checkFalling(backData, gameData, gameInfo) {
   result.update = false;
   result.ballX = -1;
   result.ballY = -1;
+  result.sound = 0;
 
   for (let i = gameData.length - 2; i >= 0; i--) {
     for (let j = 0; j < gameData[i].length; j++) {
@@ -416,6 +417,9 @@ export function checkFalling(backData, gameData, gameInfo) {
         }
         if (element1 === 8) {
           updateRed(gameInfo.redBalls, j, i, j, i + 1);
+        }
+        if (!inWater(j, i, backData) && inWater(j, i + 1, backData)) {
+          result.sound = 1;
         }
         gameData[i + 1][j] = gameData[i][j];
         gameData[i][j] = 0;
