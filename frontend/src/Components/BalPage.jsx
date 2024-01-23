@@ -23,6 +23,8 @@ import {
   moveHorizontalElevators,
   moveYellowBalls,
   pushDown,
+  moveDownLeft,
+  moveDownRight,
   checkDetonator,
   rotateGame,
 } from "../balUtils.js";
@@ -290,6 +292,12 @@ function BalPage() {
         laserY = redInfo.y;
         updateScreen();
         playSound("laser");
+      }
+    }
+    if (!gameOver && gameInfo.hasWater && !gameInfo.hasDivingGlasses) {
+      if (backData[posY][posX] === 20 || backData[posY][posX] === 23) {
+        gameOver = true;
+        updateScreen();
       }
     }
   }
@@ -654,6 +662,24 @@ function BalPage() {
             }
           }
           break;
+        case "y":
+        case "Y":
+        case "1":
+          info = moveDownLeft(backData, gameData, posX, posY, gameInfo);
+          if (info.player) {
+            posY++;
+            posX--;
+          }
+          break;
+        case "c":
+        case "C":
+        case "3":
+          info = moveDownRight(backData, gameData, posX, posY, gameInfo);
+          if (info.player) {
+            posY++;
+            posX++;
+          }
+          break;
         default:
           break;
       }
@@ -955,9 +981,10 @@ function BalPage() {
               only one position further. You cannot push a ball through a one
               direction, a game rotator or a door with a lock. You can control
               the blue ball with the letter keys, the arrow keys, the number
-              keys or the arrow buttons. If you see for example a level number
-              750, it doesn't mean that there are 750 or even more levels. The
-              number depends also on the series and on the&nbsp;
+              keys or the arrow buttons. In the water you can swim in every
+              direction. If you see for example a level number 750, it doesn't
+              mean that there are 750 or even more levels. The number depends
+              also on the series and on the&nbsp;
               <a
                 className="link"
                 target="_blank"
@@ -979,40 +1006,52 @@ function BalPage() {
               </thead>
               <tbody>
                 <tr>
-                  <td>Walk left</td>
+                  <td>Walk left / Swim left</td>
                   <td>A</td>
                   <td>Arrow left</td>
                   <td>4</td>
                 </tr>
                 <tr>
-                  <td>Walk right</td>
+                  <td>Walk right / Swim right</td>
                   <td>D</td>
                   <td>Arrow right</td>
                   <td>6</td>
                 </tr>
                 <tr>
-                  <td>Jump / Push up</td>
+                  <td>Jump / Push up / Swim up</td>
                   <td>W</td>
                   <td>Arrow up</td>
                   <td>8</td>
                 </tr>
                 <tr>
-                  <td>Jump left</td>
+                  <td>Jump left / Swim up left</td>
                   <td>Q</td>
                   <td>Shift + Arrow left</td>
                   <td>7</td>
                 </tr>
                 <tr>
-                  <td>Jump right</td>
+                  <td>Jump right / Swim up right</td>
                   <td>E</td>
                   <td>Shift + Arrow right</td>
                   <td>9</td>
                 </tr>
                 <tr>
-                  <td>Push down</td>
+                  <td>Push down / Swim down</td>
                   <td>S</td>
                   <td>Arrow down</td>
                   <td>2</td>
+                </tr>
+                <tr>
+                  <td>Swim down left</td>
+                  <td>Y</td>
+                  <td>-</td>
+                  <td>1</td>
+                </tr>
+                <tr>
+                  <td>Swim down right</td>
+                  <td>C</td>
+                  <td>-</td>
+                  <td>3</td>
                 </tr>
               </tbody>
             </table>

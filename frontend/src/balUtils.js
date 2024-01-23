@@ -3,6 +3,11 @@ function canMoveAlone(n) {
   return [9, 28, 84, 85, 86].includes(n);
 }
 
+function inWater(x, y, backData) {
+  let result = [20, 23].includes(backData[y][x]);
+  return result;
+}
+
 function isLadder(x, y, backData) {
   let result = false;
   if (y < backData.length) {
@@ -31,7 +36,8 @@ function notInAir(x, y, backData, gameData) {
   return (
     gameData[y + 1][x] !== 0 ||
     isLadder(x, y, backData) ||
-    isLadder(x, y + 1, backData)
+    isLadder(x, y + 1, backData) ||
+    inWater(x, y, backData)
   );
 }
 
@@ -398,7 +404,8 @@ export function checkFalling(backData, gameData, gameInfo) {
         element2 === 0 &&
         ((element1 === 2 &&
           !isLadder(j, i, backData) &&
-          !isLadder(j, i + 1, backData)) ||
+          !isLadder(j, i + 1, backData) &&
+          !inWater(j, i, backData)) ||
           element1 === 4 ||
           element1 === 8)
       ) {
@@ -779,9 +786,63 @@ export function pushDown(
       if (
         !result.player &&
         gameData[y + 1][x] === 0 &&
-        (isLadder(x, y, backData) || isLadder(x, y + 1, backData))
+        (isLadder(x, y, backData) ||
+          isLadder(x, y + 1, backData) ||
+          inWater(x, y, backData))
       ) {
         gameData[y + 1][x] = 2;
+        gameData[y][x] = 0;
+        result.player = true;
+      }
+    }
+  }
+  return result;
+}
+
+export function moveDownLeft(
+  backData,
+  gameData,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
+  let result = {};
+  result.player = false;
+
+  if (!isTeleport(x, y, gameInfo.teleports)) {
+    if (gameData.length > 0 && y < gameData.length - 2) {
+      if (
+        gameData[y + 1][x - 1] === 0 &&
+        gameData[y + 1][x] === 0 &&
+        inWater(x, y, backData)
+      ) {
+        gameData[y + 1][x - 1] = 2;
+        gameData[y][x] = 0;
+        result.player = true;
+      }
+    }
+  }
+  return result;
+}
+
+export function moveDownRight(
+  backData,
+  gameData,
+  x,
+  y,
+  gameInfo = { yellowBalls: [], teleports: [] }
+) {
+  let result = {};
+  result.player = false;
+
+  if (!isTeleport(x, y, gameInfo.teleports)) {
+    if (gameData.length > 0 && y < gameData.length - 2) {
+      if (
+        gameData[y + 1][x + 1] === 0 &&
+        gameData[y + 1][x] === 0 &&
+        inWater(x, y, backData)
+      ) {
+        gameData[y + 1][x + 1] = 2;
         gameData[y][x] = 0;
         result.player = true;
       }
