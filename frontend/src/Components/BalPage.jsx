@@ -65,6 +65,7 @@ import arrowRight from "../Images/arrow_right.svg";
 
 let canvas;
 let cbGraphics = null;
+let cbQuestions = null;
 let cbSound = null;
 let completed = [];
 let ctx;
@@ -100,7 +101,7 @@ let laserY = -1;
 let nextButton = false;
 let posX = -1;
 let posY = -1;
-let settings = { sound: true, nicerGraphics: true };
+let settings = { sound: true, nicerGraphics: true, lessQuestions: false };
 let skipFalling = 0;
 let teleporting = 0;
 let wave1 = 0;
@@ -208,8 +209,21 @@ function BalPage() {
         { withCredentials: credentials() }
       );
       let balSettings = JSON.parse(response.data.balSettings);
+      if (!balSettings.hasOwnProperty("lessQuestions")) {
+        balSettings.lessQuestions = false;
+      }
+      if (!balSettings.hasOwnProperty("nicerGraphics")) {
+        balSettings.nicerGraphics = false;
+      }
+      if (!balSettings.hasOwnProperty("sound")) {
+        balSettings.sound = false;
+      }
+      settings.lessQuestions = balSettings.lessQuestions;
       settings.nicerGraphics = balSettings.nicerGraphics;
       settings.sound = balSettings.sound;
+      if (cbQuestions !== null) {
+        cbQuestions.checked = settings.lessQuestions;
+      }
       if (cbGraphics !== null) {
         cbGraphics.checked = settings.nicerGraphics;
       }
@@ -466,66 +480,82 @@ function BalPage() {
   }
 
   function clickSeries1(e) {
-    confirmAlert({
-      title: "Question",
-      message: "Load the first level of series 1?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            currentLevel = 200;
-            initLevel(currentLevel);
+    if (settings.lessQuestions) {
+      currentLevel = 200;
+      initLevel(currentLevel);
+    } else {
+      confirmAlert({
+        title: "Question",
+        message: "Load the first level of series 1?",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: () => {
+              currentLevel = 200;
+              initLevel(currentLevel);
+            },
           },
-        },
-        {
-          label: "No",
-          onClick: () => {},
-        },
-      ],
-    });
+          {
+            label: "No",
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   }
 
   function clickSeries2(e) {
-    confirmAlert({
-      title: "Question",
-      message: "Load the first level of series 2?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            currentLevel = 700;
-            initLevel(currentLevel);
+    if (settings.lessQuestions) {
+      currentLevel = 700;
+      initLevel(currentLevel);
+    } else {
+      confirmAlert({
+        title: "Question",
+        message: "Load the first level of series 2?",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: () => {
+              currentLevel = 700;
+              initLevel(currentLevel);
+            },
           },
-        },
-        {
-          label: "No",
-          onClick: () => {},
-        },
-      ],
-    });
+          {
+            label: "No",
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   }
 
   function clickSeriesSmall(e) {
-    confirmAlert({
-      title: "Question",
-      message: "Load the first level of series Small?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            currentLevel = 750;
-            initLevel(currentLevel);
+    if (settings.lessQuestions) {
+      currentLevel = 750;
+      initLevel(currentLevel);
+    } else {
+      confirmAlert({
+        title: "Question",
+        message: "Load the first level of series Small?",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: () => {
+              currentLevel = 750;
+              initLevel(currentLevel);
+            },
           },
-        },
-        {
-          label: "No",
-          onClick: () => {},
-        },
-      ],
-    });
+          {
+            label: "No",
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   }
 
   function handleChangeSettings(e) {
+    settings.lessQuestions = cbQuestions.checked;
     settings.nicerGraphics = cbGraphics.checked;
     settings.sound = cbSound.checked;
     saveSettings();
@@ -729,42 +759,51 @@ function BalPage() {
   }
 
   function nextLevelClick(e) {
-    confirmAlert({
-      title: "Question",
-      message: "Load the next level?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            currentLevel++;
-            initLevel(currentLevel);
+    if (settings.lessQuestions) {
+      currentLevel++;
+      initLevel(currentLevel);
+    } else {
+      confirmAlert({
+        title: "Question",
+        message: "Load the next level?",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: () => {
+              currentLevel++;
+              initLevel(currentLevel);
+            },
           },
-        },
-        {
-          label: "No",
-          onClick: () => {},
-        },
-      ],
-    });
+          {
+            label: "No",
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   }
 
   function tryAgain(e) {
-    confirmAlert({
-      title: "Question",
-      message: "Initialize level?",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            initLevel(currentLevel);
+    if (settings.lessQuestions) {
+      initLevel(currentLevel);
+    } else {
+      confirmAlert({
+        title: "Question",
+        message: "Initialize level?",
+        buttons: [
+          {
+            label: "Yes",
+            onClick: () => {
+              initLevel(currentLevel);
+            },
           },
-        },
-        {
-          label: "No",
-          onClick: () => {},
-        },
-      ],
-    });
+          {
+            label: "No",
+            onClick: () => {},
+          },
+        ],
+      });
+    }
   }
 
   const myRef = useRef(document);
@@ -785,6 +824,7 @@ function BalPage() {
       currentLevel = 200;
       initLevel(currentLevel, false);
       cbGraphics = document.getElementById("graphics");
+      cbQuestions = document.getElementById("questions");
       cbSound = document.getElementById("sound");
       loadSettings();
       getLast();
@@ -973,6 +1013,16 @@ function BalPage() {
                   onChange={handleChangeSettings}
                 />
                 <label for="graphics">Nicer graphics</label>
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  id="questions"
+                  name="questions"
+                  value="questions"
+                  onChange={handleChangeSettings}
+                />
+                <label for="questions">Less questions</label>
               </div>
             </div>
           </div>
