@@ -888,6 +888,7 @@ describe("balUtils", () => {
     teleports: [],
     hasWater: false,
     hasDivingGlasses: false,
+    redFish: [],
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(inputBack9a, input9a))).toBe(
@@ -917,6 +918,7 @@ describe("balUtils", () => {
     teleports: [],
     hasWater: false,
     hasDivingGlasses: false,
+    redFish: [],
   };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(inputBack9b, input9b))).toBe(
@@ -943,6 +945,7 @@ describe("balUtils", () => {
     teleports: [],
     hasWater: false,
     hasDivingGlasses: false,
+    redFish: [],
   };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(inputBack9c, input9c))).toBe(
@@ -974,6 +977,7 @@ describe("balUtils", () => {
     teleports: [],
     hasWater: false,
     hasDivingGlasses: false,
+    redFish: [],
   };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(inputBack9d, input9d))).toBe(

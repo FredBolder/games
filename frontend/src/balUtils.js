@@ -147,6 +147,9 @@ function charToNumber(c) {
     case "d":
       result = 26;
       break;
+    case "f":
+      result = 27;
+      break;
     default:
       result = 0;
       break;
@@ -260,6 +263,9 @@ function numberToChar(n) {
     case 26:
       result = "d";
       break;
+    case 27:
+      result = "f";
+      break;
     default:
       result = " ";
       break;
@@ -280,7 +286,12 @@ export function stringArrayToNumberArray(arr) {
         rowBackData.push(data);
         rowGameData.push(0);
       } else {
-        rowBackData.push(0);
+        if (data === 27) {
+          // Fish is always in the water
+          rowBackData.push(23);
+        } else {
+          rowBackData.push(0);
+        }
         rowGameData.push(data);
       }
     }
@@ -867,6 +878,7 @@ export function getGameInfo(backData, gameData) {
   result.teleports = [];
   result.hasWater = false;
   result.hasDivingGlasses = false;
+  result.redFish = [];
 
   for (let i = 0; i < gameData.length; i++) {
     for (let j = 0; j < gameData[i].length; j++) {
@@ -914,6 +926,13 @@ export function getGameInfo(backData, gameData) {
       }
       if (backData[i][j] === 20 || backData[i][j] === 23) {
         result.hasWater = true;
+      }
+      if (gameData[i][j] === 27) {
+        let fish = {};
+        fish.x = j;
+        fish.y = i;
+        fish.direction = 6;
+        result.redFish.push(fish);
       }
     }
   }

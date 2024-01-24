@@ -562,6 +562,9 @@ export default function drawLevel(
         case 26:
           drawDivingGlasses("gray");
           break;
+        case 27:
+          // Red fish - will be drawn later
+          break;
         case 28:
           // purple ball
           if (nicerGraphics) {
@@ -808,6 +811,60 @@ export default function drawLevel(
     );
   }
   ctx.lineWidth = 1;
+  for (let i = 0; i < gameInfo.redFish.length; i++) {
+    const fish = gameInfo.redFish[i];
+    xmin = fish.x * size1 + leftMargin;
+    xmax = xmin + size1 - 1;
+    ymin = fish.y * size1;
+    ymax = ymin + size1 - 1;
+    w1 = xmax - xmin + 1;
+    w2 = ymax - ymin + 1;
+    xc = Math.round((xmax + xmin) / 2);
+    yc = Math.round((ymax + ymin) / 2);
+    let mirror = 1;
+    if (fish.direction == 4) {
+      mirror = -1;
+    }
+    d1 = (w1 / 2.3) * mirror;
+    d2 = w1 / 2.3;
+    d3 = 0;
+    d4 = (w1 / 3.5) * mirror;
+    d5 = w1 / 3;
+    d6 = w1 / 12;
+    pt1.x = Math.round(xc - d1);
+    pt1.y = Math.round(yc - d2);
+    pt2.x = Math.round(xc - d3);
+    pt2.y = Math.round(yc - d6);
+    pt3.x = Math.round(xc - d1);
+    pt3.y = Math.round(yc + d5);
+    pt4.x = Math.round(xc - d4);
+    pt4.y = Math.round(yc);
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    ctx.moveTo(pt1.x, pt1.y);
+    ctx.lineTo(pt2.x, pt2.y);
+    ctx.lineTo(pt3.x, pt3.y);
+    ctx.lineTo(pt4.x, pt4.y);
+    ctx.lineTo(pt1.x, pt1.y);
+    ctx.fill();
+    ctx.stroke();
+    if (mirror === 1) {
+      d1 = w1 / 7;
+    } else {
+      d1 = w1 / 2.5;
+    }
+    d2 = w1 / 3;
+    d3 = w1 / 3.2;
+    d4 = w1 / 3.8;
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
+    ctx.beginPath();
+    // ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle)
+    ctx.ellipse(xc - d1 + d3, yc - d2 + d4, d3, d4, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+  }
   if (status.gameOver) {
     x1 = leftMargin + gameWidth / 2;
     y1 = gameHeight / 2;
