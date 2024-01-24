@@ -27,6 +27,7 @@ import {
   moveDownRight,
   checkDetonator,
   rotateGame,
+  moveFish,
 } from "../balUtils.js";
 import drawLevel from "../drawLevel.js";
 import sndCatapult from "../Sounds/catapult.wav";
@@ -70,6 +71,8 @@ let cbSound = null;
 let completed = [];
 let ctx;
 let currentLevel = 200;
+let fishCounter = 0;
+let fishCountTo = 10;
 let elementDiving;
 let elementGreen;
 let elementHappy;
@@ -345,6 +348,17 @@ function BalPage() {
         }
       } else {
         skipFalling--;
+      }
+
+      if (gameInfo.redFish.length > 0)
+      {
+          fishCounter = fishCounter + 1;
+          if (fishCounter >= fishCountTo)
+          {
+              fishCounter = 0;
+              moveFish(backData, gameData, gameInfo);
+              update = true;
+          }
       }
 
       if (gameInfo.hasWater) {
