@@ -172,11 +172,11 @@ export default function drawLevel(
       const gd = gameData[row][col];
       switch (bd) {
         case 20:
-          let waterLevel1 = ymin;
+          let waterLevel1 = ymin + 1;
           let waterLevel2 = Math.round(ymin + (ymax - ymin) * 0.2);
-          pt1.x = xmin - 0.5;
-          pt1.y = ymax + 0.5;
-          pt2.x = xmin - 0.5;
+          pt1.x = xmin;
+          pt1.y = ymax;
+          pt2.x = xmin;
           pt2.y = waterLevel2;
           switch (wave) {
             case 1:
@@ -189,26 +189,34 @@ export default function drawLevel(
               pt3.x = (xc + xmax) / 2;
               break;
             case 4:
-              pt3.x = xmax + 0.5;
+              pt3.x = xmax;
               break;
             default:
               pt3.x = xc;
               break;
           }
           pt3.y = waterLevel1;
-          pt4.x = xmax + 0.5;
+          pt4.x = xmax;
           pt4.y = waterLevel2;
-          pt5.x = xmax + 0.5;
-          pt5.y = ymax + 0.5;
+          pt5.x = xmax;
+          pt5.y = ymax;
+          drawFilledBox(
+            ctx,
+            xmin,
+            waterLevel2,
+            w1,
+            ymax - waterLevel2 + 1,
+            "rgb(0, 0, 90)"
+          );
           ctx.fillStyle = "rgb(0, 0, 90)";
           ctx.strokeStyle = "rgb(0, 0, 90)";
           ctx.beginPath();
-          ctx.moveTo(pt1.x, pt1.y);
+          //ctx.moveTo(pt1.x, pt1.y);
           ctx.lineTo(pt2.x, pt2.y);
           ctx.lineTo(pt3.x, pt3.y);
           ctx.lineTo(pt4.x, pt4.y);
-          ctx.lineTo(pt5.x, pt5.y);
-          ctx.lineTo(pt1.x, pt1.y);
+          //ctx.lineTo(pt5.x, pt5.y);
+          ctx.lineTo(pt2.x, pt2.y);
           ctx.fill();
           ctx.stroke();
           break;

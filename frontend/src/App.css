@@ -491,8 +491,8 @@ tr:nth-child(even) td {
 
 .gameCanvas {
   margin-bottom: 1rem;
-  /*image-rendering: pixelated; */ 
-  /*image-rendering: crisp-edges; */
+  /*image-rendering: pixelated;*/
+  /*image-rendering: crisp-edges;*/
 }
 
 /* 10. MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */

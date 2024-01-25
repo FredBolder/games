@@ -72,7 +72,7 @@ let completed = [];
 let ctx;
 let currentLevel = 200;
 let fishCounter = 0;
-let fishCountTo = 10;
+let fishCountTo = 12;
 let elementDiving;
 let elementGreen;
 let elementHappy;
@@ -317,15 +317,24 @@ function BalPage() {
         laserX1 = redInfo.x1;
         laserX2 = redInfo.x2;
         laserY = redInfo.y;
-        updateScreen();
         playSound("laser");
       }
     }
     if (!gameOver && gameInfo.hasWater && !gameInfo.hasDivingGlasses) {
       if (backData[posY][posX] === 20 || backData[posY][posX] === 23) {
         gameOver = true;
-        updateScreen();
       }
+    }
+    if (!gameOver && gameInfo.redFish.length > 0) {
+      for (let i = 0; i < gameInfo.redFish.length && !gameOver; i++) {
+        const fish = gameInfo.redFish[i];
+        if (Math.abs(posX - fish.x) < 2 && Math.abs(posY - fish.y) < 2) {
+          gameOver = true;
+        }
+      }
+    }
+    if (gameOver) {
+      updateScreen();
     }
   }
 
@@ -350,15 +359,13 @@ function BalPage() {
         skipFalling--;
       }
 
-      if (gameInfo.redFish.length > 0)
-      {
-          fishCounter = fishCounter + 1;
-          if (fishCounter >= fishCountTo)
-          {
-              fishCounter = 0;
-              moveFish(backData, gameData, gameInfo);
-              update = true;
-          }
+      if (gameInfo.redFish.length > 0) {
+        fishCounter = fishCounter + 1;
+        if (fishCounter >= fishCountTo) {
+          fishCounter = 0;
+          moveFish(backData, gameData, gameInfo, posX, posY);
+          update = true;
+        }
       }
 
       if (gameInfo.hasWater) {
