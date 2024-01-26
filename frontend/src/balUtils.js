@@ -941,7 +941,11 @@ export function getGameInfo(backData, gameData) {
         let fish = {};
         fish.x = j;
         fish.y = i;
-        fish.direction = 6;
+        if (Math.random() > 0.5) {
+          fish.direction = 6;
+        } else {
+          fish.direction = 4;
+        }
         fish.isDead = false;
         result.redFish.push(fish);
       }
