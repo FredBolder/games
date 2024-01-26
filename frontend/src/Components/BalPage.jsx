@@ -658,6 +658,7 @@ function BalPage() {
     info.player = false;
     info.eating = false;
     info.rotate = false;
+    let rotate = false;
 
     if (gameOver || !canvas || teleporting > 0) {
       return false;
