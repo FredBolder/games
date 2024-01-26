@@ -908,7 +908,7 @@ export default function drawLevel(
     for (let i = 0; i < gameInfo.electricity.length; i++) {
       const elec = gameInfo.electricity[i];
       let elecTarget = electricityTarget(backData, gameData, elec.x, elec.y);
-      if (Math.abs(elec.y - elecTarget) > 1) {
+      if (elecTarget > 0 && Math.abs(elec.y - elecTarget) > 1) {
         x1 = Math.round(leftMargin + elec.x * size1 + 0.5 * size1);
         y1 = (elec.y + 1) * size1;
         ctx.strokeStyle = "rgb(207, 159, 255)";

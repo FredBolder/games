@@ -29,6 +29,7 @@ import {
   rotateGame,
   moveFish,
   electricityTarget,
+  inWater,
 } from "../balUtils.js";
 import drawLevel from "../drawLevel.js";
 import sndCatapult from "../Sounds/catapult.wav";
@@ -321,6 +322,33 @@ function BalPage() {
   function checkGameOver() {
     let target = -1;
 
+    if (
+      !gameOver &&
+      gameInfo.electricity.length > 0 &&
+      gameInfo.electricityActive
+    ) {
+      for (let i = 0; i < gameInfo.electricity.length; i++) {
+        const elec = gameInfo.electricity[i];
+        target = electricityTarget(backData, gameData, elec.x, elec.y);
+        if (target > 0) {
+          if (gameData[target][elec.x] === 2) {
+            gameOver = true;
+          }
+          if (
+            backData[target][elec.x] === 20 ||
+            backData[target][elec.x] === 23
+          ) {
+            if (inWater(posX, posY, backData)) {
+              gameOver = true;
+            }
+            for (let j = 0; j < gameInfo.redFish.length; j++) {
+              const fish = gameInfo.redFish[j];
+              fish.isDead = true;
+            }
+          }
+        }
+      }
+    }
     if (!gameOver) {
       let redInfo = checkRed(gameData, posX, posY, gameInfo.redBalls);
       if (redInfo.hit) {
@@ -339,19 +367,8 @@ function BalPage() {
     if (!gameOver && gameInfo.redFish.length > 0) {
       for (let i = 0; i < gameInfo.redFish.length && !gameOver; i++) {
         const fish = gameInfo.redFish[i];
-        if (Math.abs(posX - fish.x) < 2 && Math.abs(posY - fish.y) < 2) {
+        if (!fish.isDead && Math.abs(posX - fish.x) < 2 && Math.abs(posY - fish.y) < 2) {
           gameOver = true;
-        }
-      }
-    }
-    if (!gameOver && gameInfo.electricity.length > 0 && gameInfo.electricityActive) {
-      for (let i = 0; i < gameInfo.electricity.length; i++) {
-        const elec = gameInfo.electricity[i];
-        target = (electricityTarget(backData, gameData, elec.x, elec.y));
-        if (target > 0) {
-          if (gameData[target][elec.x] === 2) {
-            gameOver = true;
-          }
         }
       }
     }
