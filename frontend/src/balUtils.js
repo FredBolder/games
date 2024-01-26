@@ -150,6 +150,9 @@ function charToNumber(c) {
     case "f":
       result = 27;
       break;
+    case "!":
+      result = 91;
+      break;
     default:
       result = 0;
       break;
@@ -266,6 +269,9 @@ function numberToChar(n) {
     case 27:
       result = "f";
       break;
+    case 91:
+      result = "!";
+      break;
     default:
       result = " ";
       break;
@@ -334,23 +340,25 @@ function updateYellow(yellowBalls, x1, y1, x2, y2, direction) {
 }
 
 export function checkDetonator(arr, x, y) {
+  let info = { updated: false, explosion: false };
   let detonator = false;
-  let explosion = false;
 
   if (y > 0) {
     detonator = [2, 4, 8, 9].includes(arr[y - 1][x]);
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr[i].length; j++) {
         if (arr[i][j] === 36 && detonator) {
-          explosion = true;
+          info.explosion = true;
+          info.updated = true;
           arr[i][j] = 38;
         } else if (arr[i][j] === 38) {
+          info.updated = true;
           arr[i][j] = 0;
         }
       }
     }
   }
-  return explosion;
+  return info;
 }
 
 export function checkFalling(backData, gameData, gameInfo) {
@@ -879,6 +887,8 @@ export function getGameInfo(backData, gameData) {
   result.hasWater = false;
   result.hasDivingGlasses = false;
   result.redFish = [];
+  result.electricity = [];
+  result.electricityActive = false;
 
   for (let i = 0; i < gameData.length; i++) {
     for (let j = 0; j < gameData[i].length; j++) {
@@ -933,6 +943,12 @@ export function getGameInfo(backData, gameData) {
         fish.y = i;
         fish.direction = 6;
         result.redFish.push(fish);
+      }
+      if (gameData[i][j] === 91) {
+        let elec = {};
+        elec.x = j;
+        elec.y = i;
+        result.electricity.push(elec);
       }
     }
   }
@@ -1149,6 +1165,8 @@ export function moveHorizontalElevators(arr, elevators, redBalls) {
 }
 
 export function moveYellowBalls(arr, yellowBalls) {
+  let updated = false;
+
   for (let i = 0; i < yellowBalls.length; i++) {
     let moved = false;
     let xOld = yellowBalls[i].x;
@@ -1248,10 +1266,12 @@ export function moveYellowBalls(arr, yellowBalls) {
     if (moved) {
       arr[yOld][xOld] = 0;
       arr[yellowBalls[i].y][yellowBalls[i].x] = 9;
+      updated = true;
     } else {
       yellowBalls[i].direction = "none";
     }
   }
+  return updated;
 }
 
 export function rotateGame(backData, gameData, gameInfo) {
@@ -1445,7 +1465,7 @@ function freeToSwim(x1, x2, y, gameData) {
   let found = false;
 
   if (y >= 0 && y < gameData.length && x1 !== x2) {
-    if (x2>x1) {
+    if (x2 > x1) {
       for (let i = x1 + 1; i < x2; i++) {
         if (gameData[y][i] !== 0) {
           found = true;
@@ -1484,12 +1504,18 @@ export function moveFish(backData, gameData, gameInfo, x, y) {
         fish.direction = 6;
       }
       if (fish.y > y) {
-        if (freeToSwim(x, fish.x, fish.y - 1, gameData) || freeToSwim(x, fish.x, fish.y, gameData)) {
+        if (
+          freeToSwim(x, fish.x, fish.y - 1, gameData) ||
+          freeToSwim(x, fish.x, fish.y, gameData)
+        ) {
           up = true;
         }
       }
       if (fish.y < y) {
-        if (freeToSwim(x, fish.x, fish.y + 1, gameData) || freeToSwim(x, fish.x, fish.y, gameData)) {
+        if (
+          freeToSwim(x, fish.x, fish.y + 1, gameData) ||
+          freeToSwim(x, fish.x, fish.y, gameData)
+        ) {
           down = true;
         }
       }
@@ -1582,4 +1608,17 @@ export function moveFish(backData, gameData, gameInfo, x, y) {
     }
     gameData[fish.y][fish.x] = 27;
   }
+}
+
+export function electricityTarget(backData, gameData, x, y) {
+  let target = -1;
+  let p = y + 1;
+
+  while (p < gameData.length && target === -1) {
+    if (gameData[p][x] !== 0 || backData[p][x] !== 0) {
+      target = p;
+    }
+    p++;
+  }
+  return target;
 }

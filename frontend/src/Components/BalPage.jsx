@@ -28,6 +28,7 @@ import {
   checkDetonator,
   rotateGame,
   moveFish,
+  electricityTarget,
 } from "../balUtils.js";
 import drawLevel from "../drawLevel.js";
 import sndCatapult from "../Sounds/catapult.wav";
@@ -35,6 +36,7 @@ import sndEat1 from "../Sounds/eat1.wav";
 import sndEat2 from "../Sounds/eat2.wav";
 import sndEat3 from "../Sounds/eat3.wav";
 import sndEat4 from "../Sounds/eat4.wav";
+import sndElectricity from "../Sounds/electricity.wav";
 import sndExplosion from "../Sounds/explosion.wav";
 import sndFloor1 from "../Sounds/floor1.wav";
 import sndFloor2 from "../Sounds/floor2.wav";
@@ -73,6 +75,8 @@ let ctx;
 let currentLevel = 200;
 let fishCounter = 0;
 let fishCountTo = 12;
+let elecActiveSaved = false;
+let electricityCounter = 0;
 let elementDiving;
 let elementGreen;
 let elementHappy;
@@ -97,6 +101,8 @@ gameInfo.teleports = [];
 gameInfo.hasWater = false;
 gameInfo.hasDivingGlasses = false;
 gameInfo.redFish = [];
+gameInfo.electricity = [];
+gameInfo.electricityActive = false;
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -281,6 +287,9 @@ function BalPage() {
               break;
           }
           break;
+        case "electricity":
+          snd = sndElectricity;
+          break;
         case "explosion":
           snd = sndExplosion;
           break;
@@ -310,6 +319,8 @@ function BalPage() {
   }
 
   function checkGameOver() {
+    let target = -1;
+
     if (!gameOver) {
       let redInfo = checkRed(gameData, posX, posY, gameInfo.redBalls);
       if (redInfo.hit) {
@@ -330,6 +341,17 @@ function BalPage() {
         const fish = gameInfo.redFish[i];
         if (Math.abs(posX - fish.x) < 2 && Math.abs(posY - fish.y) < 2) {
           gameOver = true;
+        }
+      }
+    }
+    if (!gameOver && gameInfo.electricity.length > 0 && gameInfo.electricityActive) {
+      for (let i = 0; i < gameInfo.electricity.length; i++) {
+        const elec = gameInfo.electricity[i];
+        target = (electricityTarget(backData, gameData, elec.x, elec.y));
+        if (target > 0) {
+          if (gameData[target][elec.x] === 2) {
+            gameOver = true;
+          }
         }
       }
     }
@@ -411,20 +433,26 @@ function BalPage() {
         yellowCounter--;
       } else {
         yellowCounter = 1;
-        moveYellowBalls(gameData, gameInfo.yellowBalls);
-        update = true;
+        if (moveYellowBalls(gameData, gameInfo.yellowBalls)) {
+          update = true;
+        }
       }
 
       if (explosionCounter > 0) {
         explosionCounter--;
       } else {
         explosionCounter = 2;
-        if (
-          checkDetonator(gameData, gameInfo.detonator.x, gameInfo.detonator.y)
-        ) {
+        info = checkDetonator(
+          gameData,
+          gameInfo.detonator.x,
+          gameInfo.detonator.y
+        );
+        if (info.explosion) {
           playSound("explosion");
         }
-        update = true;
+        if (info.updated) {
+          update = true;
+        }
       }
 
       if (gameInfo.teleports.length === 2) {
@@ -452,6 +480,30 @@ function BalPage() {
           default:
             break;
         }
+      }
+
+      if (gameInfo.electricity.length > 0) {
+        if (electricityCounter > 110) {
+          electricityCounter = 0;
+        }
+        gameInfo.electricityActive = false;
+        if (
+          (electricityCounter > 50 && electricityCounter < 60) ||
+          (electricityCounter > 90 && electricityCounter < 100)
+        ) {
+          gameInfo.electricityActive = true;
+        }
+        if (!elecActiveSaved && gameInfo.electricityActive) {
+          playSound("electricity");
+        }
+        if (
+          gameInfo.electricityActive ||
+          elecActiveSaved !== gameInfo.electricityActive
+        ) {
+          update = true;
+        }
+        elecActiveSaved = gameInfo.electricityActive;
+        electricityCounter++;
       }
 
       if (update) {
@@ -493,6 +545,7 @@ function BalPage() {
       gameOver = false;
       updateScreen();
       gameInfo = getGameInfo(backData, gameData);
+      updateScreen();
       posX = gameInfo.blueBall.x;
       posY = gameInfo.blueBall.y;
       setGreen(gameInfo.greenBalls);
@@ -587,7 +640,7 @@ function BalPage() {
     let info = {};
     info.player = false;
     info.eating = false;
-    let rotate = false;
+    info.rotate = false;
 
     if (gameOver || !canvas || teleporting > 0) {
       return false;

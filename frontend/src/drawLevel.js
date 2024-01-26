@@ -8,6 +8,7 @@ import {
 } from "./drawUtils";
 
 import { polar } from "./utils";
+import { electricityTarget } from "./balUtils";
 
 export default function drawLevel(
   canvas,
@@ -798,6 +799,32 @@ export default function drawLevel(
             "white"
           );
           break;
+        case 91:
+          drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
+          d1 = Math.round(w1 * 0.06);
+          d2 = Math.round(w1 * 0.28);
+          d3 = Math.round(w1 * 0.14);
+          d4 = Math.round(w1 * 0.2);
+          d5 = Math.round(w1 * 0.3);
+          d6 = Math.round(w1 * 0.07);
+          d7 = Math.round(w1 * 0.04);
+          ctx.fillStyle = "yellow";
+          ctx.strokeStyle = "yellow";
+          ctx.beginPath();
+          ctx.lineWidth = 3;
+          ctx.moveTo(xc, ymin + d1);
+          ctx.lineTo(xc - d3, yc - d6);
+          ctx.lineTo(xc + d3, yc - d6);
+          ctx.lineTo(xc + d7, ymax - d2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.lineWidth = 1;
+          ctx.moveTo(xc, ymax - d1);
+          ctx.lineTo(xc - d4, ymax - d2);
+          ctx.lineTo(xc + d5, ymax - d2);
+          ctx.lineTo(xc, ymax - d1);
+          ctx.fill();
+          break;
         default:
           // empty
           drawFilledBox(ctx, xmin, ymin, w1, w2, "rgb(70, 70, 70)");
@@ -819,6 +846,8 @@ export default function drawLevel(
     );
   }
   ctx.lineWidth = 1;
+
+  // Fish
   for (let i = 0; i < gameInfo.redFish.length; i++) {
     const fish = gameInfo.redFish[i];
     xmin = fish.x * size1 + leftMargin;
@@ -873,6 +902,32 @@ export default function drawLevel(
     ctx.fill();
     ctx.stroke();
   }
+
+  // Electricity
+  if (gameInfo.electricityActive) {
+    for (let i = 0; i < gameInfo.electricity.length; i++) {
+      const elec = gameInfo.electricity[i];
+      let elecTarget = electricityTarget(backData, gameData, elec.x, elec.y);
+      if (Math.abs(elec.y - elecTarget) > 1) {
+        x1 = Math.round(leftMargin + elec.x * size1 + 0.5 * size1);
+        y1 = (elec.y + 1) * size1;
+        ctx.strokeStyle = "rgb(207, 159, 255)";
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        for (let j = elec.y + 1; j < elecTarget; j++) {
+          x2 = x1;
+          if (j < elecTarget - 1) {
+            x2 += Math.round(size1 * 0.8 * (Math.random() - 0.5));
+          }
+          y1 += size1;
+          ctx.lineTo(x2, y1);
+        }
+        ctx.stroke();
+      }
+    }
+  }
+
+  // Game Over
   if (status.gameOver) {
     x1 = leftMargin + gameWidth / 2;
     y1 = gameHeight / 2;
