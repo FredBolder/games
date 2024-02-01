@@ -30,6 +30,7 @@ import {
   moveFish,
   electricityTarget,
   inWater,
+  checkTrapDoors,
 } from "../balUtils.js";
 import drawLevel from "../drawLevel.js";
 import sndCatapult from "../Sounds/catapult.wav";
@@ -41,7 +42,6 @@ import sndElectricity from "../Sounds/electricity.wav";
 import sndExplosion from "../Sounds/explosion.wav";
 import sndFloor1 from "../Sounds/floor1.wav";
 import sndFloor2 from "../Sounds/floor2.wav";
-import sndHinge from "../Sounds/hinge.wav";
 import sndKey from "../Sounds/key.wav";
 import sndLaserGun from "../Sounds/laser_gun.wav";
 import sndPain from "../Sounds/pain.wav";
@@ -50,6 +50,7 @@ import sndSplash1 from "../Sounds/splash1.wav";
 import sndSplash2 from "../Sounds/splash2.wav";
 import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
+import sndTrapDoor from "../Sounds/trap_door.wav";
 import sndUnlock from "../Sounds/unlock.wav";
 import imgBlueHappy from "../Images/blue_ball_happy.svg";
 import imgBlueSad from "../Images/blue_ball_sad.svg";
@@ -104,6 +105,7 @@ gameInfo.hasDivingGlasses = false;
 gameInfo.redFish = [];
 gameInfo.electricity = [];
 gameInfo.electricityActive = false;
+gameInfo.trapDoors = [];
 let gameInterval;
 let gameOver = false;
 let laserX1 = -1;
@@ -309,6 +311,9 @@ function BalPage() {
         case "teleport":
           snd = sndTeleport;
           break;
+        case "trap":
+          snd = sndTrapDoor;
+          break;
         default:
           break;
       }
@@ -367,7 +372,11 @@ function BalPage() {
     if (!gameOver && gameInfo.redFish.length > 0) {
       for (let i = 0; i < gameInfo.redFish.length && !gameOver; i++) {
         const fish = gameInfo.redFish[i];
-        if (!fish.isDead && Math.abs(posX - fish.x) < 2 && Math.abs(posY - fish.y) < 2) {
+        if (
+          !fish.isDead &&
+          Math.abs(posX - fish.x) < 2 &&
+          Math.abs(posY - fish.y) < 2
+        ) {
           gameOver = true;
         }
       }
@@ -382,6 +391,14 @@ function BalPage() {
     let update = false;
 
     if (!gameOver && gameData && backData) {
+      info = checkTrapDoors(gameData, gameInfo);
+      if (info.sound) {
+        playSound("trap");
+      }
+      if (info.updated) {
+        update = true;
+      }
+
       if (skipFalling <= 0) {
         info = checkFalling(backData, gameData, gameInfo);
         if (info.ballX !== -1) {

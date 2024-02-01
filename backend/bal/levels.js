@@ -55,7 +55,7 @@ function loadFromFile(n) {
 function getLevel(n) {
   let data = [];
 
-  if ((n >= 200 && n <= 219) || (n >= 700 && n <= 714) || (n >= 750 && n <= 759)) {
+  if ((n >= 200 && n <= 219) || (n >= 700 && n <= 714) || (n >= 750 && n <= 760)) {
     data = loadFromFile(n);
   } else {
     data = loadFromFile(1000);

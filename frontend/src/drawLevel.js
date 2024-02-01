@@ -528,6 +528,26 @@ export default function drawLevel(
           drawLine(ctx, xmax, ymin, xmin, ymin + w2 / 2, "white");
           drawLine(ctx, xmax, ymax, xmin, ymin + w2 / 2, "white");
           break;
+        case 13:
+          // Trap door
+          ctx.lineWidth = 3;
+          drawLine(ctx, xmin, ymin + 1, xmax - 2, ymin + 1, "rgb(70, 70, 70)");
+          ctx.lineWidth = 1;
+          break;
+        case 14:
+          // Trap door half open
+          ctx.lineWidth = 3;
+          d1 = Math.round(w1 / Math.sqrt(2));
+          drawLine(
+            ctx,
+            xmin - 1,
+            ymin + 1,
+            Math.round(xmin + d1),
+            Math.round(ymin + d1),
+            "rgb(70, 70, 70)"
+          );
+          ctx.lineWidth = 1;
+          break;
         case 15:
           // wall |\
           ctx.fillStyle = "#464646";

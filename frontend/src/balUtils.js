@@ -153,6 +153,9 @@ function charToNumber(c) {
     case "!":
       result = 91;
       break;
+    case "-":
+      result = 13;
+      break;
     default:
       result = 0;
       break;
@@ -271,6 +274,9 @@ function numberToChar(n) {
       break;
     case 91:
       result = "!";
+      break;
+    case 13:
+      result = "-";
       break;
     default:
       result = " ";
@@ -889,6 +895,7 @@ export function getGameInfo(backData, gameData) {
   result.redFish = [];
   result.electricity = [];
   result.electricityActive = false;
+  result.trapDoors = [];
 
   for (let i = 0; i < gameData.length; i++) {
     for (let j = 0; j < gameData[i].length; j++) {
@@ -955,6 +962,13 @@ export function getGameInfo(backData, gameData) {
         elec.y = i;
         result.electricity.push(elec);
       }
+      if (gameData[i][j] === 13) {
+        let trap = {};
+        trap.x = j;
+        trap.y = i;
+        trap.status = 0;
+        result.trapDoors.push(trap);
+      }
     }
   }
   return result;
@@ -986,6 +1000,44 @@ export function checkRed(arr, x, y, redBalls) {
             result.y = -1;
           }
         }
+      }
+    }
+  }
+  return result;
+}
+
+export function checkTrapDoors(gameData, gameInfo) {
+  let result = {};
+  result.updated = false;
+  result.sound = false;
+  let data = 0;
+
+  for (let i = 0; i < gameInfo.trapDoors.length; i++) {
+    let trapDoor = gameInfo.trapDoors[i];
+    data = gameData[trapDoor.y - 1][trapDoor.x];
+    if (
+      data === 0 &&
+      (gameData[trapDoor.y][trapDoor.x] === 0 ||
+        gameData[trapDoor.y][trapDoor.x] === 13 ||
+        gameData[trapDoor.y][trapDoor.x] === 14)
+    ) {
+      gameData[trapDoor.y][trapDoor.x] = 13;
+      result.updated = true;
+      trapDoor.status = 0;
+    }
+    if (data === 2 || data === 4 || data === 8) {
+      if (trapDoor.status >= 0) {
+        trapDoor.status++;
+      }
+      if (trapDoor.status >= 5) {
+        gameData[trapDoor.y][trapDoor.x] = 14;
+        result.updated = true;
+        result.sound = true;
+      }
+      if (trapDoor.status >= 10) {
+        gameData[trapDoor.y][trapDoor.x] = 0;
+        result.updated = true;
+        trapDoor.status = -1;
       }
     }
   }
@@ -1511,7 +1563,7 @@ export function moveFish(backData, gameData, gameInfo, x, y) {
           fish.y += 1;
         }
       }
-  } else {
+    } else {
       if (attack) {
         if (fish.x > x) {
           fish.direction = 4;

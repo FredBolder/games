@@ -891,6 +891,7 @@ describe("balUtils", () => {
     redFish: [],
     electricity: [],
     electricityActive: false,
+    trapDoors: [],
   };
   it("getGameInfo A", () => {
     expect(JSON.stringify(getGameInfo(inputBack9a, input9a))).toBe(
@@ -923,6 +924,7 @@ describe("balUtils", () => {
     redFish: [],
     electricity: [],
     electricityActive: false,
+    trapDoors: [],
  };
   it("getGameInfo B", () => {
     expect(JSON.stringify(getGameInfo(inputBack9b, input9b))).toBe(
@@ -952,6 +954,7 @@ describe("balUtils", () => {
     redFish: [],
     electricity: [],
     electricityActive: false,
+    trapDoors: [],
  };
   it("getGameInfo C", () => {
     expect(JSON.stringify(getGameInfo(inputBack9c, input9c))).toBe(
@@ -986,6 +989,7 @@ describe("balUtils", () => {
     redFish: [],
     electricity: [],
     electricityActive: false,
+    trapDoors: [],
  };
   it("getGameInfo D", () => {
     expect(JSON.stringify(getGameInfo(inputBack9d, input9d))).toBe(
