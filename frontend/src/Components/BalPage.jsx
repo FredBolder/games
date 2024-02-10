@@ -108,6 +108,7 @@ gameInfo.electricityActive = false;
 gameInfo.trapDoors = [];
 let gameInterval;
 let gameOver = false;
+let giveUp = [];
 let laserX1 = -1;
 let laserX2 = -1;
 let laserY = -1;
@@ -139,6 +140,11 @@ function BalPage() {
     if (!completed.includes(level)) {
       completed.push(level);
     }
+    if (giveUp.includes(level)) {
+      giveUp = giveUp.filter((value) => {
+        return level !== value;
+      });
+    }
     try {
       let response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/users/bal/addcompleted`,
@@ -163,9 +169,57 @@ function BalPage() {
         completed = balLevels.split(",");
       }
       //alert(completed.toString());
-      updateNextButton();
     } catch (error) {
       alert(error);
+    }
+  }
+
+  async function getGiveUp() {
+    try {
+      let response = await axios.get(
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/getgiveup`,
+        { withCredentials: credentials() }
+      );
+      const balGiveUp = response.data.balGiveUp;
+      if (balGiveUp === "") {
+        giveUp = [];
+      } else {
+        giveUp = balGiveUp.split(",");
+      }
+      //alert(giveUp.toString());
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  async function giveUpLevel(n) {
+    let msg = "";
+    let level = n.toString();
+
+    if (
+      !completed.includes(level) &&
+      !giveUp.includes(level) &&
+      giveUp.length >= 3
+    ) {
+      msg =
+        "You have already given up too many levels. Try first to solve a level that you have given up.";
+    }
+    if (msg === "" && !completed.includes(level) && !giveUp.includes(level)) {
+      giveUp.push(level);
+      try {
+        let response = await axios.post(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/giveup`,
+          { level: level },
+          { withCredentials: credentials() }
+        );
+      } catch (error) {
+        msg = error;
+      }
+    }
+    if (msg === "") {
+      initLevel(currentLevel + 1);
+    } else {
+      alert(msg);
     }
   }
 
@@ -199,13 +253,14 @@ function BalPage() {
             {
               label: "Yes",
               onClick: () => {
-                currentLevel = level;
-                initLevel(currentLevel);
+                initLevel(level);
               },
             },
             {
               label: "No",
-              onClick: () => {},
+              onClick: () => {
+                updateScreen();
+              },
             },
           ],
         });
@@ -261,7 +316,8 @@ function BalPage() {
   }
 
   function updateNextButton() {
-    nextButton = completed.includes(currentLevel.toString());
+    let level = currentLevel.toString();
+    nextButton = completed.includes(level) || giveUp.includes(level);
     setShowNext(nextButton);
   }
 
@@ -557,6 +613,7 @@ function BalPage() {
     let gd;
 
     try {
+      currentLevel = n;
       setLevelNumber(n);
       if (setLastPlayed) {
         setLast(n);
@@ -590,8 +647,7 @@ function BalPage() {
 
   function clickSeries1(e) {
     if (settings.lessQuestions) {
-      currentLevel = 200;
-      initLevel(currentLevel);
+      initLevel(200);
     } else {
       confirmAlert({
         title: "Question",
@@ -600,8 +656,7 @@ function BalPage() {
           {
             label: "Yes",
             onClick: () => {
-              currentLevel = 200;
-              initLevel(currentLevel);
+              initLevel(200);
             },
           },
           {
@@ -615,8 +670,7 @@ function BalPage() {
 
   function clickSeries2(e) {
     if (settings.lessQuestions) {
-      currentLevel = 700;
-      initLevel(currentLevel);
+      initLevel(700);
     } else {
       confirmAlert({
         title: "Question",
@@ -625,8 +679,7 @@ function BalPage() {
           {
             label: "Yes",
             onClick: () => {
-              currentLevel = 700;
-              initLevel(currentLevel);
+              initLevel(700);
             },
           },
           {
@@ -640,8 +693,7 @@ function BalPage() {
 
   function clickSeriesSmall(e) {
     if (settings.lessQuestions) {
-      currentLevel = 750;
-      initLevel(currentLevel);
+      initLevel(750);
     } else {
       confirmAlert({
         title: "Question",
@@ -650,8 +702,7 @@ function BalPage() {
           {
             label: "Yes",
             onClick: () => {
-              currentLevel = 750;
-              initLevel(currentLevel);
+              initLevel(750);
             },
           },
           {
@@ -661,6 +712,25 @@ function BalPage() {
         ],
       });
     }
+  }
+
+  function giveUpClick(e) {
+    confirmAlert({
+      title: "Question",
+      message: "Give up this level?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            giveUpLevel(currentLevel);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   }
 
   function handleChangeSettings(e) {
@@ -696,14 +766,12 @@ function BalPage() {
       switch (e.key) {
         case "N":
           if (e.altKey) {
-            currentLevel++;
-            initLevel(currentLevel);
+            initLevel(currentLevel + 1);
           }
           break;
         case "P":
           if (e.altKey) {
-            currentLevel--;
-            initLevel(currentLevel);
+            initLevel(currentLevel - 1);
           }
           break;
         case "ArrowLeft":
@@ -854,8 +922,7 @@ function BalPage() {
       checkGameOver();
       if (!gameOver && gameInfo.greenBalls <= 0) {
         addLevel(currentLevel);
-        currentLevel++;
-        initLevel(currentLevel);
+        initLevel(currentLevel + 1);
       }
     }
     if (info.divingGlasses) {
@@ -870,8 +937,7 @@ function BalPage() {
 
   function nextLevelClick(e) {
     if (settings.lessQuestions) {
-      currentLevel++;
-      initLevel(currentLevel);
+      initLevel(currentLevel + 1);
     } else {
       confirmAlert({
         title: "Question",
@@ -880,8 +946,7 @@ function BalPage() {
           {
             label: "Yes",
             onClick: () => {
-              currentLevel++;
-              initLevel(currentLevel);
+              initLevel(currentLevel + 1);
             },
           },
           {
@@ -931,8 +996,9 @@ function BalPage() {
       elementYellow = document.getElementById("yellow");
 
       getCompleted();
-      currentLevel = 200;
-      initLevel(currentLevel, false);
+      getGiveUp();
+      updateNextButton();
+      initLevel(200, false);
       cbGraphics = document.getElementById("graphics");
       cbQuestions = document.getElementById("questions");
       cbSound = document.getElementById("sound");
@@ -1093,12 +1159,15 @@ function BalPage() {
               Next
             </button>
           )}
+          <button className="balButton" onClick={giveUpClick}>
+            Give up
+          </button>
           <div className="balPanelText">
             Green: <span className="balPanelTextSpan">{green}</span>
           </div>
 
           <button className="balButton" onClick={help}>
-            Help
+            ?
           </button>
 
           <div className="menu">
@@ -1137,105 +1206,110 @@ function BalPage() {
             </div>
           </div>
         </div>
-        {showHelp ? (
-          <div className="help" onClick={help}>
-            <h2>Help</h2>
-            <p>
-              In every level you control the blue ball with the happy face. You
-              have to eat all the little green balls. You can push the white
-              balls and the light blue balls, but not more than 2 at the same
-              time. The light blue balls are floating balls and they will always
-              stay at the same height. Red balls are very dangerous. If you push
-              a yellow ball, it will continue as far as possible. You cannot
-              push more yellow balls at the same time or push a yellow ball
-              together with another ball. You can push a yellow ball in the
-              directions left, right, up and down. A purple ball is almost the
-              same as a yellow ball, but when you push a purple ball, it will go
-              only one position further. You cannot push a ball through a one
-              direction, a game rotator or a door with a lock. You can control
-              the blue ball with the letter keys, the arrow keys, the number
-              keys or the arrow buttons. In the water you can swim in every
-              direction. If you see for example a level number 750, it doesn't
-              mean that there are 750 or even more levels. The number depends
-              also on the series and on the&nbsp;
-              <a
-                className="link"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://fredbolder.github.io/bal/"
-              >
-                original Bal game
-              </a>
-              .
-            </p>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Action</th>
-                  <th scope="col">Letter key</th>
-                  <th scope="col">Arrow key</th>
-                  <th scope="col">Number key</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Walk left / Swim left</td>
-                  <td>A</td>
-                  <td>Arrow left</td>
-                  <td>4</td>
-                </tr>
-                <tr>
-                  <td>Walk right / Swim right</td>
-                  <td>D</td>
-                  <td>Arrow right</td>
-                  <td>6</td>
-                </tr>
-                <tr>
-                  <td>Jump / Push up / Swim up</td>
-                  <td>W</td>
-                  <td>Arrow up</td>
-                  <td>8</td>
-                </tr>
-                <tr>
-                  <td>Jump left / Swim up left</td>
-                  <td>Q</td>
-                  <td>Shift + Arrow left</td>
-                  <td>7</td>
-                </tr>
-                <tr>
-                  <td>Jump right / Swim up right</td>
-                  <td>E</td>
-                  <td>Shift + Arrow right</td>
-                  <td>9</td>
-                </tr>
-                <tr>
-                  <td>Push down / Swim down</td>
-                  <td>S</td>
-                  <td>Arrow down</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <td>Swim down left</td>
-                  <td>Y</td>
-                  <td>-</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>Swim down right</td>
-                  <td>C</td>
-                  <td>-</td>
-                  <td>3</td>
-                </tr>
-              </tbody>
-            </table>
-            <p>
-              If you have already solved a certain level before, there is a Next
-              button available to continue with the next level.
-            </p>
-          </div>
-        ) : (
-          <canvas className="gameCanvas" onClick={putBallPosition}></canvas>
-        )}
+        <div
+          className="help"
+          onClick={help}
+          style={{ display: showHelp ? "inline" : "none" }}
+        >
+          <h2>Help</h2>
+          <p>
+            In every level you control the blue ball with the happy face. You
+            have to eat all the little green balls. You can push the white balls
+            and the light blue balls, but not more than 2 at the same time. The
+            light blue balls are floating balls and they will always stay at the
+            same height. Red balls are very dangerous. If you push a yellow
+            ball, it will continue as far as possible. You cannot push more
+            yellow balls at the same time or push a yellow ball together with
+            another ball. You can push a yellow ball in the directions left,
+            right, up and down. A purple ball is almost the same as a yellow
+            ball, but when you push a purple ball, it will go only one position
+            further. You cannot push a ball through a one direction, a game
+            rotator or a door with a lock. You can control the blue ball with
+            the letter keys, the arrow keys, the number keys or the arrow
+            buttons. In the water you can swim in every direction. If you see
+            for example a level number 750, it doesn't mean that there are 750
+            or even more levels. The number depends also on the series and on
+            the&nbsp;
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://fredbolder.github.io/bal/"
+            >
+              original Bal game
+            </a>
+            .
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Action</th>
+                <th scope="col">Letter key</th>
+                <th scope="col">Arrow key</th>
+                <th scope="col">Number key</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Walk left / Swim left</td>
+                <td>A</td>
+                <td>Arrow left</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Walk right / Swim right</td>
+                <td>D</td>
+                <td>Arrow right</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>Jump / Push up / Swim up</td>
+                <td>W</td>
+                <td>Arrow up</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>Jump left / Swim up left</td>
+                <td>Q</td>
+                <td>Shift + Arrow left</td>
+                <td>7</td>
+              </tr>
+              <tr>
+                <td>Jump right / Swim up right</td>
+                <td>E</td>
+                <td>Shift + Arrow right</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>Push down / Swim down</td>
+                <td>S</td>
+                <td>Arrow down</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Swim down left</td>
+                <td>Y</td>
+                <td>-</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Swim down right</td>
+                <td>C</td>
+                <td>-</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            If you have already solved a certain level before, there is a Next
+            button available to continue with the next level.
+          </p>
+        </div>
+        <canvas
+          className="gameCanvas"
+          onClick={putBallPosition}
+          style={{ display: showHelp ? "none" : "inline" }}
+        ></canvas>
         <div className="moveButtons">
           <button onClick={buttonJumpLeft}>
             <img src={arrowJumpLeft} alt="ArrowJumpLeft" />

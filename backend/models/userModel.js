@@ -34,6 +34,9 @@ const userSchema = mongoose.Schema(
     },
     balSettings: {
       type: String,
+    },
+    balGiveUp: {
+      type: String,
     }
   },
   {

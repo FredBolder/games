@@ -120,8 +120,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 //@access   Private
 const addLevel = asyncHandler(async (req, res) => {
   let levels = [];
-  const user = await User.findById(req.user._id);
+  let giveUp = [];
+  let level = req.body.level;
 
+  const user = await User.findById(req.user._id);
   if (user) {
     if (!user.balLevels) {
       user.balLevels = "";
@@ -131,9 +133,23 @@ const addLevel = asyncHandler(async (req, res) => {
     } else {
       levels = user.balLevels.split(",");
     }
-    if (!levels.includes(req.body.level)) {
-      levels.push(req.body.level);
+    if (!user.balGiveUp) {
+      user.balGiveUp = "";
+    }
+    if (user.balGiveUp === "") {
+      giveUp = [];
+    } else {
+      giveUp = user.balGiveUp.split(",");
+    }
+    if (!levels.includes(level)) {
+      levels.push(level);
       user.balLevels = levels.join(",");
+    }
+    if (giveUp.includes(level)) {
+      giveUp = giveUp.filter((value) => {
+        return level !== value;
+      });
+      user.balGiveUp = giveUp.join(",");
     }
     const updatedUser = await user.save();
     res.status(200).json({
@@ -149,7 +165,6 @@ const addLevel = asyncHandler(async (req, res) => {
 //route     GET /api/users/bal/getcompleted
 //@access   Private
 const getLevels = asyncHandler(async (req, res) => {
-  let levels = [];
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -230,10 +245,77 @@ const loadSettings = asyncHandler(async (req, res) => {
 
   if (user) {
     if (!user.balSettings) {
-      user.balSettings = JSON.stringify({ sound: true, nicerGraphics: true, lessQuestions: false });
+      user.balSettings = JSON.stringify({
+        sound: true,
+        nicerGraphics: true,
+        lessQuestions: false,
+      });
     }
     res.status(200).json({
       balSettings: user.balSettings,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+//@desc     Give up level
+//route     POST /api/users/bal/giveup
+//@access   Private
+const giveUpLevel = asyncHandler(async (req, res) => {
+  let levels = [];
+  let giveUp = [];
+
+  const user = await User.findById(req.user._id);
+  if (user) {
+    if (!user.balLevels) {
+      user.balLevels = "";
+    }
+    if (user.balLevels === "") {
+      levels = [];
+    } else {
+      levels = user.balLevels.split(",");
+    }
+    if (!user.balGiveUp) {
+      user.balGiveUp = "";
+    }
+    if (user.balGiveUp === "") {
+      giveUp = [];
+    } else {
+      giveUp = user.balGiveUp.split(",");
+    }
+
+    if (
+      !levels.includes(req.body.level) &&
+      !giveUp.includes(req.body.level) &&
+      giveUp.length < 3
+    ) {
+      giveUp.push(req.body.level);
+      user.balGiveUp = giveUp.join(",");
+    }
+    const updatedUser = await user.save();
+    res.status(200).json({
+      balGiveUp: updatedUser.balGiveUp,
+    });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+//@desc     Get give up levels
+//route     GET /api/users/bal/getgiveup
+//@access   Private
+const getGiveUp = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    if (!user.balGiveUp) {
+      user.balGiveUp = "";
+    }
+    res.status(200).json({
+      balGiveUp: user.balGiveUp,
     });
   } else {
     res.status(404);
@@ -253,4 +335,6 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  giveUpLevel,
+  getGiveUp,
 };

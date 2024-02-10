@@ -10,7 +10,9 @@ import {
   setLast,
   getLast,
   saveSettings,
-  loadSettings
+  loadSettings,
+  giveUpLevel,
+  getGiveUp,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -30,5 +32,7 @@ router.post("/bal/setlast", protect, setLast);
 router.get("/bal/getlast", protect, getLast);
 router.post("/bal/savesettings", protect, saveSettings);
 router.get("/bal/loadsettings", protect, loadSettings);
+router.post("/bal/giveup", protect, giveUpLevel);
+router.get("/bal/getgiveup", protect, getGiveUp);
 
 export default router;
