@@ -475,6 +475,8 @@ input[type="email"] {
   min-height: 100vh;
   height: fit-content;
   display: flex;
+  overflow-y:scroll;
+  overflow-x:hidden;
 }
 
 table {
