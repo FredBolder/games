@@ -39,6 +39,10 @@ p {
   margin-top: 1rem;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 /* 01. MAIN PAGE + ADDITIONAL STYLES USED IN WHOLE PROJECT */
 
 .boxWithScroll {
@@ -461,11 +465,15 @@ input[type="email"] {
 .help {
   background: darkgreen;
   color: whitesmoke;
-  height: 60%;
-  width: 60%;
-  margin-bottom: 1rem;
   padding: 0.5rem;
-  border-radius: 15px;
+  border-radius: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
 }
 
 table {
@@ -529,9 +537,6 @@ tr:nth-child(even) td {
     padding: 0.125rem 0.25rem;
     font-size: var(--fontsize-xs);
     border-radius: var(--radius-xs);
-  }
-  .help {
-    width: 90%;
   }
   .balButton {
     font-size: var(--fontsize-xs);
@@ -605,9 +610,6 @@ tr:nth-child(even) td {
     font-size: var(--fontsize-s);
     border-radius: var(--radius-s);
   }
-  .help {
-    width: 90%;
-  }
   .balButton {
     font-size: var(--fontsize-s);
     padding: 0.2rem 0.2rem;
@@ -679,9 +681,6 @@ tr:nth-child(even) td {
     padding: 0.25rem 0.5rem;
     font-size: var(--fontsize-m);
     border-radius: var(--radius-m);
-  }
-  .help {
-    width: 60%;
   }
   .balButton {
     font-size: var(--fontsize-m);
@@ -755,9 +754,6 @@ tr:nth-child(even) td {
     font-size: var(--fontsize-l);
     border-radius: var(--radius-l);
   }
-  .help {
-    width: 60%;
-  }
   .balButton {
     font-size: var(--fontsize-l);
     padding: 0.8rem 1.6rem;
@@ -829,9 +825,6 @@ tr:nth-child(even) td {
     padding: 0.5rem 1rem;
     font-size: var(--fontsize-xl);
     border-radius: var(--radius-xl);
-  }
-  .help {
-    width: 60%;
   }
   .balButton {
     font-size: var(--fontsize-xl);

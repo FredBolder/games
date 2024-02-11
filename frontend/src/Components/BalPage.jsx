@@ -1127,238 +1127,241 @@ function BalPage() {
   }
 
   return (
-    <div className="page">
-      <main>
-        <header>
-          <Navbar />
-        </header>
-        <div className="title">Bal - The Game for Smart People</div>
-        <div className="balPanel">
-          <div className="balPanelText">
-            Level: <span className="balPanelTextSpan">{levelNumber}</span>
-          </div>
-          <div className="menu">
-            <button className="balButton">Load</button>
-            <div className="menu-content">
-              <div onClick={clickSeries1}>
-                <label>Series 1</label>
-              </div>
-              <div onClick={clickSeries2}>
-                <label>Series 2</label>
-              </div>
-              <div onClick={clickSeriesSmall}>
-                <label>Series Small</label>
+    <div>
+      <div
+        className="help"
+        onClick={help}
+        style={{ display: showHelp ? "inline" : "none" }}
+      >
+        <h2>Help</h2>
+        <p>
+          In every level you control the blue ball with the happy face. You have
+          to eat all the little green balls. You can push the white balls and
+          the light blue balls, but not more than 2 at the same time. The light
+          blue balls are floating balls and they will always stay at the same
+          height. Red balls are very dangerous. If you push a yellow ball, it
+          will continue as far as possible. You cannot push more yellow balls at
+          the same time or push a yellow ball together with another ball. You
+          can push a yellow ball in the directions left, right, up and down. A
+          purple ball is almost the same as a yellow ball, but when you push a
+          purple ball, it will go only one position further. You cannot push a
+          ball through a one direction, a teleport, a game rotator or a door
+          with a lock. You can control the blue ball with the letter keys, the
+          arrow keys, the number keys or the arrow buttons. In the water you can
+          swim in every direction. If you see for example a level number 750, it
+          doesn't mean that there are 750 or even more levels. The number
+          depends also on the series and on the&nbsp;
+          <a
+            className="link"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://fredbolder.github.io/bal/"
+          >
+            original Bal game
+          </a>
+          .
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Action</th>
+              <th scope="col">Letter key</th>
+              <th scope="col">Arrow key</th>
+              <th scope="col">Number key</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Walk left / Swim left</td>
+              <td>A</td>
+              <td>Arrow left</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Walk right / Swim right</td>
+              <td>D</td>
+              <td>Arrow right</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>Jump / Push up / Swim up</td>
+              <td>W</td>
+              <td>Arrow up</td>
+              <td>8</td>
+            </tr>
+            <tr>
+              <td>Jump left / Swim up left</td>
+              <td>Q</td>
+              <td>Shift + Arrow left</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>Jump right / Swim up right</td>
+              <td>E</td>
+              <td>Shift + Arrow right</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Push down / Swim down</td>
+              <td>S</td>
+              <td>Arrow down</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Swim down left</td>
+              <td>Y</td>
+              <td>-</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>Swim down right</td>
+              <td>C</td>
+              <td>-</td>
+              <td>3</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          If you have already solved a certain level before, there is a Next
+          button available to continue with the next level. Some levels are very
+          difficult. If you can't solve a certain level, you can start with
+          another series or press the Give up button to continue with the next
+          level. Of course, you can't give up on too many levels.
+        </p>
+        <p className="bold topmargin">
+          You can click on this screen to close it.
+        </p>
+      </div>
+      <div className="page">
+        <main>
+          <header>
+            <Navbar />
+          </header>
+          <div className="title">Bal - The Game for Smart People</div>
+          <div className="balPanel">
+            <div className="balPanelText">
+              Level: <span className="balPanelTextSpan">{levelNumber}</span>
+            </div>
+            <div className="menu">
+              <button className="balButton">Load</button>
+              <div className="menu-content">
+                <div onClick={clickSeries1}>
+                  <label>Series 1</label>
+                </div>
+                <div onClick={clickSeries2}>
+                  <label>Series 2</label>
+                </div>
+                <div onClick={clickSeriesSmall}>
+                  <label>Series Small</label>
+                </div>
               </div>
             </div>
-          </div>
-          <button className="balButton" onClick={tryAgain}>
-            Try again
-          </button>
-          {showNext && (
-            <button className="balButton" onClick={nextLevelClick}>
-              Next
+            <button className="balButton" onClick={tryAgain}>
+              Try again
             </button>
-          )}
-          <button className="balButton" onClick={giveUpClick}>
-            Give up
-          </button>
-          <div className="balPanelText">
-            Green: <span className="balPanelTextSpan">{green}</span>
-          </div>
+            {showNext && (
+              <button className="balButton" onClick={nextLevelClick}>
+                Next
+              </button>
+            )}
+            <button className="balButton" onClick={giveUpClick}>
+              Give up
+            </button>
+            <div className="balPanelText">
+              Green: <span className="balPanelTextSpan">{green}</span>
+            </div>
 
-          <button className="balButton" onClick={help}>
-            ?
-          </button>
+            <button className="balButton" onClick={help}>
+              ?
+            </button>
 
-          <div className="menu">
-            <button className="balButton">Settings</button>
-            <div className="menu-content">
-              <div>
-                <input
-                  type="checkbox"
-                  id="sound"
-                  name="sound"
-                  value="sound"
-                  onChange={handleChangeSettings}
-                />
-                <label for="sound">Sound</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="graphics"
-                  name="graphics"
-                  value="graphics"
-                  onChange={handleChangeSettings}
-                />
-                <label for="graphics">Nicer graphics</label>
-              </div>
-              <div>
-                <input
-                  type="checkbox"
-                  id="questions"
-                  name="questions"
-                  value="questions"
-                  onChange={handleChangeSettings}
-                />
-                <label for="questions">Less questions</label>
+            <div className="menu">
+              <button className="balButton">Settings</button>
+              <div className="menu-content">
+                <div>
+                  <input
+                    type="checkbox"
+                    id="sound"
+                    name="sound"
+                    value="sound"
+                    onChange={handleChangeSettings}
+                  />
+                  <label for="sound">Sound</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="graphics"
+                    name="graphics"
+                    value="graphics"
+                    onChange={handleChangeSettings}
+                  />
+                  <label for="graphics">Nicer graphics</label>
+                </div>
+                <div>
+                  <input
+                    type="checkbox"
+                    id="questions"
+                    name="questions"
+                    value="questions"
+                    onChange={handleChangeSettings}
+                  />
+                  <label for="questions">Less questions</label>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div
-          className="help"
-          onClick={help}
-          style={{ display: showHelp ? "inline" : "none" }}
-        >
-          <h2>Help</h2>
-          <p>
-            In every level you control the blue ball with the happy face. You
-            have to eat all the little green balls. You can push the white balls
-            and the light blue balls, but not more than 2 at the same time. The
-            light blue balls are floating balls and they will always stay at the
-            same height. Red balls are very dangerous. If you push a yellow
-            ball, it will continue as far as possible. You cannot push more
-            yellow balls at the same time or push a yellow ball together with
-            another ball. You can push a yellow ball in the directions left,
-            right, up and down. A purple ball is almost the same as a yellow
-            ball, but when you push a purple ball, it will go only one position
-            further. You cannot push a ball through a one direction, a game
-            rotator or a door with a lock. You can control the blue ball with
-            the letter keys, the arrow keys, the number keys or the arrow
-            buttons. In the water you can swim in every direction. If you see
-            for example a level number 750, it doesn't mean that there are 750
-            or even more levels. The number depends also on the series and on
-            the&nbsp;
-            <a
-              className="link"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://fredbolder.github.io/bal/"
-            >
-              original Bal game
-            </a>
-            .
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Action</th>
-                <th scope="col">Letter key</th>
-                <th scope="col">Arrow key</th>
-                <th scope="col">Number key</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Walk left / Swim left</td>
-                <td>A</td>
-                <td>Arrow left</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Walk right / Swim right</td>
-                <td>D</td>
-                <td>Arrow right</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>Jump / Push up / Swim up</td>
-                <td>W</td>
-                <td>Arrow up</td>
-                <td>8</td>
-              </tr>
-              <tr>
-                <td>Jump left / Swim up left</td>
-                <td>Q</td>
-                <td>Shift + Arrow left</td>
-                <td>7</td>
-              </tr>
-              <tr>
-                <td>Jump right / Swim up right</td>
-                <td>E</td>
-                <td>Shift + Arrow right</td>
-                <td>9</td>
-              </tr>
-              <tr>
-                <td>Push down / Swim down</td>
-                <td>S</td>
-                <td>Arrow down</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Swim down left</td>
-                <td>Y</td>
-                <td>-</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Swim down right</td>
-                <td>C</td>
-                <td>-</td>
-                <td>3</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>
-            If you have already solved a certain level before, there is a Next
-            button available to continue with the next level.
-          </p>
-        </div>
-        <canvas
-          className="gameCanvas"
-          onClick={putBallPosition}
-          style={{ display: showHelp ? "none" : "inline" }}
-        ></canvas>
-        <div className="moveButtons">
-          <button onClick={buttonJumpLeft}>
-            <img src={arrowJumpLeft} alt="ArrowJumpLeft" />
-          </button>
-          <button onClick={buttonMoveLeft}>
-            <img src={arrowLeft} alt="ArrowLeft" />
-          </button>
-          <button onClick={buttonJump}>
-            <img src={arrowUp} alt="ArrowUp" />
-          </button>
-          <button onClick={buttonDown}>
-            <img src={arrowDown} alt="ArrowDown" />
-          </button>
-          <button onClick={buttonMoveRight}>
-            <img src={arrowRight} alt="ArrowRight" />
-          </button>
-          <button onClick={buttonJumpRight}>
-            <img src={arrowJumpRight} alt="ArrowJumpRight" />
-          </button>
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="diving" src={imgBlueDiving} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="happy" src={imgBlueHappy} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="sad" src={imgBlueSad} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="light_blue" src={imgLightBlue} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="red" src={imgRed} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="green" src={imgGreen} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="purple" src={imgPurple} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="white" src={imgWhite} />
-        </div>
-        <div style={{ display: "none" }}>
-          <img id="yellow" src={imgYellow} />
-        </div>
-        <Footer />
-      </main>
+          <canvas className="gameCanvas" onClick={putBallPosition}></canvas>
+          <div className="moveButtons">
+            <button onClick={buttonJumpLeft}>
+              <img src={arrowJumpLeft} alt="ArrowJumpLeft" />
+            </button>
+            <button onClick={buttonMoveLeft}>
+              <img src={arrowLeft} alt="ArrowLeft" />
+            </button>
+            <button onClick={buttonJump}>
+              <img src={arrowUp} alt="ArrowUp" />
+            </button>
+            <button onClick={buttonDown}>
+              <img src={arrowDown} alt="ArrowDown" />
+            </button>
+            <button onClick={buttonMoveRight}>
+              <img src={arrowRight} alt="ArrowRight" />
+            </button>
+            <button onClick={buttonJumpRight}>
+              <img src={arrowJumpRight} alt="ArrowJumpRight" />
+            </button>
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="diving" src={imgBlueDiving} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="happy" src={imgBlueHappy} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="sad" src={imgBlueSad} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="light_blue" src={imgLightBlue} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="red" src={imgRed} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="green" src={imgGreen} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="purple" src={imgPurple} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="white" src={imgWhite} />
+          </div>
+          <div style={{ display: "none" }}>
+            <img id="yellow" src={imgYellow} />
+          </div>
+          <Footer />
+        </main>
+      </div>
     </div>
   );
 }
