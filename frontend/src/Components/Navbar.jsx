@@ -45,7 +45,7 @@ function Navbar() {
     <div className="navbar">
       <div className="logo">
         <h1>GFS</h1>
-        <p>Games From Scratch</p>
+        <p className="hideSmall">Games From Scratch</p>
       </div>
 
       {loggedIn ? (

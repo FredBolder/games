@@ -1128,114 +1128,6 @@ function BalPage() {
 
   return (
     <div>
-      <div
-        className="help"
-        onClick={help}
-        style={{ display: showHelp ? "inline" : "none" }}
-      >
-        <div>
-          <h2>Help</h2>
-          <p>
-            In every level you control the blue ball with the happy face. You
-            have to eat all the little green balls. You can push the white balls
-            and the light blue balls, but not more than 2 at the same time. The
-            light blue balls are floating balls and they will always stay at the
-            same height. Red balls are very dangerous. If you push a yellow
-            ball, it will continue as far as possible. You cannot push more
-            yellow balls at the same time or push a yellow ball together with
-            another ball. You can push a yellow ball in the directions left,
-            right, up and down. A purple ball is almost the same as a yellow
-            ball, but when you push a purple ball, it will go only one position
-            further. You cannot push a ball through a one direction, a teleport,
-            a game rotator or a door with a lock. You can control the blue ball
-            with the letter keys, the arrow keys, the number keys or the arrow
-            buttons. In the water you can swim in every direction. If you see
-            for example a level number 750, it doesn't mean that there are 750
-            or even more levels. The number depends also on the series and on
-            the&nbsp;
-            <a
-              className="link"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://fredbolder.github.io/bal/"
-            >
-              original Bal game
-            </a>
-            .
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Action</th>
-                <th scope="col">Letter key</th>
-                <th scope="col">Arrow key</th>
-                <th scope="col">Number key</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Walk left / Swim left</td>
-                <td>A</td>
-                <td>Arrow left</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Walk right / Swim right</td>
-                <td>D</td>
-                <td>Arrow right</td>
-                <td>6</td>
-              </tr>
-              <tr>
-                <td>Jump / Push up / Swim up</td>
-                <td>W</td>
-                <td>Arrow up</td>
-                <td>8</td>
-              </tr>
-              <tr>
-                <td>Jump left / Swim up left</td>
-                <td>Q</td>
-                <td>Shift + Arrow left</td>
-                <td>7</td>
-              </tr>
-              <tr>
-                <td>Jump right / Swim up right</td>
-                <td>E</td>
-                <td>Shift + Arrow right</td>
-                <td>9</td>
-              </tr>
-              <tr>
-                <td>Push down / Swim down</td>
-                <td>S</td>
-                <td>Arrow down</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <td>Swim down left</td>
-                <td>Y</td>
-                <td>-</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>Swim down right</td>
-                <td>C</td>
-                <td>-</td>
-                <td>3</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>
-            If you have already solved a certain level before, there is a Next
-            button available to continue with the next level. Some levels are
-            very difficult. If you can't solve a certain level, you can start
-            with another series or press the Give up button to continue with the
-            next level. Of course, you can't give up on too many levels.
-          </p>
-          <p className="bold topmargin">
-            You can click on this screen to close it.
-          </p>
-        </div>
-      </div>
-
       <div className="page">
         <main>
           <header>
@@ -1365,6 +1257,113 @@ function BalPage() {
           </div>
           <Footer />
         </main>
+      </div>
+      <div
+        className="help"
+        onClick={help}
+        style={{ display: showHelp ? "inline" : "none" }}
+      >
+        <div>
+          <h2>Help</h2>
+          <p>
+            In every level you control the blue ball with the happy face. You
+            have to eat all the little green balls. You can push the white balls
+            and the light blue balls, but not more than 2 at the same time. The
+            light blue balls are floating balls and they will always stay at the
+            same height. Red balls are very dangerous. If you push a yellow
+            ball, it will continue as far as possible. You cannot push more
+            yellow balls at the same time or push a yellow ball together with
+            another ball. You can push a yellow ball in the directions left,
+            right, up and down. A purple ball is almost the same as a yellow
+            ball, but when you push a purple ball, it will go only one position
+            further. You cannot push a ball through a one direction, a teleport,
+            a game rotator or a door with a lock. You can control the blue ball
+            with the letter keys, the arrow keys, the number keys or the arrow
+            buttons. In the water you can swim in every direction. If you see
+            for example a level number 750, it doesn't mean that there are 750
+            or even more levels. The number depends also on the series and on
+            the&nbsp;
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://fredbolder.github.io/bal/"
+            >
+              original Bal game
+            </a>
+            .
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Action</th>
+                <th scope="col">Letter key</th>
+                <th scope="col">Arrow key</th>
+                <th scope="col">Number key</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Walk left / Swim left</td>
+                <td>A</td>
+                <td>Arrow left</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Walk right / Swim right</td>
+                <td>D</td>
+                <td>Arrow right</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>Jump / Push up / Swim up</td>
+                <td>W</td>
+                <td>Arrow up</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <td>Jump left / Swim up left</td>
+                <td>Q</td>
+                <td>Shift + Arrow left</td>
+                <td>7</td>
+              </tr>
+              <tr>
+                <td>Jump right / Swim up right</td>
+                <td>E</td>
+                <td>Shift + Arrow right</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <td>Push down / Swim down</td>
+                <td>S</td>
+                <td>Arrow down</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Swim down left</td>
+                <td>Y</td>
+                <td>-</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>Swim down right</td>
+                <td>C</td>
+                <td>-</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            If you have already solved a certain level before, there is a Next
+            button available to continue with the next level. Some levels are
+            very difficult. If you can't solve a certain level, you can start
+            with another series or press the Give up button to continue with the
+            next level. Of course, you can't give up on too many levels.
+          </p>
+          <p className="bold topmargin">
+            You can click on this screen to close it.
+          </p>
+        </div>
       </div>
     </div>
   );
