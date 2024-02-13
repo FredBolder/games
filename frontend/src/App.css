@@ -601,6 +601,9 @@ tr:nth-child(even) td {
   .balPanelTextSpan {
     font-size: var(--fontsize-xs);
   }
+  .help-content {
+    width: 100%;
+  }
   .menu-content {
     font-size: var(--fontsize-xs);
     box-shadow: 1px 1px 1px inset rgba(255, 255, 255, 0.5),
@@ -672,6 +675,9 @@ tr:nth-child(even) td {
   }
   .balPanelTextSpan {
     font-size: var(--fontsize-s);
+  }
+  .help-content {
+    width: 100%;
   }
   .menu-content {
     font-size: var(--fontsize-s);
