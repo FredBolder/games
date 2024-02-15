@@ -109,15 +109,14 @@ gameInfo.electricityActive = false;
 gameInfo.trapDoors = [];
 let gameInterval;
 let gameOver = false;
-let giveUp = [];
 let laserX1 = -1;
 let laserX2 = -1;
 let laserY = -1;
-let nextButton = false;
 let posX = -1;
 let posY = -1;
 let settings = { sound: true, nicerGraphics: true, lessQuestions: false };
 let skipFalling = 0;
+let skipped = [];
 let teleporting = 0;
 let wave1 = 0;
 let wave2 = 0;
@@ -140,8 +139,8 @@ function BalPage() {
     if (!completed.includes(level)) {
       completed.push(level);
     }
-    if (giveUp.includes(level)) {
-      giveUp = giveUp.filter((value) => {
+    if (skipped.includes(level)) {
+      skipped = skipped.filter((value) => {
         return level !== value;
       });
     }
@@ -168,47 +167,49 @@ function BalPage() {
       } else {
         completed = balLevels.split(",");
       }
+      updateNextButton();
       //alert(completed.toString());
     } catch (error) {
       alert(error);
     }
   }
 
-  async function getGiveUp() {
+  async function getSkipped() {
     try {
       let response = await axios.get(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/getgiveup`,
+        `${import.meta.env.VITE_BE_URL}/api/users/bal/getskipped`,
         { withCredentials: credentials() }
       );
-      const balGiveUp = response.data.balGiveUp;
-      if (balGiveUp === "") {
-        giveUp = [];
+      const balSkipped = response.data.balSkipped;
+      if (balSkipped === "") {
+        skipped = [];
       } else {
-        giveUp = balGiveUp.split(",");
+        skipped = balSkipped.split(",");
       }
-      //alert(giveUp.toString());
+      updateNextButton();
+      //alert(skipped.toString());
     } catch (error) {
       alert(error);
     }
   }
 
-  async function giveUpLevel(n) {
+  async function skipLevel(n) {
     let msg = "";
     let level = n.toString();
 
     if (
       !completed.includes(level) &&
-      !giveUp.includes(level) &&
-      giveUp.length >= 3
+      !skipped.includes(level) &&
+      skipped.length >= 3
     ) {
       msg =
-        "You have already given up too many levels. Try first to solve a level that you have given up.";
+        "You have already skipped too many levels. Try first to solve a level that you have skipped.";
     }
-    if (msg === "" && !completed.includes(level) && !giveUp.includes(level)) {
-      giveUp.push(level);
+    if (msg === "" && !completed.includes(level) && !skipped.includes(level)) {
+      skipped.push(level);
       try {
         let response = await axios.post(
-          `${import.meta.env.VITE_BE_URL}/api/users/bal/giveup`,
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/skip`,
           { level: level },
           { withCredentials: credentials() }
         );
@@ -317,7 +318,7 @@ function BalPage() {
 
   function updateNextButton() {
     let level = currentLevel.toString();
-    nextButton = completed.includes(level) || giveUp.includes(level);
+    let nextButton = completed.includes(level) || skipped.includes(level);
     setShowNext(nextButton);
   }
 
@@ -718,15 +719,15 @@ function BalPage() {
     }
   }
 
-  function giveUpClick(e) {
+  function skipClick(e) {
     confirmAlert({
       title: "Question",
-      message: "Give up this level?",
+      message: "Skip this level?",
       buttons: [
         {
           label: "Yes",
           onClick: () => {
-            giveUpLevel(currentLevel);
+            skipLevel(currentLevel);
           },
         },
         {
@@ -1002,8 +1003,7 @@ function BalPage() {
       elementHelp = document.getElementById("help");
 
       getCompleted();
-      getGiveUp();
-      updateNextButton();
+      getSkipped();
       initLevel(200, false);
       cbGraphics = document.getElementById("graphics");
       cbQuestions = document.getElementById("questions");
@@ -1166,9 +1166,11 @@ function BalPage() {
                 Next
               </button>
             )}
-            <button className="balButton" onClick={giveUpClick}>
-              Give up
-            </button>
+            {!showNext && (
+              <button className="balButton" onClick={skipClick}>
+                Skip
+              </button>
+            )}
             <div className="balPanelText">
               Green: <span className="balPanelTextSpan">{green}</span>
             </div>
@@ -1267,7 +1269,9 @@ function BalPage() {
       <div className="help" id="help">
         <div className="help-content">
           <div className="help-header">
-            <span className="help-close" onClick={closeHelp}>&times;</span>
+            <span className="help-close" onClick={closeHelp}>
+              &times;
+            </span>
             <h2>Help</h2>
           </div>
           <div class="help-body">
@@ -1363,8 +1367,8 @@ function BalPage() {
               If you have already solved a certain level before, there is a Next
               button available to continue with the next level. Some levels are
               very difficult. If you can't solve a certain level, you can start
-              with another series or press the Give up button to continue with
-              the next level. Of course, you can't give up on too many levels.
+              with another series or press the Skip button to continue with the
+              next level. Of course, you can't skip too many levels.
             </p>
           </div>
         </div>

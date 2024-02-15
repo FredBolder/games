@@ -11,8 +11,8 @@ import {
   getLast,
   saveSettings,
   loadSettings,
-  giveUpLevel,
-  getGiveUp,
+  skipLevel,
+  getSkipped,
 } from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -32,7 +32,7 @@ router.post("/bal/setlast", protect, setLast);
 router.get("/bal/getlast", protect, getLast);
 router.post("/bal/savesettings", protect, saveSettings);
 router.get("/bal/loadsettings", protect, loadSettings);
-router.post("/bal/giveup", protect, giveUpLevel);
-router.get("/bal/getgiveup", protect, getGiveUp);
+router.post("/bal/skip", protect, skipLevel);
+router.get("/bal/getskipped", protect, getSkipped);
 
 export default router;

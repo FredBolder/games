@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema(
     balSettings: {
       type: String,
     },
-    balGiveUp: {
+    balSkipped: {
       type: String,
     }
   },

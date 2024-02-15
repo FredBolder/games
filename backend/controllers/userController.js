@@ -120,7 +120,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 //@access   Private
 const addLevel = asyncHandler(async (req, res) => {
   let levels = [];
-  let giveUp = [];
+  let skipped = [];
   let level = req.body.level;
 
   const user = await User.findById(req.user._id);
@@ -133,23 +133,23 @@ const addLevel = asyncHandler(async (req, res) => {
     } else {
       levels = user.balLevels.split(",");
     }
-    if (!user.balGiveUp) {
-      user.balGiveUp = "";
+    if (!user.balSkipped) {
+      user.balSkipped = "";
     }
-    if (user.balGiveUp === "") {
-      giveUp = [];
+    if (user.balSkipped === "") {
+      skipped = [];
     } else {
-      giveUp = user.balGiveUp.split(",");
+      skipped = user.balSkipped.split(",");
     }
     if (!levels.includes(level)) {
       levels.push(level);
       user.balLevels = levels.join(",");
     }
-    if (giveUp.includes(level)) {
-      giveUp = giveUp.filter((value) => {
+    if (skipped.includes(level)) {
+      skipped = skipped.filter((value) => {
         return level !== value;
       });
-      user.balGiveUp = giveUp.join(",");
+      user.balSkipped = skipped.join(",");
     }
     const updatedUser = await user.save();
     res.status(200).json({
@@ -260,12 +260,12 @@ const loadSettings = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc     Give up level
-//route     POST /api/users/bal/giveup
+//@desc     Skip level
+//route     POST /api/users/bal/skip
 //@access   Private
-const giveUpLevel = asyncHandler(async (req, res) => {
+const skipLevel = asyncHandler(async (req, res) => {
   let levels = [];
-  let giveUp = [];
+  let skipped = [];
 
   const user = await User.findById(req.user._id);
   if (user) {
@@ -277,26 +277,26 @@ const giveUpLevel = asyncHandler(async (req, res) => {
     } else {
       levels = user.balLevels.split(",");
     }
-    if (!user.balGiveUp) {
-      user.balGiveUp = "";
+    if (!user.balSkipped) {
+      user.balSkipped = "";
     }
-    if (user.balGiveUp === "") {
-      giveUp = [];
+    if (user.balSkipped === "") {
+      skipped = [];
     } else {
-      giveUp = user.balGiveUp.split(",");
+      skipped = user.balSkipped.split(",");
     }
 
     if (
       !levels.includes(req.body.level) &&
-      !giveUp.includes(req.body.level) &&
-      giveUp.length < 3
+      !skipped.includes(req.body.level) &&
+      skipped.length < 3
     ) {
-      giveUp.push(req.body.level);
-      user.balGiveUp = giveUp.join(",");
+      skipped.push(req.body.level);
+      user.balSkipped = skipped.join(",");
     }
     const updatedUser = await user.save();
     res.status(200).json({
-      balGiveUp: updatedUser.balGiveUp,
+      balSkipped: updatedUser.balSkipped,
     });
   } else {
     res.status(404);
@@ -304,18 +304,18 @@ const giveUpLevel = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc     Get give up levels
-//route     GET /api/users/bal/getgiveup
+//@desc     Get skipped levels
+//route     GET /api/users/bal/getskipped
 //@access   Private
-const getGiveUp = asyncHandler(async (req, res) => {
+const getSkipped = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    if (!user.balGiveUp) {
-      user.balGiveUp = "";
+    if (!user.balSkipped) {
+      user.balSkipped = "";
     }
     res.status(200).json({
-      balGiveUp: user.balGiveUp,
+      balSkipped: user.balSkipped,
     });
   } else {
     res.status(404);
@@ -335,6 +335,6 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
-  giveUpLevel,
-  getGiveUp,
+  skipLevel,
+  getSkipped,
 };
