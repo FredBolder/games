@@ -26,8 +26,16 @@ function LoginPage() {
       setLoggedIn(true);
       navigate("/bal");
     } catch (err) {
-      //console.log(err);
-      alert(err);
+      let msg = "Error while logging in!";
+      if (err.message) {
+        msg = err.message;
+      }
+      if (err.response){
+        if (err.response.status === 401) {
+          msg = "Invalid email address and/or password!";
+        }
+      }
+      alert(msg);
     }
   };
 

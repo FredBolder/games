@@ -1280,19 +1280,19 @@ function BalPage() {
               have to eat all the little green balls. You can push the white
               balls and the light blue balls, but not more than 2 at the same
               time. The light blue balls are floating balls and they will always
-              stay at the same height. Red balls are very dangerous. If you push
-              a yellow ball, it will continue as far as possible. You cannot
-              push more yellow balls at the same time or push a yellow ball
-              together with another ball. You can push a yellow ball in the
-              directions left, right, up and down. A purple ball is almost the
-              same as a yellow ball, but when you push a purple ball, it will go
-              only one position further. You cannot push a ball through a one
-              direction, a teleport, a game rotator or a door with a lock. You
-              can control the blue ball with the letter keys, the arrow keys,
-              the number keys or the arrow buttons. In the water you can swim in
-              every direction. If you see for example a level number 750, it
-              doesn't mean that there are 750 or even more levels. The number
-              depends also on the series and on the&nbsp;
+              stay at the same height. Red balls and red fish are very
+              dangerous. If you push a yellow ball, it will continue as far as
+              possible. You cannot push more yellow balls at the same time or
+              push a yellow ball together with another ball. You can push a
+              yellow ball in the directions left, right, up and down. A purple
+              ball is almost the same as a yellow ball, but when you push a
+              purple ball, it will go only one position further. You cannot push
+              a ball through a one direction, a teleport, a game rotator or a
+              door with a lock. You can control the blue ball with the letter
+              keys, the arrow keys, the number keys or the arrow buttons. In the
+              water you can swim in every direction. If you see for example a
+              level number 750, it doesn't mean that there are 750 or even more
+              levels. The number depends also on the series and on the&nbsp;
               <a
                 className="link"
                 target="_blank"
@@ -1364,11 +1364,12 @@ function BalPage() {
               </tbody>
             </table>
             <p>
-              If you have already solved a certain level before, there is a Next
-              button available to continue with the next level. Some levels are
-              very difficult. If you can't solve a certain level, you can start
-              with another series or press the Skip button to continue with the
-              next level. Of course, you can't skip too many levels.
+              If you have already solved or skipped a certain level before,
+              there is a Next button available to continue with the next level.
+              Some levels are very difficult. If you can't solve a certain
+              level, you can start with another series or press the Skip button
+              to continue with the next level. Of course, you can't skip too
+              many levels.
             </p>
           </div>
         </div>
