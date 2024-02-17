@@ -8,7 +8,6 @@ import axios from "axios";
 // https://www.npmjs.com/package/react-confirm-alert
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-
 import {
   stringArrayToNumberArray,
   checkFalling,
@@ -68,10 +67,6 @@ import arrowUp from "../Images/arrow_up.svg";
 import arrowLeft from "../Images/arrow_left.svg";
 import arrowRight from "../Images/arrow_right.svg";
 
-let canvas;
-let cbGraphics = null;
-let cbQuestions = null;
-let cbSound = null;
 let completed = [];
 let ctx;
 let currentLevel = 200;
@@ -79,16 +74,6 @@ let fishCounter = 0;
 let fishCountTo = 12;
 let elecActiveSaved = false;
 let electricityCounter = 0;
-let elementDiving;
-let elementGreen;
-let elementHappy;
-let elementLightBlue;
-let elementPurple;
-let elementRed;
-let elementSad;
-let elementWhite;
-let elementYellow;
-let elementHelp;
 let elevatorCounter = 0;
 let explosionCounter = 0;
 let backData = [];
@@ -114,7 +99,11 @@ let laserX2 = -1;
 let laserY = -1;
 let posX = -1;
 let posY = -1;
-let settings = { sound: true, nicerGraphics: true, lessQuestions: false };
+let settings = {
+  sound: true,
+  nicerGraphics: true,
+  lessQuestions: false,
+};
 let skipFalling = 0;
 let skipped = [];
 let teleporting = 0;
@@ -123,6 +112,20 @@ let wave2 = 0;
 let yellowCounter = 0;
 
 function BalPage() {
+  const canvas = useRef(null);
+  const cbGraphics = useRef(null);
+  const cbQuestions = useRef(null);
+  const cbSound = useRef(null);
+  const elementDiving = useRef(null);
+  const elementGreen = useRef(null);
+  const elementHappy = useRef(null);
+  const elementLightBlue = useRef(null);
+  const elementPurple = useRef(null);
+  const elementRed = useRef(null);
+  const elementSad = useRef(null);
+  const elementWhite = useRef(null);
+  const elementYellow = useRef(null);
+  const elementHelp = useRef(null);
   const [green, setGreen] = useState(0);
   const [levelNumber, setLevelNumber] = useState(0);
   const [showNext, setShowNext] = useState(false);
@@ -287,18 +290,12 @@ function BalPage() {
       if (!balSettings.hasOwnProperty("sound")) {
         balSettings.sound = false;
       }
-      settings.lessQuestions = balSettings.lessQuestions;
-      settings.nicerGraphics = balSettings.nicerGraphics;
       settings.sound = balSettings.sound;
-      if (cbQuestions !== null) {
-        cbQuestions.checked = settings.lessQuestions;
-      }
-      if (cbGraphics !== null) {
-        cbGraphics.checked = settings.nicerGraphics;
-      }
-      if (cbSound !== null) {
-        cbSound.checked = settings.sound;
-      }
+      settings.nicerGraphics = balSettings.nicerGraphics;
+      settings.lessQuestions = balSettings.lessQuestions;
+      cbQuestions.current.checked = balSettings.lessQuestions;
+      cbGraphics.current.checked = balSettings.nicerGraphics;
+      cbSound.current.checked = balSettings.sound;
     } catch (error) {
       alert(error);
     }
@@ -605,11 +602,11 @@ function BalPage() {
   }
 
   function closeHelp(e) {
-    elementHelp.style.display = "none";
+    elementHelp.current.style.display = "none";
   }
 
   function help(e) {
-    elementHelp.style.display = "block";
+    elementHelp.current.style.display = "block";
   }
 
   async function initLevel(n, setLastPlayed = true) {
@@ -628,7 +625,6 @@ function BalPage() {
         `${import.meta.env.VITE_BE_URL}/api/bal/initlevel`,
         { level: level }
       );
-      //console.log(response);
       posX = -1;
       posY = -1;
       data = response.data.gameData;
@@ -739,9 +735,10 @@ function BalPage() {
   }
 
   function handleChangeSettings(e) {
-    settings.lessQuestions = cbQuestions.checked;
-    settings.nicerGraphics = cbGraphics.checked;
-    settings.sound = cbSound.checked;
+    settings.sound = cbSound.current.checked;
+    settings.nicerGraphics = cbGraphics.current.checked;
+    settings.lessQuestions = cbQuestions.current.checked;
+    updateScreen();
     saveSettings();
   }
 
@@ -752,10 +749,9 @@ function BalPage() {
     info.rotate = false;
     let rotate = false;
 
-    if (gameOver || !canvas || teleporting > 0) {
+    if (gameOver || teleporting > 0) {
       return false;
     }
-    //console.log(posX, posY, gameData.length);
     if (posX === -1 || posY === -1 || gameData.length === 0) {
       return false;
     }
@@ -990,24 +986,9 @@ function BalPage() {
 
   useEffect(() => {
     if (loggedIn) {
-      elementDiving = document.getElementById("diving");
-      elementHappy = document.getElementById("happy");
-      elementSad = document.getElementById("sad");
-      elementRed = document.getElementById("red");
-      elementGreen = document.getElementById("green");
-      elementLightBlue = document.getElementById("light_blue");
-      elementPurple = document.getElementById("purple");
-      elementWhite = document.getElementById("white");
-      elementYellow = document.getElementById("yellow");
-
-      elementHelp = document.getElementById("help");
-
       getCompleted();
       getSkipped();
       initLevel(200, false);
-      cbGraphics = document.getElementById("graphics");
-      cbQuestions = document.getElementById("questions");
-      cbSound = document.getElementById("sound");
       loadSettings();
       getLast();
 
@@ -1027,28 +1008,27 @@ function BalPage() {
   }, []);
 
   function updateScreen() {
-    canvas = document.querySelector(".gameCanvas");
-    if (!canvas) {
-      return false;
+    const displayWidth = canvas.current.clientWidth;
+    const displayHeight = canvas.current.clientHeight;
+    if (
+      canvas.current.width !== displayWidth ||
+      canvas.current.height !== displayHeight
+    ) {
+      canvas.current.width = displayWidth;
+      canvas.current.height = displayHeight;
     }
-    const displayWidth = canvas.clientWidth;
-    const displayHeight = canvas.clientHeight;
-    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-      canvas.width = displayWidth;
-      canvas.height = displayHeight;
-    }
-    ctx = canvas.getContext("2d");
+    ctx = canvas.current.getContext("2d");
     //console.log("gameData: ", gameData);
     const elements = {
-      elementDiving: elementDiving,
-      elementGreen: elementGreen,
-      elementHappy: elementHappy,
-      elementLightBlue: elementLightBlue,
-      elementPurple: elementPurple,
-      elementRed: elementRed,
-      elementSad: elementSad,
-      elementWhite: elementWhite,
-      elementYellow: elementYellow,
+      elementDiving: elementDiving.current,
+      elementGreen: elementGreen.current,
+      elementHappy: elementHappy.current,
+      elementLightBlue: elementLightBlue.current,
+      elementPurple: elementPurple.current,
+      elementRed: elementRed.current,
+      elementSad: elementSad.current,
+      elementWhite: elementWhite.current,
+      elementYellow: elementYellow.current,
     };
     const status = {
       gameOver: gameOver,
@@ -1056,9 +1036,9 @@ function BalPage() {
       laserX2: laserX2,
       laserY: laserY,
     };
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     drawLevel(
-      canvas,
+      canvas.current,
       ctx,
       backData,
       gameData,
@@ -1096,14 +1076,14 @@ function BalPage() {
 
   function putBallPosition(e) {
     if (e.altKey && e.shiftKey && e.ctrlKey) {
-      if (!gameData || gameData.length < 1 || !canvas) {
+      if (!gameData || gameData.length < 1) {
         return false;
       }
       const rows = gameData.length;
       const columns = gameData[0].length;
 
-      let size1 = canvas.width / columns;
-      let size2 = canvas.height / rows;
+      let size1 = canvas.current.width / columns;
+      let size2 = canvas.current.height / rows;
 
       if (size2 < size1) {
         size1 = size2;
@@ -1111,9 +1091,9 @@ function BalPage() {
       size1 = Math.trunc(size1);
       let gameWidth = columns * size1;
       let gameHeight = rows * size1;
-      let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);
+      let leftMargin = Math.trunc((canvas.current.width - gameWidth) / 2);
 
-      let rect = canvas.getBoundingClientRect();
+      let rect = canvas.current.getBoundingClientRect();
       let x = e.clientX - rect.left - leftMargin;
       let y = e.clientY - rect.top;
 
@@ -1175,7 +1155,12 @@ function BalPage() {
               Green: <span className="balPanelTextSpan">{green}</span>
             </div>
 
-            <button className="balButton" onClick={help}>
+            <button
+              className="balButton"
+              onClick={() => {
+                help();
+              }}
+            >
               ?
             </button>
 
@@ -1186,6 +1171,7 @@ function BalPage() {
                   <input
                     type="checkbox"
                     id="sound"
+                    ref={cbSound}
                     name="sound"
                     value="sound"
                     onChange={handleChangeSettings}
@@ -1196,6 +1182,7 @@ function BalPage() {
                   <input
                     type="checkbox"
                     id="graphics"
+                    ref={cbGraphics}
                     name="graphics"
                     value="graphics"
                     onChange={handleChangeSettings}
@@ -1206,6 +1193,7 @@ function BalPage() {
                   <input
                     type="checkbox"
                     id="questions"
+                    ref={cbQuestions}
                     name="questions"
                     value="questions"
                     onChange={handleChangeSettings}
@@ -1215,7 +1203,11 @@ function BalPage() {
               </div>
             </div>
           </div>
-          <canvas className="gameCanvas" onClick={putBallPosition}></canvas>
+          <canvas
+            className="gameCanvas"
+            ref={canvas}
+            onClick={putBallPosition}
+          ></canvas>
           <div className="moveButtons">
             <button onClick={buttonJumpLeft}>
               <img src={arrowJumpLeft} alt="ArrowJumpLeft" />
@@ -1237,36 +1229,36 @@ function BalPage() {
             </button>
           </div>
           <div style={{ display: "none" }}>
-            <img id="diving" src={imgBlueDiving} />
+            <img ref={elementDiving} src={imgBlueDiving} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="happy" src={imgBlueHappy} />
+            <img ref={elementHappy} src={imgBlueHappy} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="sad" src={imgBlueSad} />
+            <img ref={elementSad} src={imgBlueSad} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="light_blue" src={imgLightBlue} />
+            <img ref={elementLightBlue} src={imgLightBlue} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="red" src={imgRed} />
+            <img ref={elementRed} src={imgRed} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="green" src={imgGreen} />
+            <img ref={elementGreen} src={imgGreen} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="purple" src={imgPurple} />
+            <img ref={elementPurple} src={imgPurple} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="white" src={imgWhite} />
+            <img ref={elementWhite} src={imgWhite} />
           </div>
           <div style={{ display: "none" }}>
-            <img id="yellow" src={imgYellow} />
+            <img ref={elementYellow} src={imgYellow} />
           </div>
           <Footer />
         </main>
       </div>
-      <div className="help" id="help">
+      <div className="help" ref={elementHelp}>
         <div className="help-content">
           <div className="help-header">
             <span className="help-close" onClick={closeHelp}>

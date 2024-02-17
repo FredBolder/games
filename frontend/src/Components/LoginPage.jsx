@@ -1,16 +1,25 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useContext, useRef } from "react";
 import InfoContext from "../Context/InfoContext";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Footer from "./Footer";
 import Tennis from "../Images/tennis.svg";
+import { useEffect } from "react";
 
 function LoginPage() {
   const navigate = useNavigate();
   const { setLoggedIn, loggedIn } = useContext(InfoContext);
+  const elementEmail = useRef(null);
+  const elementPassword = useRef(null);
+
+  useEffect(() => {
+    if (import.meta.env.VITE_NODE_ENV === "development") {
+      elementEmail.current.value = import.meta.env.VITE_EMAIL;
+      elementPassword.current.value = import.meta.env.VITE_PASSWORD;
+    }
+  }, []); 
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -57,9 +66,9 @@ function LoginPage() {
             <div>
               <form onSubmit={submitHandler}>
                 <p className="form-label">Email:</p>
-                <input name="email" type="email" />
+                <input name="email" type="email" ref={elementEmail} />
                 <p className="form-label">Password:</p>
-                <input name="password" type="password" />
+                <input name="password" type="password" ref={elementPassword} />
                 <br />
                 <div className="loginSubmit">
                   <input type="submit" value="Login" className="button" />
