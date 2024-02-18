@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useContext } from "react";
 import InfoContext from "../Context/InfoContext";

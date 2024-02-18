@@ -182,7 +182,7 @@ main {
   text-decoration: none;
   font-size: 1rem;
   font-weight: 900;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 .nav-links {
@@ -386,11 +386,11 @@ input[type="email"] {
   font-size: 1.2rem;
   font-weight: 700;
   background-color: rgba(0, 0, 0, 0.45);
-  padding: 0.5rem 1rem;
-  box-shadow: 0px 2px 2px black, 2px 0px 2px black, -2px 0px 2px black,
-    0px -2px 2px black;
+  padding: min(0.7vw, 10px);
+  box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
+    0px -1px 1px black;
   border-radius: 20px;
-  margin: 0 0.75rem;
+  margin: 0 min(0.7vw, 25px);
 }
 
 .balButton {
@@ -398,10 +398,10 @@ input[type="email"] {
   font-weight: 700;
   background-color: rgba(0, 0, 0, 0.65);
   color: white;
-  padding: 0.8rem 1.6rem;
-  margin: 0 0.75rem;
-  box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-    0px -3px 3px black;
+  padding: min(0.7vw, 10px);
+  margin: 0 min(0.7vw, 25px);
+  box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
+    0px -1px 1px black;
   border-radius: 30px;
   cursor: pointer;
 }
@@ -557,6 +557,18 @@ tr:nth-child(even) td {
   color: black;
   font-size: 0.1rem;
   cursor: pointer;
+  padding: 5px 5px;
+  border-radius: 50%;
+  box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
+    0px -1px 1px black;
+  margin: 0 min(1.7vw, 25px);
+}
+
+.moveButtons button img {
+  width: 7vw;
+  height: 7vw;
+  max-width: 50px;
+  max-height: 50px;
 }
 
 /* 11. MEDIA QUERIES */
@@ -582,19 +594,11 @@ tr:nth-child(even) td {
   }
   .balButton {
     font-size: var(--fontsize-xs);
-    padding: 0.2rem 0.2rem;
-    margin: 0 0.5rem;
-    box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
-      0px -1px 1px black;
     border-radius: var(--radius-xs);
   }
   .balPanelText {
     font-size: var(--fontsize-xs);
-    padding: 0.2rem 0.2rem;
-    box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
-      0px -1px 1px black;
     border-radius: var(--radius-xs);
-    margin: 0 0.75rem;
   }
   .balPanelTextSpan {
     font-size: var(--fontsize-xs);
@@ -628,17 +632,6 @@ tr:nth-child(even) td {
   .gameCanvas {
     height: 60%;
     width: 100%;
-  }
-  .moveButtons button {
-    padding: 0.1em 0.1rem;
-    border-radius: var(--radius-xs);
-    box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
-      0px -1px 1px black;
-    margin: 0 0.5rem;
-  }
-  .moveButtons button img {
-    width: 20px;
-    height: 20px;
   }
 }
 
@@ -657,19 +650,11 @@ tr:nth-child(even) td {
   }
   .balButton {
     font-size: var(--fontsize-s);
-    padding: 0.2rem 0.2rem;
-    margin: 0 0.5rem;
-    box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
-      0px -1px 1px black;
     border-radius: var(--radius-s);
   }
   .balPanelText {
     font-size: var(--fontsize-s);
-    padding: 0.2rem 0.2rem;
-    box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
-      0px -1px 1px black;
     border-radius: var(--radius-s);
-    margin: 0 0.75rem;
   }
   .balPanelTextSpan {
     font-size: var(--fontsize-s);
@@ -704,17 +689,6 @@ tr:nth-child(even) td {
     height: 60%;
     width: 100%;
   }
-  .moveButtons button {
-    padding: 0.1rem 0.1rem;
-    border-radius: var(--radius-s);
-    box-shadow: 0px 1px 1px black, 1px 0px 1px black, -1px 0px 1px black,
-      0px -1px 1px black;
-    margin: 0 0.5rem;
-  }
-  .moveButtons button img {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -732,19 +706,11 @@ tr:nth-child(even) td {
   }
   .balButton {
     font-size: var(--fontsize-m);
-    padding: 0.8rem 1.6rem;
-    margin: 0 0.75rem;
-    box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-      0px -3px 3px black;
     border-radius: var(--radius-m);
   }
   .balPanelText {
     font-size: var(--fontsize-m);
-    padding: 0.5rem 1rem;
-    box-shadow: 0px 2px 2px black, 2px 0px 2px black, -2px 0px 2px black,
-      0px -2px 2px black;
     border-radius: var(--radius-m);
-    margin: 0 0.75rem;
   }
   .balPanelTextSpan {
     font-size: var(--fontsize-m);
@@ -778,17 +744,6 @@ tr:nth-child(even) td {
   .gameCanvas {
     height: 60%;
     width: 60%;
-  }
-  .moveButtons button {
-    padding: 0.3rem 0.7rem;
-    border-radius: var(--radius-m);
-    box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-      0px -3px 3px black;
-    margin: 0 0.75rem;
-  }
-  .moveButtons button img {
-    width: 23px;
-    height: 23px;
   }
 }
 
@@ -807,19 +762,11 @@ tr:nth-child(even) td {
   }
   .balButton {
     font-size: var(--fontsize-l);
-    padding: 0.8rem 1.6rem;
-    margin: 0 0.75rem;
-    box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-      0px -3px 3px black;
     border-radius: var(--radius-l);
   }
   .balPanelText {
     font-size: var(--fontsize-l);
-    padding: 0.5rem 1rem;
-    box-shadow: 0px 2px 2px black, 2px 0px 2px black, -2px 0px 2px black,
-      0px -2px 2px black;
     border-radius: var(--radius-l);
-    margin: 0 0.75rem;
   }
   .balPanelTextSpan {
     font-size: var(--fontsize-l);
@@ -853,17 +800,6 @@ tr:nth-child(even) td {
   .gameCanvas {
     height: 60%;
     width: 60%;
-  }
-  .moveButtons button {
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-l);
-    box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-      0px -3px 3px black;
-    margin: 0 1rem;
-  }
-  .moveButtons button img {
-    width: 25px;
-    height: 25px;
   }
 }
 
@@ -882,19 +818,11 @@ tr:nth-child(even) td {
   }
   .balButton {
     font-size: var(--fontsize-xl);
-    padding: 0.8rem 1.6rem;
-    margin: 0 0.75rem;
-    box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-      0px -3px 3px black;
     border-radius: var(--radius-xl);
   }
   .balPanelText {
     font-size: var(--fontsize-xl);
-    padding: 0.5rem 1rem;
-    box-shadow: 0px 2px 2px black, 2px 0px 2px black, -2px 0px 2px black,
-      0px -2px 2px black;
     border-radius: var(--radius-xl);
-    margin: 0 0.75rem;
   }
   .balPanelTextSpan {
     font-size: var(--fontsize-xl);
@@ -928,16 +856,5 @@ tr:nth-child(even) td {
   .gameCanvas {
     height: 60%;
     width: 60%;
-  }
-  .moveButtons button {
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius-xl);
-    box-shadow: 0px 3px 3px black, 3px 0px 3px black, -3px 0px 3px black,
-      0px -3px 3px black;
-    margin: 0 1rem;
-  }
-  .moveButtons button img {
-    width: 25px;
-    height: 25px;
   }
 }
