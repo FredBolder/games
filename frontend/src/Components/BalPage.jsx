@@ -1203,30 +1203,32 @@ function BalPage() {
               </div>
             </div>
           </div>
-          <canvas
-            className="gameCanvas"
-            ref={canvas}
-            onClick={putBallPosition}
-          ></canvas>
-          <div className="moveButtons">
-            <button onClick={buttonJumpLeft}>
-              <img src={arrowJumpLeft} alt="ArrowJumpLeft" />
-            </button>
-            <button onClick={buttonMoveLeft}>
-              <img src={arrowLeft} alt="ArrowLeft" />
-            </button>
-            <button onClick={buttonJump}>
-              <img src={arrowUp} alt="ArrowUp" />
-            </button>
-            <button onClick={buttonDown}>
-              <img src={arrowDown} alt="ArrowDown" />
-            </button>
-            <button onClick={buttonMoveRight}>
-              <img src={arrowRight} alt="ArrowRight" />
-            </button>
-            <button onClick={buttonJumpRight}>
-              <img src={arrowJumpRight} alt="ArrowJumpRight" />
-            </button>
+          <div className="canvasAndButtons">
+            <canvas
+              className="gameCanvas"
+              ref={canvas}
+              onClick={putBallPosition}
+            ></canvas>
+            <div className="moveButtons">
+              <button onClick={buttonJumpLeft}>
+                <img src={arrowJumpLeft} alt="ArrowJumpLeft" />
+              </button>
+              <button onClick={buttonMoveLeft}>
+                <img src={arrowLeft} alt="ArrowLeft" />
+              </button>
+              <button onClick={buttonJump}>
+                <img src={arrowUp} alt="ArrowUp" />
+              </button>
+              <button onClick={buttonDown}>
+                <img src={arrowDown} alt="ArrowDown" />
+              </button>
+              <button onClick={buttonMoveRight}>
+                <img src={arrowRight} alt="ArrowRight" />
+              </button>
+              <button onClick={buttonJumpRight}>
+                <img src={arrowJumpRight} alt="ArrowJumpRight" />
+              </button>
+            </div>
           </div>
           <div style={{ display: "none" }}>
             <img ref={elementDiving} src={imgBlueDiving} />

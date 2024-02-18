@@ -534,12 +534,24 @@ tr:nth-child(even) td {
 /* 09. GAME CANVAS */
 
 .gameCanvas {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   /*image-rendering: pixelated;*/
   /*image-rendering: crisp-edges;*/
 }
 
 /* 10. MOVE BUTTONS (DIRECTION BUTTONS) IN BAL GAME */
+
+.canvasAndButtons {
+  width: 100%;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  row-gap: 0rem;
+}
 
 .moveButtons {
   width: 100%;
