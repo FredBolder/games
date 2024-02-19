@@ -404,6 +404,7 @@ input[type="email"] {
     0px -1px 1px black;
   border-radius: 30px;
   cursor: pointer;
+  min-width: 3rem;
 }
 
 /* 07. MENU (UPPER BUTTONS) IN BAL PAGE */
@@ -535,6 +536,8 @@ tr:nth-child(even) td {
 
 .gameCanvas {
   margin-bottom: 0rem;
+  height: 50vh;
+  width: 100%;
   /*image-rendering: pixelated;*/
   /*image-rendering: crisp-edges;*/
 }
@@ -641,10 +644,6 @@ tr:nth-child(even) td {
   .menu-content input {
     margin-right: 0.5rem;
   }
-  .gameCanvas {
-    height: 60%;
-    width: 100%;
-  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -696,10 +695,6 @@ tr:nth-child(even) td {
   }
   .menu-content input {
     margin-right: 0.5rem;
-  }
-  .gameCanvas {
-    height: 60%;
-    width: 100%;
   }
 }
 
@@ -753,10 +748,6 @@ tr:nth-child(even) td {
   .menu-content input {
     margin-right: 0.5rem;
   }
-  .gameCanvas {
-    height: 60%;
-    width: 60%;
-  }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -809,10 +800,6 @@ tr:nth-child(even) td {
   .menu-content input {
     margin-right: 0.5rem;
   }
-  .gameCanvas {
-    height: 60%;
-    width: 60%;
-  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -864,9 +851,5 @@ tr:nth-child(even) td {
   }
   .menu-content input {
     margin-right: 0.5rem;
-  }
-  .gameCanvas {
-    height: 60%;
-    width: 60%;
   }
 }

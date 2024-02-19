@@ -1092,10 +1092,11 @@ function BalPage() {
       let gameWidth = columns * size1;
       let gameHeight = rows * size1;
       let leftMargin = Math.trunc((canvas.current.width - gameWidth) / 2);
+      let topMargin = Math.trunc(canvas.current.height - gameHeight);
 
       let rect = canvas.current.getBoundingClientRect();
       let x = e.clientX - rect.left - leftMargin;
-      let y = e.clientY - rect.top;
+      let y = e.clientY - rect.top - topMargin;
 
       let squareX = Math.floor(x / size1);
       let squareY = Math.floor(y / size1);

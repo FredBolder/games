@@ -125,7 +125,8 @@ export default function drawLevel(
   let gameWidth = columns * size1;
   let gameHeight = rows * size1;
   let leftMargin = Math.trunc((canvas.width - gameWidth) / 2);
-  drawFilledBox(ctx, leftMargin, 0, gameWidth, gameHeight, "black");
+  let topMargin = Math.trunc(canvas.height - gameHeight);
+  drawFilledBox(ctx, leftMargin, topMargin, gameWidth, gameHeight, "black");
   let xmin = 0;
   let xmax = 0;
   let ymin = 0;
@@ -158,7 +159,7 @@ export default function drawLevel(
   ctx.shadowOffsetY = 0;
   ctx.imageSmoothingEnabled = false;
 
-  ymin = 0;
+  ymin = topMargin;
   for (let row = 0; row < rows; row++) {
     ymax = ymin + size1 - 1;
     xmin = leftMargin;
@@ -859,7 +860,7 @@ export default function drawLevel(
     drawBox(
       ctx,
       gameInfo.teleports[i].x * size1 + leftMargin + 1,
-      gameInfo.teleports[i].y * size1 + 1,
+      gameInfo.teleports[i].y * size1 + topMargin + 1,
       size1 - 2,
       size1 - 2,
       "white"
@@ -872,7 +873,7 @@ export default function drawLevel(
     const fish = gameInfo.redFish[i];
     xmin = fish.x * size1 + leftMargin;
     xmax = xmin + size1 - 1;
-    ymin = fish.y * size1;
+    ymin = fish.y * size1 + topMargin;
     ymax = ymin + size1 - 1;
     w1 = xmax - xmin + 1;
     w2 = ymax - ymin + 1;
@@ -930,7 +931,7 @@ export default function drawLevel(
       let elecTarget = electricityTarget(backData, gameData, elec.x, elec.y);
       if (elecTarget > 0 && Math.abs(elec.y - elecTarget) > 1) {
         x1 = Math.round(leftMargin + elec.x * size1 + 0.5 * size1);
-        y1 = (elec.y + 1) * size1;
+        y1 = (elec.y + 1) * size1 + topMargin;
         ctx.strokeStyle = "rgb(207, 159, 255)";
         ctx.beginPath();
         ctx.moveTo(x1, y1);
@@ -950,7 +951,7 @@ export default function drawLevel(
   // Game Over
   if (status.gameOver) {
     x1 = leftMargin + gameWidth / 2;
-    y1 = gameHeight / 2;
+    y1 = gameHeight / 2 + topMargin;
     drawText(
       ctx,
       x1,
@@ -967,8 +968,7 @@ export default function drawLevel(
     if (status.laserX1 >= 0 && status.laserX2 >= 0 && status.laserY >= 0) {
       x1 = leftMargin + status.laserX1 * size1;
       x2 = leftMargin + size1 + status.laserX2 * size1;
-      y1 = Math.round(status.laserY * size1 + size1 / 2);
-
+      y1 = Math.round(status.laserY * size1 + size1 / 2 + topMargin);
       drawLine(ctx, x1, y1, x2, y1, "yellow");
     }
   }
