@@ -1,22 +1,43 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./TennisPage.css";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import MessageBox from "./MessageBox";
 
 let ctx;
+let pause = false;
+let runGame = false;
+let user;
+let ball;
+let com;
+let winningScore = 5;
+let selectedSpeed = 6;
 
 function TennisPage() {
+  let gameInterval;
   const canvas = useRef(null);
-  let runGame = false;
-  let user;
-  let ball;
-  let com;
-  let winningScore = 5;
-  let selectedSpeed = 6;
+  const [showModal, setShowModal] = useState(false);
+  const [messageTitle, setMessageTitle] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+
+  const showMessage = (title, message) => {
+    setMessageTitle(title);
+    setMessageContent(message);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    if (pause) {
+      resumeGame();
+    }
+  };
 
   useEffect(() => {
+    const framePerSecond = 60;
+    gameInterval = setInterval(gameLoop, 1000 / framePerSecond);
     window.addEventListener("resize", handleResize);
     canvas.current.addEventListener("mousemove", racketMovement);
     updateCanvas();
@@ -93,9 +114,6 @@ function TennisPage() {
     drawBall(ball.x, ball.y, ball.radius, "yellow");
   }
 
-  const framePerSecond = 60;
-  let gameInterval = setInterval(gameLoop, 1000 / framePerSecond);
-
   function gameLoop() {
     if (runGame) {
       checkWinner();
@@ -122,7 +140,6 @@ function TennisPage() {
     b.bottom = b.y + b.radius;
     b.left = b.x - b.radius;
     b.right = b.x + b.radius;
-
     return (
       p.left < b.right &&
       p.top < b.bottom &&
@@ -146,44 +163,36 @@ function TennisPage() {
   }
 
   function startGame() {
-    runGame = true;
-    ball.speed = selectedSpeed;
-    gameLoop();
+    if (!runGame) {
+      user.score = 0;
+      com.score = 0;
+      ball.speed = selectedSpeed;
+      resetBall();
+      runGame = true;
+    }
   }
 
   function pauseGame() {
-    runGame = false;
-    document.getElementById("tennis-pause-menu").classList.remove("hidden");
+    if (runGame) {
+      pause = true;
+      runGame = false;
+      showMessage("Game paused", "Close this message to resume the game.");
+    }
   }
 
   function resumeGame() {
+    pause = false;
     runGame = true;
-    document.getElementById("tennis-pause-menu").classList.add("hidden");
-    ball.speed = selectedSpeed;
-    gameLoop();
   }
 
-  function restartGame() {
+  function stopGame() {
     runGame = false;
-    document.getElementById("tennis-pause-menu").classList.add("hidden");
-    ball.speed = selectedSpeed;
-    user.score = 0;
-    com.score = 0;
-    resetBall();
-    gameLoop();
-  }
-
-  function quitGame() {
-    runGame = false;
-    document.getElementById("tennis-pause-menu").classList.add("hidden");
-    resetBall();
   }
 
   function changeSpeed() {
     let speedSelect = document.getElementById("speedSelect");
     selectedSpeed = parseInt(speedSelect.value);
     ball.speed = selectedSpeed;
-    gameLoop();
   }
 
   function update() {
@@ -194,34 +203,25 @@ function TennisPage() {
       user.score++;
       resetBall();
     }
-
     ball.x += ball.velocityX;
     ball.y += ball.velocityY;
-
     if (
       ball.y + ball.radius > canvas.current.height ||
       ball.y - ball.radius < 0
     ) {
       ball.velocityY = -ball.velocityY;
     }
-
     let computerLevel = 0.04;
     com.y += (ball.y - (com.y + com.height / 2)) * computerLevel;
-
     ball.speed = selectedSpeed;
-
     let player = ball.x + ball.radius < canvas.current.width / 2 ? user : com;
-
     if (collision(ball, player)) {
       let collisionPoint = ball.y - (player.y + player.height / 2);
       collisionPoint = collisionPoint / (player.height / 2);
-
       let angleRad = collisionPoint * (Math.PI / 4);
       let direction = ball.x + ball.radius < canvas.current.width / 2 ? 1 : -1;
-
       ball.velocityX = direction * ball.speed * Math.cos(angleRad);
       ball.velocityY = ball.speed * Math.sin(angleRad);
-
       ball.speed += 0.4; // Increases the speed of the ball after each hit
     }
   }
@@ -289,34 +289,28 @@ function TennisPage() {
         <div className="tennis-controls">
           <button onClick={startGame}>Start</button>
           <button onClick={pauseGame}>Pause</button>
+          <button onClick={stopGame}>Stop</button>
           <select
             id="speedSelect"
             className="tennis-speed"
             onChange={changeSpeed}
           >
-            <option value="6">Normal</option>
-            <option value="10">Fast</option>
             <option value="3">Slow</option>
+            <option value="6" selected="selected">Normal</option>
+            <option value="10">Fast</option>
+            <option value="14">Very fast</option>
           </select>
         </div>
         <canvas className="tennis-canvas" ref={canvas}></canvas>
-        <div id="tennis-pause-menu" className="hidden">
-          <h1 className="pause-menu-title">Game Paused</h1>
-          <div className="pauseMenu-BtnContainer">
-            <button className="tennis-pause-menu-btn" onClick={resumeGame}>
-              Resume
-            </button>
-            <button className="tennis-pause-menu-btn" onClick={restartGame}>
-              Restart
-            </button>
-
-            <button className="tennis-pause-menu-btn" onClick={quitGame}>
-              Quit
-            </button>
-          </div>
-        </div>
       </main>
       <Footer />
+      {showModal && (
+        <MessageBox
+          title={messageTitle}
+          message={messageContent}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }

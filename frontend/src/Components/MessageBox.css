@@ -45,7 +45,7 @@ img, picture, video, canvas, svg {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-right: 0.25rem;
 }
 
 .close-button {
@@ -54,6 +54,7 @@ img, picture, video, canvas, svg {
   color: white;
   font-size: 28px;
   font-weight: bold;
+  margin-left: 0.5rem;
 }
 
 .close-button:hover,
