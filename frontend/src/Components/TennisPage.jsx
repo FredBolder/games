@@ -2,9 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./TennisPage.css";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 import MessageBox from "./MessageBox";
+import { randomInt } from "../utils";
 
 let ctx;
 let pause = false;
@@ -14,6 +13,7 @@ let ball;
 let com;
 let winningScore = 5;
 let selectedSpeed = 6;
+let ignoreMouseMove = false;
 
 function TennisPage() {
   let gameInterval;
@@ -47,7 +47,7 @@ function TennisPage() {
       y: canvas.current.height / 2,
       radius: 10,
       velocityX: 5,
-      velocityY: 5,
+      velocityY: randomInt(-3, 3),
       speed: selectedSpeed,
     };
 
@@ -123,12 +123,14 @@ function TennisPage() {
   }
 
   function racketMovement(event) {
-    let rect = canvas.current.getBoundingClientRect();
-    let mouseY = event.clientY - rect.top;
-    user.y = Math.min(
-      Math.max(mouseY - user.height / 2, 0),
-      canvas.current.height - user.height
-    );
+    if (!ignoreMouseMove) {
+      let rect = canvas.current.getBoundingClientRect();
+      let mouseY = event.clientY - rect.top;
+      user.y = Math.min(
+        Math.max(mouseY - user.height / 2, 0),
+        canvas.current.height - user.height
+      );
+    }
   }
 
   function collision(b, p) {
@@ -167,7 +169,11 @@ function TennisPage() {
       user.score = 0;
       com.score = 0;
       ball.speed = selectedSpeed;
-      resetBall();
+      ball.x = canvas.current.width / 2;
+      ball.y = canvas.current.height / 2;
+      ball.velocityX = 5;
+      ball.velocityY = randomInt(-3, 3);
+      ball.speed = selectedSpeed;
       runGame = true;
     }
   }
@@ -196,6 +202,7 @@ function TennisPage() {
   }
 
   function update() {
+    let computerLevel;
     if (ball.x - ball.radius < 0) {
       com.score++;
       resetBall();
@@ -211,7 +218,11 @@ function TennisPage() {
     ) {
       ball.velocityY = -ball.velocityY;
     }
-    let computerLevel = 0.04;
+    if (selectedSpeed < 5) {
+      computerLevel = 0.03;
+    } else {
+      computerLevel = 0.04;
+    }
     com.y += (ball.y - (com.y + com.height / 2)) * computerLevel;
     ball.speed = selectedSpeed;
     let player = ball.x + ball.radius < canvas.current.width / 2 ? user : com;
@@ -230,29 +241,27 @@ function TennisPage() {
     let msg = userWins
       ? "Congratulations! You win!"
       : "Game Over! Computer wins.";
-    msg += "\n\nWould you like to play again?";
+    showMessage("Information", msg);
+  }
 
-    confirmAlert({
-      title: "Information",
-      message: msg,
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => {
-            user.score = 0;
-            com.score = 0;
-            resetBall();
-          },
-        },
-        {
-          label: "No",
-          onClick: () => {
-            // Quit the game
-            runGame = false;
-          },
-        },
-      ],
-    });
+  function handleCanvasTouch(e) {
+    const touches = e.changedTouches;
+    ignoreMouseMove = true;
+    let rect = canvas.current.getBoundingClientRect();
+    if (touches.length > 0) {
+      let y = touches[touches.length - 1].pageY - rect.top;
+      if (y < rect.height / 2) {
+        user.y -= 30;
+      } else {
+        user.y += 30;
+      }
+      if (user.y < 0) {
+        user.y = 0;
+      }
+      if (user.y > rect.height - user.height) {
+        user.y = rect.height - user.height;
+      }
+    }
   }
 
   function handleResize(e) {
@@ -283,8 +292,10 @@ function TennisPage() {
       <main>
         <div className="tennis-title">Tennis</div>
         <p className="tennis-instruction">
-          Move the left paddle with your mouse to hit the ball. To win the game,
-          get 5 points. To play, click the Start button.
+          Move the left paddle with your mouse to hit the ball. If you don't
+          have a mouse, you can touch in the upper or lower part of the
+          hardcourt to move the paddle. To win the game, get 5 points. To play,
+          click the Start button.
         </p>
         <div className="tennis-controls">
           <button onClick={startGame}>Start</button>
@@ -296,12 +307,18 @@ function TennisPage() {
             onChange={changeSpeed}
           >
             <option value="3">Slow</option>
-            <option value="6" selected="selected">Normal</option>
+            <option value="6" selected="selected">
+              Normal
+            </option>
             <option value="10">Fast</option>
             <option value="14">Very fast</option>
           </select>
         </div>
-        <canvas className="tennis-canvas" ref={canvas}></canvas>
+        <canvas
+          className="tennis-canvas"
+          ref={canvas}
+          onTouchStart={handleCanvasTouch}
+        ></canvas>
       </main>
       <Footer />
       {showModal && (

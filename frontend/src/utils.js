@@ -34,6 +34,18 @@ export function randomiseArray(arr) {
   return result;
 }
 
+export function randomInt(min, max) {
+  if (typeof min !== "number" || typeof max !== "number") {
+    return null;
+  }
+  if (max < min) {
+    return null;
+  }
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.trunc(Math.random() * (max - min + 1)) + min;
+}
+
 export function validateUserData(user) {
   let msg = "";
 
@@ -60,5 +72,3 @@ export function validateUserData(user) {
   }
   return msg;
 }
-
-
