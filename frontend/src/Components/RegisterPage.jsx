@@ -1,15 +1,28 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 import { fixUserData, validateUserData } from "../utils";
 import imgRedBig from "../Images/red_ball_big.svg";
+import MessageBox from './MessageBox';
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [messageTitle, setMessageTitle] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+
+  const showMessage = (title, message) => {
+    setMessageTitle(title);
+    setMessageContent(message);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   const submitHandler = async (e) => {
     let msg = "";
@@ -36,37 +49,19 @@ function RegisterPage() {
         throw new Error(response.data);
       } else {
         navigate("/login");
-        confirmAlert({
-          title: "Information",
-          message: "User Registered Succesfully!",
-          buttons: [
-            {
-              label: "OK",
-              onClick: () => {},
-            },
-          ],
-        });
+        showMessage("Information", "User Registered Succesfully!");
       }
     } catch (err) {
-      confirmAlert({
-        title: "Error",
-        message: err.message,
-        buttons: [
-          {
-            label: "OK",
-            onClick: () => {},
-          },
-        ],
-      });
+      showMessage("Error", err.message);
     }
   };
 
   return (
-    <>
+    <div className="page">
+      <header>
+        <Navbar />
+      </header>
       <main>
-        <header>
-          <Navbar />
-        </header>
         <div className="registerBox">
           <div className="registerBoxInfo">
             <div className="registerBoxInfos">
@@ -100,9 +95,16 @@ function RegisterPage() {
             </div>
           </div>
         </div>
-        <Footer />
       </main>
-    </>
+      <Footer />
+      {showModal && (
+        <MessageBox
+          title={messageTitle}
+          message={messageContent}
+          onClose={closeModal}
+        />
+      )}
+    </div>
   );
 }
 

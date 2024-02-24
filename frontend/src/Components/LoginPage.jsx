@@ -1,25 +1,39 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import InfoContext from "../Context/InfoContext";
 import Navbar from "./Navbar";
 import axios from "axios";
 import Footer from "./Footer";
 import Tennis from "../Images/tennis.svg";
 import { useEffect } from "react";
+import MessageBox from './MessageBox';
 
 function LoginPage() {
   const navigate = useNavigate();
   const { setLoggedIn, loggedIn } = useContext(InfoContext);
   const elementEmail = useRef(null);
   const elementPassword = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+  const [messageTitle, setMessageTitle] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+
+  const showMessage = (title, message) => {
+    setMessageTitle(title);
+    setMessageContent(message);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (import.meta.env.VITE_NODE_ENV === "development") {
       elementEmail.current.value = import.meta.env.VITE_EMAIL;
       elementPassword.current.value = import.meta.env.VITE_PASSWORD;
     }
-  }, []); 
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -39,12 +53,12 @@ function LoginPage() {
       if (err.message) {
         msg = err.message;
       }
-      if (err.response){
+      if (err.response) {
         if (err.response.status === 401) {
           msg = "Invalid email address and/or password!";
         }
       }
-      alert(msg);
+      showMessage("Error", msg);
     }
   };
 
@@ -53,11 +67,11 @@ function LoginPage() {
   }
 
   return (
-    <>
+    <div className="page">
+      <header>
+        <Navbar />
+      </header>
       <main>
-        <header>
-          <Navbar />
-        </header>
         <div className="loginBox">
           <div className="loginBoxInfo loginBoxOne">
             <div>
@@ -99,9 +113,16 @@ function LoginPage() {
             </div>
           </div>
         </div>
-        <Footer />
       </main>
-    </>
+      <Footer />
+      {showModal && (
+        <MessageBox
+          title={messageTitle}
+          message={messageContent}
+          onClose={closeModal}
+        />
+      )}
+    </div>
   );
 }
 

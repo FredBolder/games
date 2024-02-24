@@ -8,6 +8,7 @@ import axios from "axios";
 // https://www.npmjs.com/package/react-confirm-alert
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import MessageBox from './MessageBox';
 import {
   stringArrayToNumberArray,
   checkFalling,
@@ -131,6 +132,19 @@ function BalPage() {
   const [showNext, setShowNext] = useState(false);
   const { loggedIn } = useContext(InfoContext);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [messageTitle, setMessageTitle] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+
+  const showMessage = (title, message) => {
+    setMessageTitle(title);
+    setMessageContent(message);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   function credentials() {
     return import.meta.env.VITE_NODE_ENV !== "development";
@@ -154,7 +168,7 @@ function BalPage() {
         { withCredentials: credentials() }
       );
     } catch (error) {
-      alert(error);
+      showMessage("Error", error);
     }
   }
 
@@ -171,9 +185,8 @@ function BalPage() {
         completed = balLevels.split(",");
       }
       updateNextButton();
-      //alert(completed.toString());
     } catch (error) {
-      alert(error);
+      showMessage("Error", error);
     }
   }
 
@@ -190,9 +203,8 @@ function BalPage() {
         skipped = balSkipped.split(",");
       }
       updateNextButton();
-      //alert(skipped.toString());
     } catch (error) {
-      alert(error);
+      showMessage("Error", error);
     }
   }
 
@@ -223,7 +235,7 @@ function BalPage() {
     if (msg === "") {
       initLevel(currentLevel + 1);
     } else {
-      alert(msg);
+      showMessage("Info", msg);
     }
   }
 
@@ -237,7 +249,7 @@ function BalPage() {
         { withCredentials: credentials() }
       );
     } catch (error) {
-      alert(error);
+      showMessage("Error", error);
     }
   }
 
@@ -270,7 +282,7 @@ function BalPage() {
         });
       }
     } catch (error) {
-      alert(error);
+      showMessage("Error", error);
     }
   }
 
@@ -1116,10 +1128,10 @@ function BalPage() {
   return (
     <div>
       <div className="page">
+        <header>
+          <Navbar />
+        </header>
         <main>
-          <header>
-            <Navbar />
-          </header>
           <div className="title">Bal - The Game for Smart People</div>
           <div className="balPanel">
             <div className="balPanelText">
@@ -1258,8 +1270,8 @@ function BalPage() {
           <div style={{ display: "none" }}>
             <img ref={elementYellow} src={imgYellow} />
           </div>
-          <Footer />
         </main>
+        <Footer />
       </div>
       <div className="help" ref={elementHelp}>
         <div className="help-content">
@@ -1269,7 +1281,7 @@ function BalPage() {
             </span>
             <h2>Help</h2>
           </div>
-          <div class="help-body">
+          <div class="help-main">
             <p>
               In every level you control the blue ball with the happy face. You
               have to eat all the little green balls. You can push the white
@@ -1369,6 +1381,13 @@ function BalPage() {
           </div>
         </div>
       </div>
+      {showModal && (
+        <MessageBox
+          title={messageTitle}
+          message={messageContent}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }

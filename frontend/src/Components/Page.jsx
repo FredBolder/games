@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "../Components/Footer";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Page() {
   const navigate = useNavigate();
@@ -16,10 +16,10 @@ function Page() {
 
   return (
     <div className="page">
+      <header>
+        <Navbar />
+      </header>
       <main>
-        <header>
-          <Navbar />
-        </header>
         <div>
           <h1 className="title">The Journey Begins Here</h1>
           <div className="button-container">
@@ -31,8 +31,8 @@ function Page() {
             </button>
           </div>
         </div>
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }

@@ -1,144 +1,128 @@
 .tennis-title {
-	color: whitesmoke;
+  color: whitesmoke;
   font-size: calc(1.5rem + 2vw);
   font-weight: bold;
   text-align: center;
-  padding: 2rem 0;
+  padding: 10px 0;
   text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
     -3px -3px 3px black;
 }
 
-.board-size {
-	background-color: darkgreen;
+.tennis-instruction {
+  color: white;
+  font-size: 1rem;
+  margin: 10px;
 }
 
-#tennis-canvas {
-	border: 3px solid rgb(255, 255, 255);
+.tennis-canvas {
+  border: 3px solid rgb(255, 255, 255);
+  width: 99%;
+  height: 50vh;
+  max-width: 800px;
+  max-height: 500px;
 }
 
-.tennis-intro {
-	color: white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 5px;
-	text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
+.tennis-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.tennis-controls button {
+  background-color: green;
+  color: white;
+  font-size: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.752);
+  padding: 10px 20px;
+  margin: 5px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
     -3px -3px 3px black;
 }
 
-.tennis-directions{
-	color: white;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin: 5px;
-	text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
+.tennis-controls button:hover {
+  background-color: rgb(0, 65, 0);
+}
+
+.tennis-speed {
+  background-color: green;
+  color: white;
+  font-size: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.705);
+  padding: 10px 20px;
+  margin: 5px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
     -3px -3px 3px black;
-}
-
-/* button edits */
-.game-btn {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	width: 800px; /* Set a width for the button container */
-	
-}
-
-.game-btn button {
-  background-color: green; 
-  color: white; 
-	font-size: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.752);  
-  padding: 10px 20px; 
-	margin-bottom: 10px;
-  cursor: pointer; 
-	border-radius: 10px;
-  transition: background-color 0.3s ease;
-	text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
-    -3px -3px 3px black; 
-}
-
-.game-btn button:hover {
-  background-color: rgb(0, 65, 0); 
-}
-
-.speed-btn {
-	background-color: green; 
-  color: white; 
-	font-size: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.705); 
-  padding: 10px 20px; 
-	margin-bottom: 10px;
-  cursor: pointer; 
-	border-radius: 10px;
-  transition: background-color 0.3s ease;
-	text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
-    -3px -3px 3px black; 
 }
 
 .speed-btn:hover {
-  background-color: rgb(0, 65, 0); 
+  background-color: rgb(0, 65, 0);
 }
 
 /* pause menu edits */
 #tennis-pause-menu {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-evenly;
-	position: absolute;
-	border-radius: 10px;
-	top: 29%;
-	left: 26.5%;
-	width: 47vw;
-	height: 69vh;
-	background-color: rgba(0, 0, 0, 0.702);
-	z-index: 10;
-	text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: absolute;
+  border-radius: 10px;
+  top: 29%;
+  left: 26.5%;
+  width: 47vw;
+  height: 69vh;
+  background-color: rgba(0, 0, 0, 0.702);
+  z-index: 10;
+  text-shadow: 3px 3px 3px black, -3px 3px 3px black, 3px -3px 3px black,
     -3px -3px 3px black;
 }
 /* Pause menu edits */
 
 .pause-menu-title {
-	color: white;
-	font-size: 2rem;
-	background-color: darkgreen;
-	border-radius: 10px;
-	padding: 10px;
-	margin-top: 50px;	
+  color: white;
+  font-size: 2rem;
+  background-color: darkgreen;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 50px;
 }
 
 .pauseMenu-BtnContainer {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-evenly;
-	gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 20px;
 }
 
 #tennis-pause-menu.hidden {
-	color: white;
-	display: none;
+  color: white;
+  display: none;
 }
 .tennis-pause-menu-title {
-	color: white;
+  color: white;
 }
 .tennis-pause-menu-title:hover {
-	color: green;
+  color: green;
 }
 
 /* Pause Menu Buttons edits */
 .tennis-pause-menu-btn {
-	width: 100px;
-	height: 50px;
-	font-size: 1rem;
-	border-radius: 10px;
-	background-color: white;
-	border: 2px solid black;
-	cursor: pointer;
+  width: 100px;
+  height: 50px;
+  font-size: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  border: 2px solid black;
+  cursor: pointer;
 }
 .tennis-pause-menu-btn:hover {
-	background-color: rgb(0, 65, 0);
-	color: white;
+  background-color: rgb(0, 65, 0);
+  color: white;
 }
