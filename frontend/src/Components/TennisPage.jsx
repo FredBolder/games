@@ -69,6 +69,7 @@ function TennisPage() {
     };
 
     return () => {
+      runGame = false;
       removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       document.removeEventListener('touchmove', handleTouchMove);
