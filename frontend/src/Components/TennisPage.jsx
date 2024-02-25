@@ -39,7 +39,7 @@ function TennisPage() {
     const framePerSecond = 60;
     gameInterval = setInterval(gameLoop, 1000 / framePerSecond);
     window.addEventListener("resize", handleResize);
-    canvas.current.addEventListener("mousemove", racketMovement);
+    canvas.current.addEventListener("mousemove", handleMouseMove);
     updateCanvas();
 
     ball = {
@@ -68,7 +68,7 @@ function TennisPage() {
     };
 
     return () => {
-      removeEventListener("mousemove", racketMovement);
+      removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       clearInterval(gameInterval);
     };
@@ -119,17 +119,6 @@ function TennisPage() {
       checkWinner();
       updateScreen();
       update();
-    }
-  }
-
-  function racketMovement(event) {
-    if (!ignoreMouseMove) {
-      let rect = canvas.current.getBoundingClientRect();
-      let mouseY = event.clientY - rect.top;
-      user.y = Math.min(
-        Math.max(mouseY - user.height / 2, 0),
-        canvas.current.height - user.height
-      );
     }
   }
 
@@ -244,23 +233,40 @@ function TennisPage() {
     showMessage("Information", msg);
   }
 
+  function handleCanvasMove(e) {
+    const touches = e.changedTouches;
+    ignoreMouseMove = true;
+    let rect = canvas.current.getBoundingClientRect();
+    if (touches.length > 0) {
+      let y = touches[touches.length - 1].pageY - rect.top;
+      user.y = Math.min(
+        Math.max(y - user.height / 2, 0),
+        canvas.current.height - user.height
+      );
+    }
+  }
+
   function handleCanvasTouch(e) {
     const touches = e.changedTouches;
     ignoreMouseMove = true;
     let rect = canvas.current.getBoundingClientRect();
     if (touches.length > 0) {
       let y = touches[touches.length - 1].pageY - rect.top;
-      if (y < rect.height / 2) {
-        user.y -= 30;
-      } else {
-        user.y += 30;
-      }
-      if (user.y < 0) {
-        user.y = 0;
-      }
-      if (user.y > rect.height - user.height) {
-        user.y = rect.height - user.height;
-      }
+      user.y = Math.min(
+        Math.max(y - user.height / 2, 0),
+        canvas.current.height - user.height
+      );
+    }
+  }
+
+  function handleMouseMove(event) {
+    if (!ignoreMouseMove) {
+      let rect = canvas.current.getBoundingClientRect();
+      let mouseY = event.clientY - rect.top;
+      user.y = Math.min(
+        Math.max(mouseY - user.height / 2, 0),
+        canvas.current.height - user.height
+      );
     }
   }
 
@@ -293,9 +299,9 @@ function TennisPage() {
         <div className="tennis-title">Tennis</div>
         <p className="tennis-instruction">
           Move the left paddle with your mouse to hit the ball. If you don't
-          have a mouse, you can touch in the upper or lower part of the
-          hardcourt to move the paddle. To win the game, get 5 points. To play,
-          click the Start button.
+          have a mouse (phone or table), you can touch and move on the hardcourt
+          to move the paddle. To win the game, get 5 points. To play, click the
+          Start button.
         </p>
         <div className="tennis-controls">
           <button onClick={startGame}>Start</button>
@@ -318,6 +324,7 @@ function TennisPage() {
           className="tennis-canvas"
           ref={canvas}
           onTouchStart={handleCanvasTouch}
+          onTouchMove={handleCanvasMove}
         ></canvas>
       </main>
       <Footer />
