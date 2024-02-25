@@ -40,6 +40,7 @@ function TennisPage() {
     gameInterval = setInterval(gameLoop, 1000 / framePerSecond);
     window.addEventListener("resize", handleResize);
     canvas.current.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
     updateCanvas();
 
     ball = {
@@ -70,6 +71,7 @@ function TennisPage() {
     return () => {
       removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener('touchmove', handleTouchMove);
       clearInterval(gameInterval);
     };
   }, []);
@@ -207,11 +209,7 @@ function TennisPage() {
     ) {
       ball.velocityY = -ball.velocityY;
     }
-    if (selectedSpeed < 5) {
-      computerLevel = 0.03;
-    } else {
-      computerLevel = 0.04;
-    }
+    computerLevel = (selectedSpeed / 3) * 0.01 + 0.02;
     com.y += (ball.y - (com.y + com.height / 2)) * computerLevel;
     ball.speed = selectedSpeed;
     let player = ball.x + ball.radius < canvas.current.width / 2 ? user : com;
@@ -233,20 +231,8 @@ function TennisPage() {
     showMessage("Information", msg);
   }
 
-  function handleCanvasMove(e) {
-    const touches = e.changedTouches;
-    ignoreMouseMove = true;
-    let rect = canvas.current.getBoundingClientRect();
-    if (touches.length > 0) {
-      let y = touches[touches.length - 1].pageY - rect.top;
-      user.y = Math.min(
-        Math.max(y - user.height / 2, 0),
-        canvas.current.height - user.height
-      );
-    }
-  }
-
-  function handleCanvasTouch(e) {
+  function handleTouchMove(e) {
+    e.preventDefault()
     const touches = e.changedTouches;
     ignoreMouseMove = true;
     let rect = canvas.current.getBoundingClientRect();
@@ -299,9 +285,9 @@ function TennisPage() {
         <div className="tennis-title">Tennis</div>
         <p className="tennis-instruction">
           Move the left paddle with your mouse to hit the ball. If you don't
-          have a mouse (phone or tablet), you can touch and move on the hardcourt
-          to move the paddle. To win the game, get 5 points. To play, click the
-          Start button.
+          have a mouse (phone or tablet), you can touch and move on the
+          hardcourt to move the paddle. To win the game, get 5 points. To play,
+          click the Start button.
         </p>
         <div className="tennis-controls">
           <button onClick={startGame}>Start</button>
@@ -323,8 +309,6 @@ function TennisPage() {
         <canvas
           className="tennis-canvas"
           ref={canvas}
-          onTouchStart={handleCanvasTouch}
-          onTouchMove={handleCanvasMove}
         ></canvas>
       </main>
       <Footer />

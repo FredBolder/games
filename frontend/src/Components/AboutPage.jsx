@@ -64,13 +64,22 @@ function AboutPage() {
               href={sites[randomIndexes[3]]}
             >
               {names[randomIndexes[3]]}
-            </a>{" "}
+            </a>
+            {") "}
             are a team of motivated people from different career backgrounds,
             that came together to colaborate on this final project as a
             testament to what we have learned not only from DCI (Digital Career
             Institute GmbH), but also from each other and with that embarking on
             the journey of self-discovery, continuous learning and improvement
             that is programming.
+          </p>
+          <p>
+            As of Jan. 17, 2024, Fred Bolder is working on this site. The
+            styling of the whole site is improved. The game Tennis is now also
+            playable on a phone or a tablet. There are a lot of new levels added
+            to the game Bal. New in the game Bal are swimming, red fish,
+            electricity, trap doors and a button to skip a level, in case it is
+            too difficult.
           </p>
           <h4 className="topmargin">The games</h4>
           <p>
