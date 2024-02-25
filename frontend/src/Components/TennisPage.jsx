@@ -299,7 +299,7 @@ function TennisPage() {
         <div className="tennis-title">Tennis</div>
         <p className="tennis-instruction">
           Move the left paddle with your mouse to hit the ball. If you don't
-          have a mouse (phone or table), you can touch and move on the hardcourt
+          have a mouse (phone or tablet), you can touch and move on the hardcourt
           to move the paddle. To win the game, get 5 points. To play, click the
           Start button.
         </p>
