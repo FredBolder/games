@@ -12,6 +12,19 @@ export function fixUserData(user) {
   user.password2 = user.password2.trim();
 }
 
+export function minMax(value, min, max) {
+  let result = value;
+  if (max >= min) {
+    if (result < min) {
+      result = min;
+    }
+    if (result > max) {
+      result = max;
+    }
+  }
+  return result;
+}
+
 export function polar(x, y, angle, dist) {
   let result = { x: x, y: y };
   result.x = dist * Math.cos((angle / 180) * Math.PI) + x;

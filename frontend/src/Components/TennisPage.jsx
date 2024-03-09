@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./TennisPage.css";
 import MessageBox from "./MessageBox";
-import { randomInt } from "../utils";
+import { minMax, randomInt } from "../utils";
 
 let ctx;
 let pause = false;
@@ -40,7 +40,7 @@ function TennisPage() {
     gameInterval = setInterval(gameLoop, 1000 / framePerSecond);
     window.addEventListener("resize", handleResize);
     canvas.current.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
     updateCanvas();
 
     ball = {
@@ -72,7 +72,7 @@ function TennisPage() {
       runGame = false;
       removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
-      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener("touchmove", handleTouchMove);
       clearInterval(gameInterval);
     };
   }, []);
@@ -212,6 +212,7 @@ function TennisPage() {
     }
     computerLevel = (selectedSpeed / 3) * 0.01 + 0.02;
     com.y += (ball.y - (com.y + com.height / 2)) * computerLevel;
+    com.y = minMax(com.y, 0, canvas.current.height - com.height);
     ball.speed = selectedSpeed;
     let player = ball.x + ball.radius < canvas.current.width / 2 ? user : com;
     if (collision(ball, player)) {
@@ -233,27 +234,22 @@ function TennisPage() {
   }
 
   function handleTouchMove(e) {
-    e.preventDefault()
+    e.preventDefault();
     const touches = e.changedTouches;
     ignoreMouseMove = true;
     let rect = canvas.current.getBoundingClientRect();
     if (touches.length > 0) {
-      let y = touches[touches.length - 1].pageY - rect.top;
-      user.y = Math.min(
-        Math.max(y - user.height / 2, 0),
-        canvas.current.height - user.height
-      );
+      let y = touches[touches.length - 1].pageY;
+      user.y = y - rect.top - user.height / 2;
+      user.y = minMax(user.y, 0, canvas.current.height - user.height);
     }
   }
 
   function handleMouseMove(event) {
     if (!ignoreMouseMove) {
       let rect = canvas.current.getBoundingClientRect();
-      let mouseY = event.clientY - rect.top;
-      user.y = Math.min(
-        Math.max(mouseY - user.height / 2, 0),
-        canvas.current.height - user.height
-      );
+      user.y = event.clientY - rect.top - user.height / 2;
+      user.y = minMax(user.y, 0, canvas.current.height - user.height);
     }
   }
 
@@ -307,10 +303,7 @@ function TennisPage() {
             <option value="14">Very fast</option>
           </select>
         </div>
-        <canvas
-          className="tennis-canvas"
-          ref={canvas}
-        ></canvas>
+        <canvas className="tennis-canvas" ref={canvas}></canvas>
       </main>
       <Footer />
       {showModal && (
