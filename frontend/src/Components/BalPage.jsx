@@ -805,6 +805,7 @@ function BalPage() {
           break;
       }
     } else {
+      console.log("KEY: " + e.key);
       switch (e.key) {
         case "p":
         case "P":
