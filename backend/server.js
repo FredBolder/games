@@ -17,14 +17,27 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-if (process.env.NODE_ENV === "development") {
-  console.log("CORS FOR DEVELOPMENT");
-  app.use(cors());
-} else {
-  console.log("CORS FOR PUBLISHING");
-  app.use(cors({ origin: ['https://games-41ql.onrender.com/', "http://localhost:5173/", "http://localhost:5000/"], credentials: true }));
-}
+app.use(cookieParser());
 app.use(express.json());
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('CORS FOR DEVELOPMENT');
+  app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+  }));
+} else {
+  console.log('CORS FOR PUBLISHING');
+  app.use(cors({
+    origin: [
+      'https://games-41ql.onrender.com',
+      'http://localhost:5173',
+      'http://localhost:5000'
+    ],
+    credentials: true
+  }));
+}
+
 app.use(express.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === "development") {
@@ -32,8 +45,6 @@ if (process.env.NODE_ENV === "development") {
 } else {
   app.use(express.static(path.resolve("./frontend/dist/")));
 }
-
-app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/bal", balRoutes);

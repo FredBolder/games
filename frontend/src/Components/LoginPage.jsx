@@ -42,9 +42,13 @@ function LoginPage() {
         email: e.target["email"].value,
         password: e.target["password"].value,
       };
+      
       const response = await axios.post(
         `${import.meta.env.VITE_BE_URL}/api/users/login`,
-        userCredentials
+        userCredentials,
+        {
+          withCredentials: true // Ensure cookies are sent
+        }
       );
       setLoggedIn(true);
       navigate("/bal");
