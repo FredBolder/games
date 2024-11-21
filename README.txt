@@ -3,7 +3,7 @@ BACKEND
 Go to the backend folder
 Make sure that there is a .env in there with the right content (ask Fred)
 Type npm i
-Type nodemon server
+Type node server
 
 FRONTEND
 
