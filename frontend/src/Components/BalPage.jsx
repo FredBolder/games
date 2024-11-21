@@ -150,61 +150,77 @@ function BalPage() {
     return import.meta.env.VITE_NODE_ENV !== "development";
   }
 
+  function isDevelopment() {
+    return import.meta.env.VITE_NODE_ENV === "development";
+  }
+
   async function addLevel(n) {
     let level = n.toString();
 
-    if (!completed.includes(level)) {
-      completed.push(level);
-    }
-    if (skipped.includes(level)) {
-      skipped = skipped.filter((value) => {
-        return level !== value;
-      });
-    }
-    try {
-      let response = await axios.post(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/addcompleted`,
-        { level: level },
-        { withCredentials: credentials() }
-      );
-    } catch (error) {
-      showMessage("Error", error);
+    if (loggedIn) {
+      if (!completed.includes(level)) {
+        completed.push(level);
+      }
+      if (skipped.includes(level)) {
+        skipped = skipped.filter((value) => {
+          return level !== value;
+        });
+      }
+      try {
+        let response = await axios.post(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/addcompleted`,
+          { level: level },
+          { withCredentials: credentials() }
+        );
+      } catch (error) {
+        showMessage("Error", error);
+      }
     }
   }
 
   async function getCompleted() {
-    try {
-      let response = await axios.get(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/getcompleted`,
-        { withCredentials: credentials() }
-      );
-      const balLevels = response.data.balLevels;
-      if (balLevels === "") {
-        completed = [];
-      } else {
-        completed = balLevels.split(",");
+    if (loggedIn) {
+      try {
+        let response = await axios.get(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/getcompleted`,
+          { withCredentials: credentials() }
+        );
+        const balLevels = response.data.balLevels;
+        if (balLevels === "") {
+          completed = [];
+        } else {
+          completed = balLevels.split(",");
+        }
+        updateNextButton();
+      } catch (error) {
+        showMessage("Error", error);
       }
+    } else {
+      completed = [];
       updateNextButton();
-    } catch (error) {
-      showMessage("Error", error);
     }
   }
 
   async function getSkipped() {
-    try {
-      let response = await axios.get(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/getskipped`,
-        { withCredentials: credentials() }
-      );
-      const balSkipped = response.data.balSkipped;
-      if (balSkipped === "") {
-        skipped = [];
-      } else {
-        skipped = balSkipped.split(",");
+    if (loggedIn) {
+      try {
+        let response = await axios.get(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/getskipped`,
+          { withCredentials: credentials() }
+        );
+        const balSkipped = response.data.balSkipped;
+        if (balSkipped === "") {
+          skipped = [];
+        } else {
+          skipped = balSkipped.split(",");
+        }
+        updateNextButton();
+      } catch (error) {
+        showMessage("Error", error);
       }
+    } else {
+      skipped = [];
       updateNextButton();
-    } catch (error) {
-      showMessage("Error", error);
     }
   }
 
@@ -212,116 +228,126 @@ function BalPage() {
     let msg = "";
     let level = n.toString();
 
-    if (
-      !completed.includes(level) &&
-      !skipped.includes(level) &&
-      skipped.length >= 3
-    ) {
-      msg =
-        "You have already skipped too many levels. Try first to solve a level that you have skipped.";
-    }
-    if (msg === "" && !completed.includes(level) && !skipped.includes(level)) {
-      skipped.push(level);
-      try {
-        let response = await axios.post(
-          `${import.meta.env.VITE_BE_URL}/api/users/bal/skip`,
-          { level: level },
-          { withCredentials: credentials() }
-        );
-      } catch (error) {
-        msg = error;
+    if (loggedIn) {
+      if (
+        !completed.includes(level) &&
+        !skipped.includes(level) &&
+        skipped.length >= 3
+      ) {
+        msg =
+          "You have already skipped too many levels. Try first to solve a level that you have skipped.";
       }
-    }
-    if (msg === "") {
-      initLevel(currentLevel + 1);
-    } else {
-      showMessage("Info", msg);
+      if (msg === "" && !completed.includes(level) && !skipped.includes(level)) {
+        skipped.push(level);
+        try {
+          let response = await axios.post(
+            `${import.meta.env.VITE_BE_URL}/api/users/bal/skip`,
+            { level: level },
+            { withCredentials: credentials() }
+          );
+        } catch (error) {
+          msg = error;
+        }
+      }
+      if (msg === "") {
+        initLevel(currentLevel + 1);
+      } else {
+        showMessage("Info", msg);
+      }
     }
   }
 
   async function setLast(n) {
     let level = n.toString();
 
-    try {
-      let response = await axios.post(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/setlast`,
-        { level: level },
-        { withCredentials: credentials() }
-      );
-    } catch (error) {
-      showMessage("Error", error);
+    if (loggedIn) {
+      try {
+        let response = await axios.post(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/setlast`,
+          { level: level },
+          { withCredentials: credentials() }
+        );
+      } catch (error) {
+        showMessage("Error", error);
+      }
     }
   }
 
   async function getLast() {
-    try {
-      let response = await axios.get(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/getlast`,
-        { withCredentials: credentials() }
-      );
-      let level = response.data.balLastPlayed;
-      if (level !== "") {
-        level = Number(level);
-        confirmAlert({
-          title: "Question",
-          message: `Load level ${level}?`,
-          buttons: [
-            {
-              label: "Yes",
-              onClick: () => {
-                initLevel(level);
+    if (loggedIn) {
+      try {
+        let response = await axios.get(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/getlast`,
+          { withCredentials: credentials() }
+        );
+        let level = response.data.balLastPlayed;
+        if (level !== "") {
+          level = Number(level);
+          confirmAlert({
+            title: "Question",
+            message: `Load level ${level}?`,
+            buttons: [
+              {
+                label: "Yes",
+                onClick: () => {
+                  initLevel(level);
+                },
               },
-            },
-            {
-              label: "No",
-              onClick: () => {
-                updateScreen();
+              {
+                label: "No",
+                onClick: () => {
+                  updateScreen();
+                },
               },
-            },
-          ],
-        });
+            ],
+          });
+        }
+      } catch (error) {
+        showMessage("Error", error);
       }
-    } catch (error) {
-      showMessage("Error", error);
     }
   }
 
   async function loadSettings() {
-    try {
-      let response = await axios.get(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/loadsettings`,
-        { withCredentials: credentials() }
-      );
-      let balSettings = JSON.parse(response.data.balSettings);
-      if (!balSettings.hasOwnProperty("lessQuestions")) {
-        balSettings.lessQuestions = false;
+    if (loggedIn) {
+      try {
+        let response = await axios.get(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/loadsettings`,
+          { withCredentials: credentials() }
+        );
+        let balSettings = JSON.parse(response.data.balSettings);
+        if (!balSettings.hasOwnProperty("lessQuestions")) {
+          balSettings.lessQuestions = false;
+        }
+        if (!balSettings.hasOwnProperty("nicerGraphics")) {
+          balSettings.nicerGraphics = false;
+        }
+        if (!balSettings.hasOwnProperty("sound")) {
+          balSettings.sound = false;
+        }
+        settings.sound = balSettings.sound;
+        settings.nicerGraphics = balSettings.nicerGraphics;
+        settings.lessQuestions = balSettings.lessQuestions;
+        cbQuestions.current.checked = balSettings.lessQuestions;
+        cbGraphics.current.checked = balSettings.nicerGraphics;
+        cbSound.current.checked = balSettings.sound;
+      } catch (error) {
+        alert(error);
       }
-      if (!balSettings.hasOwnProperty("nicerGraphics")) {
-        balSettings.nicerGraphics = false;
-      }
-      if (!balSettings.hasOwnProperty("sound")) {
-        balSettings.sound = false;
-      }
-      settings.sound = balSettings.sound;
-      settings.nicerGraphics = balSettings.nicerGraphics;
-      settings.lessQuestions = balSettings.lessQuestions;
-      cbQuestions.current.checked = balSettings.lessQuestions;
-      cbGraphics.current.checked = balSettings.nicerGraphics;
-      cbSound.current.checked = balSettings.sound;
-    } catch (error) {
-      alert(error);
     }
   }
 
   async function saveSettings() {
-    try {
-      let response = await axios.post(
-        `${import.meta.env.VITE_BE_URL}/api/users/bal/savesettings`,
-        { balSettings: JSON.stringify(settings) },
-        { withCredentials: credentials() }
-      );
-    } catch (error) {
-      alert(error);
+    if (loggedIn) {
+      try {
+        let response = await axios.post(
+          `${import.meta.env.VITE_BE_URL}/api/users/bal/savesettings`,
+          { balSettings: JSON.stringify(settings) },
+          { withCredentials: credentials() }
+        );
+      } catch (error) {
+        alert(error);
+      }
     }
   }
 
@@ -674,7 +700,7 @@ function BalPage() {
           },
           {
             label: "No",
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       });
@@ -697,7 +723,7 @@ function BalPage() {
           },
           {
             label: "No",
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       });
@@ -720,7 +746,7 @@ function BalPage() {
           },
           {
             label: "No",
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       });
@@ -740,7 +766,7 @@ function BalPage() {
         },
         {
           label: "No",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
@@ -968,7 +994,7 @@ function BalPage() {
           },
           {
             label: "No",
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       });
@@ -991,7 +1017,7 @@ function BalPage() {
           },
           {
             label: "No",
-            onClick: () => {},
+            onClick: () => { },
           },
         ],
       });
@@ -1001,12 +1027,17 @@ function BalPage() {
   const myRef = useRef(document);
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn || isDevelopment) {
       getCompleted();
       getSkipped();
       initLevel(200, false);
       loadSettings();
       getLast();
+
+      if (!loggedIn) {
+        // When logged in, this is done in getLast
+        updateScreen();
+      }
 
       myRef.current.addEventListener("keydown", handleKeyDown);
       //window.addEventListener("keydown", handleKeyDown);
@@ -1193,7 +1224,7 @@ function BalPage() {
                     value="sound"
                     onChange={handleChangeSettings}
                   />
-                  <label for="sound">Sound</label>
+                  <label htmlFor="sound">Sound</label>
                 </div>
                 <div>
                   <input
@@ -1204,7 +1235,7 @@ function BalPage() {
                     value="graphics"
                     onChange={handleChangeSettings}
                   />
-                  <label for="graphics">Nicer graphics</label>
+                  <label htmlFor="graphics">Nicer graphics</label>
                 </div>
                 <div>
                   <input
@@ -1215,7 +1246,7 @@ function BalPage() {
                     value="questions"
                     onChange={handleChangeSettings}
                   />
-                  <label for="questions">Less questions</label>
+                  <label htmlFor="questions">Less questions</label>
                 </div>
               </div>
             </div>
@@ -1285,7 +1316,7 @@ function BalPage() {
             </span>
             <h2>Help</h2>
           </div>
-          <div class="help-main">
+          <div className="help-main">
             <p>
               In every level you control the blue ball with the happy face. You
               have to eat all the little green balls. You can push the white
