@@ -805,11 +805,9 @@ function BalPage() {
           break;
       }
     } else {
-      console.log("KEY: " + e.key);
       switch (e.key) {
         case "p":
         case "P":
-          console.log("PANAGIOTIS");
           initLevel(990);
           break;
         case "ArrowLeft":
