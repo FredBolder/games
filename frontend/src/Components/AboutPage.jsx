@@ -1,4 +1,3 @@
-import React from "react";
 import Navbar from "./Navbar";
 import Footer from "../Components/Footer";
 import { randomiseArray } from "../utils";
@@ -79,7 +78,17 @@ function AboutPage() {
             playable on a phone or a tablet. There are a lot of new levels added
             to the game Bal. New in the game Bal are swimming, red fish,
             electricity, trap doors and a button to skip a level, in case it is
-            too difficult.
+            too difficult.<br />
+            Fred Bolder has created a new site for the game Bal with more than 280 levels
+            and many new objects!<br />
+            <a
+              className="link"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://bal-online.onrender.com/"
+            >
+              pc game Bal
+            </a><br />         
           </p>
           <h4 className="topmargin">The games</h4>
           <p>
@@ -88,17 +97,9 @@ function AboutPage() {
           </p>
           <p>
             <br />
-            Bal (dutch translation of ball) is the online version of the{" "}
-            <a
-              className="link"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://fredbolder.github.io/bal/"
-            >
-              pc game Bal
-            </a>{" "}
-            by Fred Bolder, first programmed in Turbo Pascal for DOS and later
-            in C# for Windows.
+            Bal was first programmed by Fred Bolder in Turbo Pascal for DOS and later
+            in C# for Windows. For this site Bal was rewritten for JavaScript and now Bal has improved a lot add
+            has its own site.
           </p>
           <h4 className="topmargin">Contact</h4>
           <p>

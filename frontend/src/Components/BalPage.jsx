@@ -1,4 +1,3 @@
-import React from "react";
 import { useRef, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import InfoContext from "../Context/InfoContext";
@@ -33,25 +32,18 @@ import {
   checkTrapDoors,
 } from "../balUtils.js";
 import drawLevel from "../drawLevel.js";
-import sndCatapult from "../Sounds/catapult.wav";
 import sndEat1 from "../Sounds/eat1.wav";
 import sndEat2 from "../Sounds/eat2.wav";
 import sndEat3 from "../Sounds/eat3.wav";
 import sndEat4 from "../Sounds/eat4.wav";
 import sndElectricity from "../Sounds/electricity.wav";
 import sndExplosion from "../Sounds/explosion.wav";
-import sndFloor1 from "../Sounds/floor1.wav";
-import sndFloor2 from "../Sounds/floor2.wav";
-import sndKey from "../Sounds/key.wav";
 import sndLaserGun from "../Sounds/laser_gun.wav";
-import sndPain from "../Sounds/pain.wav";
-import sndPickaxe from "../Sounds/pickaxe.wav";
 import sndSplash1 from "../Sounds/splash1.wav";
 import sndSplash2 from "../Sounds/splash2.wav";
 import sndTake from "../Sounds/take.wav";
 import sndTeleport from "../Sounds/teleport.wav";
 import sndTrapDoor from "../Sounds/trap_door.wav";
-import sndUnlock from "../Sounds/unlock.wav";
 import imgBlueHappy from "../Images/blue_ball_happy.svg";
 import imgBlueSad from "../Images/blue_ball_sad.svg";
 import imgBlueDiving from "../Images/blue_ball_with_diving_glasses.svg";
